@@ -3,9 +3,15 @@
 NAME 	= .parse_relink
 PARSE 	= parse
 AR 		= ar
+
+LIBFT 	= ./libft/libft.a
+LIBFT_DIR = ./libft/
+
+LDFLAGS	= -L$(LIBFT_DIR)
+LDLIBS	= -lreadline -lft
+
 CC 		= cc
 CFLAGS 	= -Wall -Wextra -Werror
-LDLIBS	= -lreadline
 
 SRCS 	= \
 	main.c \
@@ -25,19 +31,24 @@ endif
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(LIBFT) :
+	make -C $(LIBFT_DIR) all
+
 all: $(NAME)
 
 $(NAME) : $(PARSE)
 	touch $@
 
-$(PARSE) : $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LDLIBS) -o $(PARSE)
+$(PARSE) : $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(PARSE)
 
 clean :
 	rm -rf $(OBJS)
+	make -C $(LIBFT_DIR) clean
 
-fclean : clean
-	rm -rf $(NAME) $(PARSE)
+fclean :
+	rm -rf $(OBJS) $(NAME) $(PARSE)
+	make -C $(LIBFT_DIR) fclean
 
 re :
 	$(MAKE) fclean

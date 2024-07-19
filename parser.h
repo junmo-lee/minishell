@@ -1,6 +1,8 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# include "libft/libft.h"
+
 # include <stdlib.h> //malloc
 # include <stdio.h> //printf , readline
 # include <readline/readline.h> //readline
