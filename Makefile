@@ -1,13 +1,12 @@
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := parse
 
 NAME 	= .parse_relink
 PARSE 	= parse
 AR 		= ar
 CC 		= cc
-CFLAGS 	= -c -Wall -Wextra -Werror
+CFLAGS 	= -Wall -Wextra -Werror
 LDLIBS	= -lreadline
 
-ARFLAGS = rc
 SRCS 	= \
 	main.c \
 	parser.c token_list_funcs.c parser_list_funcs.c \
@@ -18,7 +17,13 @@ SRCS 	= \
 
 OBJS	= $(SRCS:.c=.o)
 HEADER	= parser.h
-SANITIZE= -fsanitize=address
+
+ifdef DEBUG_FLAG
+	CFLAGS += -g3 -fsanitize=address
+endif
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
@@ -26,10 +31,7 @@ $(NAME) : $(PARSE)
 	touch $@
 
 $(PARSE) : $(OBJS)
-	$(CC) $(OBJS) -g $(SANITIZE) $(LDLIBS) -o $(PARSE)
-
-$(OBJS) : $(SRCS) $(HEADER)
-	$(CC)  $(CFLAGS) -g $(SANITIZE) $(SRCS)
+	$(CC) $(CFLAGS) $(OBJS) $(LDLIBS) -o $(PARSE)
 
 clean :
 	rm -rf $(OBJS)
