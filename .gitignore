@@ -1,0 +1,5 @@
+*.o
+.DS_store
+.parse_relink
+parse_relink
+a.out.dSYM/
