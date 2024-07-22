@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	char			*str;
 	// struct termios	term;
 	t_parsed_tree	*head;
+	t_vars			vars;
 
 	// atexit(leaks_check);
 	head = NULL;
@@ -92,7 +93,16 @@ int	main(int argc, char **argv, char **envp)
 			// printf_parsed_list(parsed_list);
 			// clear_parse_list(&parsed_list);
 			if (head->error == NO_ERROR)
+			{
 				printf_parsed_tree(head);
+				// 명령어 실행
+				// vars 에 argc, argv, envp, path를 넣는 단계
+				init(&vars, argc, argv, envp);
+
+				// 실제 line 실행부
+				
+				// 명령어가 종료될때까지 기다림
+			}
 			else
 			{
 				if (head->error == NOT_CLOSED_ERROR)

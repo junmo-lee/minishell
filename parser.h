@@ -6,12 +6,15 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/22 19:45:49 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 20:01:27 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "libft/libft.h"
+# include "pipex/pipex_bonus.h"
 
 # include <stdlib.h> //malloc
 # include <stdio.h> //printf , readline

@@ -13,14 +13,16 @@ LDLIBS	= -lreadline -lft
 CC 		= cc
 CFLAGS 	= -Wall -Wextra -Werror
 
-SRCS 	= \
+SRCS_PARSE	= \
 	main.c \
 	parser.c parser_list_funcs.c parsed_tree_funcs.c \
 	token_list_funcs.c tokenize_string_1.c tokenize_string_2.c \
 	expand_env_vars_1.c expand_env_vars_2.c \
 	combine_expanded_tokens.c 
 
-OBJS	= $(SRCS:.c=.o)
+SRCS_PIPE	= \
+
+OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o)
 HEADER	= parser.h
 
 ifdef DEBUG_FLAG
