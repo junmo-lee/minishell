@@ -48,6 +48,7 @@ void	printf_parsed_tree(t_parsed_tree *head)
 	{
 		printf("cmd_list %d\n", index);
 		index ++;
+		current_node->arg_len = 0;
 		parser_node = current_node->cmd_list_head;
 		while (parser_node != NULL)
 		{
@@ -57,6 +58,7 @@ void	printf_parsed_tree(t_parsed_tree *head)
 				printf("	%s		->REDIRECTION\n", parser_node->token);
 			else if (parser_node->type == HERE_DOC)
 				printf("	%s		->HERE_DOC\n", parser_node->token);
+			current_node->arg_len++;
 			parser_node = parser_node->next;
 		}
 		current_node = current_node->next;
@@ -100,8 +102,7 @@ int	main(int argc, char **argv, char **envp)
 				init(&vars, argc, argv, envp);
 
 				// 실제 line 실행부
-				
-				// 명령어가 종료될때까지 기다림
+				run_cmd_tree(&vars, head);
 			}
 			else
 			{

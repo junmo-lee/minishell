@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:54:38 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:57:48 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:29:27 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_parsed_tree
 	t_parser_list			*cmd_list_head;
 	struct s_parsed_tree	*next;
 	int						error;
+	int						arg_len;
 }	t_parsed_tree;
 
 // pipex type 추가

@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 21:03:25 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:47:07 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	wait_processes(t_vars *vars, t_cmd *cmd)
 			{
 				(cmd + count)->is_end = 1;
 				exit_count++;
-				free_cmds((cmd + count));
+				// 메모리는 나중에
+				//free_cmds((cmd + count));
 			}
 			count++;
 		}
@@ -84,7 +85,8 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 	t_parsed_tree	*current_node;
 	t_parser_list	*parser_node;
 	int				index;
-	char			*new_arg;
+	int				arg_index;
+
 	// vars : main에서 argc, argv, envp, path 를 받아옴
 
 	// 리다이엑션은 나중에 고려
@@ -100,24 +102,29 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 
 	ft_memset(cmd, 0, sizeof(cmd));
 	current_node = tree;
-	index = 0;
+	index = 0; // cmd 0, cmd 1
+
 	while (current_node != NULL)
 	{
+		fprintf(stderr, "arg_len : %d\n", current_node->arg_len);
+		(cmd + index)->args = malloc(sizeof(char *) * (current_node->arg_len + 1));
 		parser_node = current_node->cmd_list_head;
+		arg_index = 0;
 		while (parser_node != NULL)
 		{
 			if ((cmd + index)->cmd_name == NULL)
-				(cmd + index)->cmd_name = parser_node->token;
-			// args 넣는 것은 나중에, 일단 함수만 실행되도록
-			else
 			{
-				new_arg = malloc(sizeof(char *));
-				
+				(cmd + index)->cmd_name = parser_node->token;
+				fprintf(stderr, "cmd_name : [%s]\n", (cmd + index)->cmd_name);
 			}
-
+			(cmd + index)->args[arg_index] = parser_node->token;
+			fprintf(stderr, "[%s]\n", (cmd + index)->args[arg_index]);
+			arg_index++;
 			parser_node = parser_node->next;
 		}
+		(cmd + index)->args[arg_index] = NULL;
 		current_node = current_node->next;
+		index++;
 	}
 
 
@@ -146,8 +153,9 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		}
 		else
 		{
-			vars->next_write = dup(vars->file2_write_fd);
-			close(vars->file2_write_fd);
+			vars->next_write = dup(STDOUT_FILENO);
+			//vars->next_write = dup(vars->file2_write_fd);
+			//close(vars->file2_write_fd);
 		}
 		fork_ret = fork();
 		if (fork_ret == -1)
@@ -157,9 +165,11 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		else
 		{
 			(cmd + count)->pid = fork_ret;
-			close_fd_main(vars, count);
+			//stdin, stdout 이 닫히면 안되서 일단 pass
+			//close_fd_main(vars, count);
 		}
 		count++;
 	}
 	return (main_return(vars, cmd));
+	//return (0);
 }
