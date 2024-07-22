@@ -21,6 +21,10 @@ SRCS_PARSE	= \
 	combine_expanded_tokens.c 
 
 SRCS_PIPE	= \
+	pipex/do_pipex_bonus.c pipex/main_bonus.c \
+	pipex/read_file_bonus.c  pipex/write_file_bonus.c \
+	pipex/utils_bonus.c pipex/pipex_init_bonus.c \
+	pipex/path_join_bonus.c pipex/pipex_split_bonus.c 
 
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o)
 HEADER	= parser.h

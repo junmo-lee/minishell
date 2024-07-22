@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:53 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:45:12 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:03:35 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../parser.h"
 
 void	write_here_doc(t_vars *vars)
 {

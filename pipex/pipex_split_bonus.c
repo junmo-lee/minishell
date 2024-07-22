@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:05:02 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:44:52 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:04:00 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../parser.h"
 
 int	parse_name_args(t_cmd *cmd, char *cmd_argv)
 {

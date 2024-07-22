@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:43 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:51:09 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:03:48 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../parser.h"
 
 int	import_path(t_vars *vars)
 {

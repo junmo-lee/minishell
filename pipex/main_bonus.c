@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:50:16 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:03:25 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../parser.h"
 
 int	get_exit_status(int status)
 {
@@ -130,8 +130,10 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 	count = 0;
 	while (count < vars->cmd_len)
 	{
+		/*
 		//cmd_init(vars, (cmd + count), count, \
 			vars->argv[count + 2 + vars->is_here_doc]);
+		*/
 		(cmd + count)->envp = vars->envp;
 
 		//parse_name_args(cmd, cmd_argv);
@@ -159,5 +161,5 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		}
 		count++;
 	}
-	return (main_return(&vars, cmd));
+	return (main_return(vars, cmd));
 }

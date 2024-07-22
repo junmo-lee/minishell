@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:57:04 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 21:03:17 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	cmd_init(t_vars *vars, t_cmd *cmd, int count, char *cmd_argv);
 
 void	do_pipex_bonus(t_vars *vars, t_cmd *cmd);
 void	check_cmd_access(t_vars *vars, t_cmd *cmd);
+
+void	child(t_vars *vars, t_cmd *cmd);
+void	close_fd_main(t_vars *vars, int count);
 
 int		write_stderr(char *error_msg, char *name);
 void	write_stderr_exit(char *error_msg, char *name, int errorcode);
