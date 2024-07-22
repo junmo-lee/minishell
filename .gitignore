@@ -1,4 +1,8 @@
 *.o
+*.d
+libft/libft.a
+LAST_ALL
+.vscode/settings.json
 .DS_store
 .parse_relink
 parse_relink
