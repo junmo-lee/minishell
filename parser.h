@@ -6,12 +6,14 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/22 20:01:27 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/22 20:55:41 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "type_def.h"
 
 # include "libft/libft.h"
 # include "pipex/pipex_bonus.h"
@@ -22,73 +24,6 @@
 # include <readline/history.h> //add_history
 # include <termios.h> // tcgetattr() 
 # include <string.h> //strlen
-
-# define UNDEFINED_ERROR -1
-# define NO_ERROR 0
-# define NOT_CLOSED_ERROR 1
-# define MALLOC_ERROR 2
-# define REDIRECTION_ERROR 3
-# define PIPE_ERROR 4
-
-# define STDIN_FILENO 0
-
-typedef enum
-{
-	DEFAULT,
-	CMD,
-	STRING,
-	EQUAL,
-	REDIRECTION,
-	HERE_DOC,
-	PIPE,
-	DOUBLEQUOTE,
-	SINGLEQUOTE,
-}	tag;
-
-
-/*
-t_token_list	p;
-
-if (p.type == CMD)
- */
-
-typedef struct s_parser_list
-{
-	// int inFd;
-	// int outFd;
-	// char *cmd;
-	char					*token;
-	tag						type;
-	int						error;
-	struct s_parser_list	*next;
-}	t_parser_list;
-
-typedef struct s_token_list
-{
-	char				*token;
-	tag					type;
-	int					error;
-	int					connect_flag;
-	struct s_token_list	*next;
-}	t_token_list;
-
-typedef struct s_info
-{
-	int	token_count;
-	int	start_index;
-	int	end_index;
-	tag	type_code;
-	int	connect_flag;
-	int	error;
-}	t_info;
-
-typedef struct s_parsed_tree
-{
-	int						cmd_len;
-	t_parser_list			*cmd_list_head;
-	struct s_parsed_tree	*next;
-	int						error;
-}	t_parsed_tree;
 
 // parser.c
 t_parsed_tree	*parser(char *str);
