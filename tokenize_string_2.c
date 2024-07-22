@@ -7,7 +7,8 @@ static void	tokenize_singlequote(t_info *info_s, char *str, int *index)
 	{
 		if (str[*index] == '\0')
 		{
-			info_s->error = ERROR;
+			info_s->error = NOT_CLOSED_ERROR;
+			perror("The string in singlequote is not closed");
 			return ;
 		}
 		*index += 1;
@@ -24,7 +25,8 @@ static void	tokenize_doublequote(t_info *info_s, char *str, int *index)
 	{
 		if (str[*index] == '\0')
 		{
-			info_s->error = ERROR;
+			info_s->error = NOT_CLOSED_ERROR;
+			perror("The string in doublequote is not closed");
 			return ;
 		}
 		*index += 1;
@@ -36,14 +38,14 @@ static void	tokenize_doublequote(t_info *info_s, char *str, int *index)
 
 void	find_last_index_of_token(t_info *info_s, char *str)
 {
-	int	index;
+	int index;
 
 	index = info_s->start_index;
 	while (str[index] != '\0')
 	{
-		if (str[index] == '\'')
+		if (str[index] == '\'') // '를 만나면 다시 '가 나올때까지 인덱스를 밀고 안 나오면 error
 			tokenize_singlequote(info_s, str, &index);
-		else if (str[index] == '\"')
+		else if (str[index] == '\"') // "를 만나면 다시 "가 나올때까지 인덱스를 밀고 안 나오면 error
 			tokenize_doublequote(info_s, str, &index);
 		else if (str[index + 1] == ' ' || str[index + 1] == '<' \
 		|| str[index + 1] == '>' || str[index + 1] == '|')

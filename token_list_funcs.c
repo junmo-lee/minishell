@@ -5,6 +5,11 @@ t_token_list	*create_token_node(t_info *info_s, char *str)
 	t_token_list	*new_node;
 
 	new_node = (t_token_list *)malloc(sizeof(t_token_list));
+	if (!new_node)
+	{
+		info_s->error = MALLOC_ERROR;
+		return (NULL);
+	}
 	new_node->token = str;
 	new_node->type = info_s->type_code;
 	new_node->connect_flag = info_s->connect_flag;

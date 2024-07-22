@@ -14,6 +14,7 @@ char	*slice_string(int start_index, int end_index, char *str)
 	return (result);
 }
 
+
 char	*get_envp_value(char *str, int *index)
 {
 	char	*envp_key;
@@ -40,6 +41,7 @@ char	*get_envp_value(char *str, int *index)
 	return (envp_value);
 }
 
+
 char	*concatenate_strings(char *word1, char *word2)
 {
 	int		word1_len;
@@ -49,6 +51,8 @@ char	*concatenate_strings(char *word1, char *word2)
 	word1_len = ft_strlen(word1);
 	word2_len = ft_strlen(word2);
 	result = (char *)malloc(sizeof(char) * (word1_len + word2_len + 1));
+	if (!result)
+		return (NULL);
 	ft_strlcpy(result, word1, word1_len + 1);
 	ft_strlcat(result, word2, word1_len + word2_len + 1);
 	free(word1);

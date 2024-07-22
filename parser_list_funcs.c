@@ -5,19 +5,29 @@ t_parser_list	*create_parse_node(char *str, t_token_list *token_s)
 	t_parser_list	*new_node;
 
 	new_node = (t_parser_list *)malloc(sizeof(t_parser_list));
-	new_node->token = str;
-	if (token_s->type == SINGLEQUOTE || token_s->type == DOUBLEQUOTE)
+	if (!new_node)
+		return (NULL);
+	if (token_s == NULL)
 	{
-		new_node->type = STRING;
+		new_node->token = NULL;
+		new_node->type = DEFAULT;
+		new_node->error = UNDEFINED_ERROR;
+		new_node->next = NULL;
 	}
 	else
-		new_node->type = token_s->type;
-	new_node->error = token_s->error;
-	new_node->next = NULL;
+	{
+		new_node->token = str;
+		if (token_s->type == SINGLEQUOTE || token_s->type == DOUBLEQUOTE)
+			new_node->type = STRING;
+		else
+			new_node->type = token_s->type;
+		new_node->error = token_s->error;
+		new_node->next = NULL;
+	}
 	return (new_node);
 }
 
-static void	destroy_parse_node(t_parser_list *node)
+void	destroy_parse_node(t_parser_list *node)
 {
 	free(node->token);
 	node->token = NULL;
@@ -25,7 +35,7 @@ static void	destroy_parse_node(t_parser_list *node)
 	node = NULL;
 }
 
-void	clear_parse_s(t_parser_list **head)
+void	clear_parse_list(t_parser_list **head)
 {
 	t_parser_list	*current_node;
 	t_parser_list	*next_node;
