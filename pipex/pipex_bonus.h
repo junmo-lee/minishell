@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 21:03:17 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/23 19:37:56 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ void	free_cmds(t_cmd *cmd);
 
 void	wait_processes(t_vars *vars, t_cmd *cmd);
 int		main_return(t_vars *vars, t_cmd *cmd);
-int		run_cmd_tree(t_vars *vars, t_parsed_tree *tree);
+int		run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree);
 
 #endif

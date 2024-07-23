@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 	// struct termios	term;
 	t_parsed_tree	*head;
 	t_vars			vars;
+	t_status		status;
 
 	// atexit(leaks_check);
 	head = NULL;
@@ -102,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 				init(&vars, argc, argv, envp);
 
 				// 실제 line 실행부
-				run_cmd_tree(&vars, head);
+				run_cmd_tree(&status, &vars, head);
 
 				// stdin
 			}

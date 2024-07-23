@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/23 16:29:19 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/23 19:40:25 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	bonus_get_fds(t_vars *vars)
 	}
 }
 
-int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
+int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 {
 	t_cmd 			cmd[1024]; // 나중에 연결리스트 형태로 변경?
 	t_parsed_tree	*current_node;
@@ -139,7 +139,6 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 	check_fd("main");
 	int		count;
 	pid_t	fork_ret;
-	int		ret_cmd_tree;
 
 	// 리다이엑션이 들어오면 stdin 이 아니라 file1_read_fd로
 	vars->prev_read = dup(STDIN_FILENO);
@@ -180,9 +179,9 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		}
 		count++;
 	}
-	ret_cmd_tree = main_return(vars, cmd);
+	status->exit_status = main_return(vars, cmd);
 	dup2(save_stdin, STDIN_FILENO);
 	dup2(save_stdout, STDOUT_FILENO);
-	return (ret_cmd_tree);
+	return (status->exit_status);
 	//return (0);
 }

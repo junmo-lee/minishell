@@ -4,6 +4,7 @@
 
 # define UNDEFINED_ERROR -1
 # define NO_ERROR 0
+
 # define NOT_CLOSED_ERROR 1
 # define MALLOC_ERROR 2
 # define REDIRECTION_ERROR 3
@@ -71,6 +72,11 @@ typedef struct s_parsed_tree
 	int						error;
 	int						arg_len;
 }	t_parsed_tree;
+
+typedef	struct	s_status
+{
+	int	exit_status;
+}	t_status;
 
 // pipex type 추가
 typedef struct s_cmd
