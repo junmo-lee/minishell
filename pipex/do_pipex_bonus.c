@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 21:42:29 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:12:49 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ int	check_local_path(t_vars *vars, t_cmd *cmd)
 
 void	child(t_vars *vars, t_cmd *cmd)
 {
+	check_fd("cmd _ after fork");
 	if (dup2(vars->prev_read, STDIN_FILENO) == -1)
 		exit(EXIT_FAILURE);
-	//close(vars->prev_read);
+	close(vars->prev_read);
 	if (dup2(vars->next_write, STDOUT_FILENO) == -1)
 		exit(EXIT_FAILURE);
-	//close(vars->next_write);
+	close(vars->next_write);
 	close(vars->pipe_fd[0]);
+	check_fd("cmd _ after close");
 	check_cmd_access(vars, cmd);
 	fprintf(stderr, "[%s]\n", cmd->cmd_path);
 	if(cmd->args != NULL)
@@ -55,6 +57,7 @@ void	child(t_vars *vars, t_cmd *cmd)
 			fprintf(stderr, "[%s]\n", cmd->args[i]);
 	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
 		exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 void	close_fd_main(t_vars *vars, int count)

@@ -6,11 +6,14 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 21:47:07 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:29:19 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser.h"
+
+// 디버그용
+#include <stdio.h>
 
 int	get_exit_status(int status)
 {
@@ -87,6 +90,12 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 	int				index;
 	int				arg_index;
 
+	int				save_stdin;
+	int				save_stdout;
+
+	save_stdin = dup(STDIN_FILENO);
+	save_stdout = dup(STDOUT_FILENO);
+
 	// vars : main에서 argc, argv, envp, path 를 받아옴
 
 	// 리다이엑션은 나중에 고려
@@ -127,13 +136,14 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		index++;
 	}
 
-
+	check_fd("main");
 	int		count;
 	pid_t	fork_ret;
+	int		ret_cmd_tree;
 
 	// 리다이엑션이 들어오면 stdin 이 아니라 file1_read_fd로
 	vars->prev_read = dup(STDIN_FILENO);
-	//close(vars->file1_read_fd);
+	close(STDIN_FILENO);
 	count = 0;
 	while (count < vars->cmd_len)
 	{
@@ -155,7 +165,7 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		{
 			vars->next_write = dup(STDOUT_FILENO);
 			//vars->next_write = dup(vars->file2_write_fd);
-			//close(vars->file2_write_fd);
+			close(STDOUT_FILENO);
 		}
 		fork_ret = fork();
 		if (fork_ret == -1)
@@ -166,10 +176,13 @@ int	run_cmd_tree(t_vars *vars, t_parsed_tree *tree)
 		{
 			(cmd + count)->pid = fork_ret;
 			//stdin, stdout 이 닫히면 안되서 일단 pass
-			//close_fd_main(vars, count);
+			close_fd_main(vars, count);
 		}
 		count++;
 	}
-	return (main_return(vars, cmd));
+	ret_cmd_tree = main_return(vars, cmd);
+	dup2(save_stdin, STDIN_FILENO);
+	dup2(save_stdout, STDOUT_FILENO);
+	return (ret_cmd_tree);
 	//return (0);
 }

@@ -103,6 +103,8 @@ int	main(int argc, char **argv, char **envp)
 
 				// 실제 line 실행부
 				run_cmd_tree(&vars, head);
+
+				// stdin
 			}
 			else
 			{
