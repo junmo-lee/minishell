@@ -13,14 +13,21 @@ LDLIBS	= -lreadline -lft
 CC 		= cc
 CFLAGS 	= -Wall -Wextra -Werror
 
-SRCS 	= \
+SRCS_PARSE	= \
 	main.c \
 	parser.c parser_list_funcs.c parsed_tree_funcs.c \
 	token_list_funcs.c tokenize_string_1.c tokenize_string_2.c \
 	expand_env_vars_1.c expand_env_vars_2.c \
-	combine_expanded_tokens.c 
+	combine_expanded_tokens.c \
+	check_fd.c 
 
-OBJS	= $(SRCS:.c=.o)
+SRCS_PIPE	= \
+	pipex/do_pipex_bonus.c pipex/main_bonus.c \
+	pipex/read_file_bonus.c  pipex/write_file_bonus.c \
+	pipex/utils_bonus.c pipex/pipex_init_bonus.c \
+	pipex/path_join_bonus.c pipex/pipex_split_bonus.c 
+
+OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o)
 HEADER	= parser.h
 
 ifdef DEBUG_FLAG
