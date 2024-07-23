@@ -6,35 +6,18 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/23 16:12:49 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/23 20:20:14 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser.h"
 
-int	check_local_path(t_vars *vars, t_cmd *cmd)
+int	check_local_path(t_cmd *cmd)
 {
-	char	*temp;
-
 	if (access(cmd->cmd_name, X_OK) == 0)
 	{
 		cmd->cmd_path = cmd->cmd_name;
 		return (1);
-	}
-	else
-	{
-		vars++;
-		temp = ft_substr(cmd->cmd_argv, 2, ft_strlen(cmd->cmd_argv) - 2);
-		if (access(temp, X_OK) == 0)
-		{
-			cmd->cmd_path = temp;
-			return (1);
-		}
-		else
-		{
-			ft_memset(temp, 0, ft_strlen(temp));
-			free(temp);
-		}
 	}
 	return (0);
 }
