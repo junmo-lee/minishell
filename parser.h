@@ -6,7 +6,7 @@
 /*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/24 14:25:44 by choolee          ###   ########.fr       */
+/*   Updated: 2024/07/24 14:45:01 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdio.h> //printf , readline
 # include <readline/readline.h> //readline
 # include <readline/history.h> //add_history
-# include <termios.h> // tcgetattr() 
+# include <termios.h> // tcgetattr()
 # include <string.h> //strlen
 
 // parser.c

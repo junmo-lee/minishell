@@ -35,7 +35,7 @@ void	check_pipe_syntax(t_info *info_s, t_parser_list *parser_list)
 	}
 }
 
-int		count_pipe(t_parser_list *parser_list)
+int	count_pipe(t_parser_list *parser_list)
 {
 	t_parser_list	*current_node;
 	int				pipe_count;
@@ -87,7 +87,7 @@ void	divide_cmd_list(t_parsed_tree **parsed_tree)
 			destroy_parse_node(current_node->next);
 			current_node->next = NULL;
 		}
-		current_node = current_node->next;	
+		current_node = current_node->next;
 	}
 }
 
@@ -126,7 +126,7 @@ static void	init_info_struct(t_info *info_s)
 	info_s->end_index = 0;
 	info_s->type_code = DEFAULT;
 	info_s->connect_flag = 0;
-	info_s->error = 0;	
+	info_s->error = 0;
 }
 
 t_parsed_tree	*parser(char *str)
@@ -140,24 +140,19 @@ t_parsed_tree	*parser(char *str)
 	init_info_struct(&info_s);
 	token_list = tokenize_string(&info_s, str);
 	handle_dilimiter_with_env(&token_list);
-	expand_env_vars_in_token_list(&token_list); // 히어독 뒤에 나오는 딜리미터의 달러는 환경변수 처리 안 함. 히어독 나오면 딜리미터 끝날 때까지 더블쿠오트를 실글로 테그 변경
+	expand_env_vars_in_token_list(&token_list);
 	parse_list = combine_expanded_tokens(&token_list);
 	check_syntax(&info_s, parse_list);
 	if (info_s.error != NO_ERROR)
 	{
-		parsed_tree = (t_parsed_tree *)malloc(sizeof(t_parsed_tree));
-		parsed_tree->cmd_len = 0;
-		parsed_tree->cmd_list_head = NULL;
+		parsed_tree = create_parsed_tree_node(0, NULL);
 		parsed_tree->error = info_s.error;
-		parsed_tree->next = NULL;
+		clear_parse_list(&parse_list);
 	}
 	else
-	{
 		parsed_tree = make_parsed_tree(parse_list);
-	}
 	free(str);
 	str = NULL;
 	clear_token_list(&token_list);
-	// clear_parse_list(&parse_list);
 	return (parsed_tree);
 }
