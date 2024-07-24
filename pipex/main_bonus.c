@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/23 19:40:25 by choolee          ###   ########.fr       */
+/*   Updated: 2024/07/24 16:51:00 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,6 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 	int				index;
 	int				arg_index;
 
-	int				save_stdin;
-	int				save_stdout;
-
-	save_stdin = dup(STDIN_FILENO);
-	save_stdout = dup(STDOUT_FILENO);
-
 	// vars : main에서 argc, argv, envp, path 를 받아옴
 
 	// 리다이엑션은 나중에 고려
@@ -136,13 +130,18 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 		index++;
 	}
 
-	check_fd("main");
+	check_fd("main start");
 	int		count;
 	pid_t	fork_ret;
 
-	// 리다이엑션이 들어오면 stdin 이 아니라 file1_read_fd로
-	vars->prev_read = dup(STDIN_FILENO);
-	close(STDIN_FILENO);
+	// 리다이엑션이 들어오면 STDIN_FILENO 이 아니라 file1_read_fd로
+	// 위의 t_parser_list -> cmd 로 바꾸는 과정에서 prev_read를 바꾸어줌
+
+	// if ((cmd + count)->redirection == 1)
+	// 	vars->prev_read = open(file_path, OPTION)
+	// else
+		vars->prev_read = dup(STDIN_FILENO);
+
 	count = 0;
 	while (count < vars->cmd_len)
 	{
@@ -164,7 +163,6 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 		{
 			vars->next_write = dup(STDOUT_FILENO);
 			//vars->next_write = dup(vars->file2_write_fd);
-			close(STDOUT_FILENO);
 		}
 		fork_ret = fork();
 		if (fork_ret == -1)
@@ -173,15 +171,22 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 			child(vars, (cmd + count));
 		else
 		{
+			check_fd("main in pipe");
 			(cmd + count)->pid = fork_ret;
-			//stdin, stdout 이 닫히면 안되서 일단 pass
-			close_fd_main(vars, count);
+			close(vars->prev_read);
+			close(vars->next_write);
+			if (count != vars->cmd_len - 1)
+			{
+				vars->prev_read = dup(vars->pipe_fd[0]);
+				close(vars->pipe_fd[0]);
+			}
 		}
 		count++;
 	}
 	status->exit_status = main_return(vars, cmd);
-	dup2(save_stdin, STDIN_FILENO);
-	dup2(save_stdout, STDOUT_FILENO);
+
+
+	check_fd("main end");
 	return (status->exit_status);
 	//return (0);
 }
