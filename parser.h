@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/23 16:09:43 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/24 14:25:44 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void			append_parse_node(t_parser_list **head, t_parser_list *node);
 // parsed_tree_funcs.c
 t_parsed_tree	*create_parsed_tree_node(int cmd_count, t_parser_list *cmd_list_head);
 void			append_parsed_tree_node(t_parsed_tree **head, t_parsed_tree *node);
+void			clear_parsed_tree(t_parsed_tree **head);
 
 // tokenize_string_1.c
 t_token_list	*tokenize_string(t_info *info_s, char *str);
@@ -56,6 +57,7 @@ void			expand_env_vars_in_token_list(t_token_list **token_s);
 char			*slice_string(int start_index, int end_index, char *str);
 char			*get_envp_value(char *str, int *index);
 char			*concatenate_strings(char *word1, char *word2);
+void			handle_dilimiter_with_env(t_token_list **token_list);
 
 // combine_expanded_tokens.c
 t_parser_list	*combine_expanded_tokens(t_token_list **token_s);

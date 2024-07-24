@@ -59,3 +59,22 @@ char	*concatenate_strings(char *word1, char *word2)
 	free(word2);
 	return (result);
 }
+
+void	handle_dilimiter_with_env(t_token_list **token_list)
+{
+	int				flag;
+	t_token_list	*current_node;
+
+	flag = 0;
+	current_node = *(token_list);
+	while (current_node != NULL)
+	{
+		if (current_node->type == HERE_DOC)
+			flag = 1;
+		if (flag == 1 && (current_node->type == DOUBLEQUOTE || current_node->type == STRING))
+			current_node->type = SINGLEQUOTE;
+		if (current_node->type != HERE_DOC && current_node->connect_flag == 0)
+			flag = 0;
+		current_node = current_node->next;
+	}
+}

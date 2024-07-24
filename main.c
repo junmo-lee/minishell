@@ -118,6 +118,7 @@ int	main(int argc, char **argv, char **envp)
 				else if (head->error == PIPE_ERROR)
 					fprintf(stderr, "PIPE_ERROR\n");
 			}
+			clear_parsed_tree(&head); // leaks 잡은거 merge할때 안 합쳐 진듯
 			// free(str);
 		}
 	}

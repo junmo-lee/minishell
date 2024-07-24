@@ -139,6 +139,7 @@ t_parsed_tree	*parser(char *str)
 	parsed_tree = NULL;
 	init_info_struct(&info_s);
 	token_list = tokenize_string(&info_s, str);
+	handle_dilimiter_with_env(&token_list);
 	expand_env_vars_in_token_list(&token_list); // 히어독 뒤에 나오는 딜리미터의 달러는 환경변수 처리 안 함. 히어독 나오면 딜리미터 끝날 때까지 더블쿠오트를 실글로 테그 변경
 	parse_list = combine_expanded_tokens(&token_list);
 	check_syntax(&info_s, parse_list);

@@ -32,3 +32,25 @@ void	append_parsed_tree_node(t_parsed_tree **head, t_parsed_tree *node)
 		tail->next = node;
 	}
 }
+
+static void	destroy_parsed_tree_node(t_parsed_tree *node)
+{
+	clear_parse_list(&(node->cmd_list_head));
+	node->cmd_list_head = NULL;
+	free(node);
+	node = NULL;
+}
+
+void	clear_parsed_tree(t_parsed_tree **head)
+{
+	t_parsed_tree	*current_node;
+	t_parsed_tree	*next_node;
+
+	current_node = *(head);
+	while (current_node != NULL)
+	{
+		next_node = current_node->next;
+		destroy_parsed_tree_node(current_node);
+		current_node = next_node;
+	}
+}
