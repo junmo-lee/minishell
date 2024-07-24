@@ -54,7 +54,7 @@ void	printf_parsed_tree(t_parsed_tree *head)
 int	main(int argc, char **argv, char **envp)
 {
 	char			*str;
-	// struct termios	term;
+	struct termios	term;
 	t_parsed_tree	*head;
 	t_vars			vars;
 	t_status		status;
@@ -67,9 +67,9 @@ int	main(int argc, char **argv, char **envp)
 		fprintf(stderr, "argument input error");
 		return (0);
 	}
-	// tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
-	// term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
-	// tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
+	tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
+	term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
+	tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (1)
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*str != '\0')
 		{
 			add_history(str);
-			head = parser(str);
+			head = parser(str, &status);
 			// printf_parsed_list(parsed_list);
 			// clear_parse_list(&parsed_list);
 			if (head->error == NO_ERROR)

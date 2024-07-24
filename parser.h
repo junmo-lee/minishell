@@ -6,7 +6,7 @@
 /*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/24 14:45:01 by choolee          ###   ########.fr       */
+/*   Updated: 2024/07/24 17:34:45 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <string.h> //strlen
 
 // parser.c
-t_parsed_tree	*parser(char *str);
+t_parsed_tree	*parser(char *str, t_status *status);
 
 // token_list_funcs.c
 t_token_list	*create_token_node(t_info *info_s, char *str);
@@ -51,7 +51,7 @@ t_token_list	*tokenize_string(t_info *info_s, char *str);
 void			find_last_index_of_token(t_info *info_s, char *str);
 
 // expand_env_vars_1.c
-void			expand_env_vars_in_token_list(t_token_list **token_s);
+void			expand_env_vars_in_token_list(t_token_list **token_s, t_status *status);
 
 // expand_env_vars_2.c
 char			*slice_string(int start_index, int end_index, char *str);
