@@ -1,7 +1,6 @@
 #ifndef TYPE_DEF_H
 #  define TYPE_DEF_H
 
-
 # define UNDEFINED_ERROR -1
 # define NO_ERROR 0
 

@@ -5,33 +5,19 @@
 // 	system("leaks parse");
 // }
 
-void	printf_parsed_list(t_parser_list *head)
+void	signal_handler(int signo)
 {
-	t_parser_list	*current_node;
-
-	current_node = head;
-	if (current_node->error != NO_ERROR)
-		fprintf(stderr, "error : %d\n", current_node->error);
-	else
+	if (signo == SIGINT)
 	{
-		while (current_node != NULL)
-		{
-			if (current_node->type == STRING)
-				fprintf(stderr, "%s				-> string\n", current_node->token);
-			else if (current_node->type == EQUAL)
-				fprintf(stderr, "%s				-> equal\n", current_node->token);
-			else if (current_node->type == REDIRECTION)
-				fprintf(stderr, "%s				-> rediection\n", current_node->token);
-			else if (current_node->type == HERE_DOC)
-				fprintf(stderr, "%s				-> here_doc\n", current_node->token);
-			else if (current_node->type == PIPE)
-				fprintf(stderr, "%s				-> pipe\n", current_node->token);
-			else if (current_node->type == SINGLEQUOTE)
-				fprintf(stderr, "%s				-> singlequote\n", current_node->token);
-			else if (current_node->type == DOUBLEQUOTE)
-				fprintf(stderr, "%s				-> doublequote\n", current_node->token);
-			current_node = current_node->next;
-		}	
+		write (1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (signo == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
@@ -68,7 +54,7 @@ void	printf_parsed_tree(t_parsed_tree *head)
 int	main(int argc, char **argv, char **envp)
 {
 	char			*str;
-	// struct termios	term;
+	struct termios	term;
 	t_parsed_tree	*head;
 	t_vars			vars;
 	t_status		status;
@@ -81,9 +67,11 @@ int	main(int argc, char **argv, char **envp)
 		fprintf(stderr, "argument input error");
 		return (0);
 	}
-	// tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
-	// term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
-	// tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
+	tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
+	term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
+	tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		str = readline("prompt : ");
@@ -92,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*str != '\0')
 		{
 			add_history(str);
-			head = parser(str);
+			head = parser(str, &status);
 			// printf_parsed_list(parsed_list);
 			// clear_parse_list(&parsed_list);
 			if (head->error == NO_ERROR)
@@ -118,6 +106,7 @@ int	main(int argc, char **argv, char **envp)
 				else if (head->error == PIPE_ERROR)
 					fprintf(stderr, "PIPE_ERROR\n");
 			}
+			clear_parsed_tree(&head); // leaks 잡은거 merge할때 안 합쳐 진듯
 			// free(str);
 		}
 	}
