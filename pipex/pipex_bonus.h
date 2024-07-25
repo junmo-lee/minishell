@@ -6,15 +6,15 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/23 20:19:15 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/25 17:15:50 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
-# include "../libft/libft.h"
 # include "../type_def.h"
+# include "../libft/libft.h"
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -39,7 +39,7 @@ int		parse_name_args(t_cmd *cmd, char *cmd_argv);
 void	read_file(int *fd, char *file_path, int option);
 
 void	write_file(int *fd, char *file_path, int option);
-void	write_here_doc(t_vars *vars);
+void	write_here_doc(t_vars *vars, char *limiter);
 
 int		free_strs(char *strs[], int exit_code);
 void	free_cmds(t_cmd *cmd);

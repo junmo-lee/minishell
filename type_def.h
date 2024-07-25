@@ -86,6 +86,8 @@ typedef struct s_cmd
 	char	**args;
 	char	**envp;
 	char	*cmd_argv;
+	int		redirection_in;
+	int		redirection_out;
 	int		cant_execute;
 	int		status;
 	int		is_end;
