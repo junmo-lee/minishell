@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/26 16:22:17 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 17:42:52 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,6 @@ void	wait_processes(t_vars *vars, t_cmd *cmd)
 			count++;
 		}
 	}
-}
-
-int	main_return(t_vars *vars, t_cmd *cmd)
-{
-	wait_processes(vars, cmd);
-	if (vars->is_here_doc == 1)
-		unlink(".here_doc");
-	free_strs(vars->path, EXIT_SUCCESS);
-	return (get_exit_status((cmd + (vars->cmd_len - 1))->status));
 }
 
 int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
@@ -130,13 +121,34 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 			}
 			else if (parser_node->type == HERE_DOC)
 			{
-				// .here_doc 이라는 파일이름을 고정적으로 하지 않고 이미 파일이 존재한다면 다른 파일로 변경해야함
+				// 이전에 here_doc 이나 리다이엑션을 받았는지 먼저 확인이 필요할거 같음
+
+				status->is_here_doc = 1;
+
 				parser_node = parser_node->next;
-				write_file(&(vars->here_doc_fd), ".here_doc", \
+				// .here_doc 이라는 파일이름을 고정적으로 하지 않고 이미 파일이 존재한다면 다른 파일로 변경해야함
+				// make_temp_here_doc()
+				char	*temp_dir = NULL;
+				char	*temp_number = NULL;
+				int		number = 0;
+				while(1)
+				{
+					temp_number = ft_itoa(number);
+					temp_dir = path_join("/tmp",temp_number);
+					free(temp_number);
+					if (access(temp_dir, F_OK) != 0)
+					{
+						status->temp_here_doc = temp_dir;
+						break ;
+					}
+					free(temp_dir);
+					number++;
+				}
+				write_file(&(status->here_doc_fd), status->temp_here_doc, \
 					O_WRONLY | O_CREAT | O_TRUNC);
 				//fprintf(stderr, "<< [%s]\n", parser_node->token);
-				write_here_doc(vars, parser_node->token);
-				read_file(&((cmd + index)->redirection_in), ".here_doc", O_RDONLY);
+				write_here_doc(status->here_doc_fd, parser_node->token);
+				read_file(&((cmd + index)->redirection_in), status->temp_here_doc, O_RDONLY);
 			}
 			else
 			{
@@ -245,9 +257,16 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 		}
 		count++;
 	}
-	status->exit_status = main_return(vars, cmd);
-	check_fd("main");
 
+	// main return
+	wait_processes(vars, cmd);
+	// if (vars->is_here_doc == 1)
+	// 	unlink(".here_doc");
+	if (status->is_here_doc == 1)
+		unlink(status->temp_here_doc);
+	free_strs(vars->path, EXIT_SUCCESS);
+	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
+	check_fd("main");
 
 	return (status->exit_status);
 	//return (0);

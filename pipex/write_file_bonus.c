@@ -6,13 +6,13 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:53 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/26 17:10:10 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 17:20:08 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser.h"
 
-void	write_here_doc(t_vars *vars, char *limiter)
+void	write_here_doc(int here_doc_fd, char *limiter)
 {
 	char	*input;
 	int		meet_limiter;
@@ -26,7 +26,7 @@ void	write_here_doc(t_vars *vars, char *limiter)
 		if (input == NULL)
 		{
 			limiter = 0;
-			close(vars->here_doc_fd);
+			close(here_doc_fd);
 			return ;
 		}
 		// //fprintf(stderr, "heredoc : [%s]\n", input);
@@ -35,11 +35,11 @@ void	write_here_doc(t_vars *vars, char *limiter)
 			&& ft_strlen(input) == ft_strlen(limiter) + 1)
 		{
 			meet_limiter = 0;
-			close(vars->here_doc_fd);
+			close(here_doc_fd);
 		}
 		else
 		{
-			write(vars->here_doc_fd, input, ft_strlen(input));
+			write(here_doc_fd, input, ft_strlen(input));
 			meet_limiter = 1;
 		}
 		ft_memset(input, 0, ft_strlen(input));
