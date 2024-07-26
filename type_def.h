@@ -13,7 +13,7 @@
 # define SIGQUIT_EXIT_CODE 131
 
 # include <unistd.h>
-
+# include <sys/syslimits.h>
 typedef enum
 {
 	DEFAULT,
@@ -110,6 +110,7 @@ typedef	struct	s_status
 	int		is_here_doc;
 	int		here_doc_fd;
 	char	*temp_here_doc;
+	char	pwd[PATH_MAX + 1];
 }	t_status;
 
 # endif

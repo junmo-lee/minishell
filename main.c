@@ -69,6 +69,10 @@ int	main(int argc, char **argv, char **envp)
 	// main의 지역변수로 vars 관리
 	status.one_line = &vars;
 
+	//getcwd 로 현재 위치 pwd 에 저장
+	if (getcwd(status.pwd, PATH_MAX) == NULL)
+		exit(EXIT_FAILURE);
+	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
 	// atexit(leaks_check);
 	head = NULL;
 	str = NULL;

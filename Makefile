@@ -30,7 +30,10 @@ SRCS_PIPE	= \
 SRCS_GNL	= \
 	gnl/get_next_line.c gnl/get_next_line_utils.c
 
-OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o)
+SRCS_BUITIN	= \
+	parse_dir_path.c
+
+OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o)
 HEADER	= parser.h
 
 ifdef DEBUG_FLAG

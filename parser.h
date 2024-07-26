@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/26 16:01:21 by junmlee          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -74,5 +62,7 @@ size_t			ft_strlcat(char *dst, const char *src, size_t size);
 
 // check_fd.c : fd 확인용
 int check_fd(char *str);
+
+void	update_pwd(char *pwd, const char *str);
 
 #endif
