@@ -9,7 +9,8 @@
 # define REDIRECTION_ERROR 3
 # define PIPE_ERROR 4
 
-# define STDIN_FILENO 0
+# define SIGINT_EXIT_CODE 130
+# define SIGQUIT_EXIT_CODE 131
 
 # include <unistd.h>
 
@@ -72,10 +73,6 @@ typedef struct s_parsed_tree
 	int						arg_len;
 }	t_parsed_tree;
 
-typedef	struct	s_status
-{
-	int	exit_status;
-}	t_status;
 
 // pipex type 추가
 typedef struct s_cmd
@@ -99,15 +96,20 @@ typedef struct s_vars
 	char			**argv;
 	char			**envp;
 	char			**path;
-	int				file1_read_fd;
-	int				file2_write_fd;
 	int				here_doc_fd;
 	int				pipe_fd[2];
 	int				prev_read;
 	int				next_write;
 	int				cmd_len;
 	int				is_here_doc;
-	char			*pwd;
 }	t_vars;
+
+typedef	struct	s_status
+{
+	int		exit_status;
+	t_vars	*one_line;
+	int		is_here_doc;
+	int		here_doc_fd;
+}	t_status;
 
 # endif

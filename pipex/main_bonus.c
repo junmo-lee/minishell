@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/25 16:43:41 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 16:22:17 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,45 +62,17 @@ int	main_return(t_vars *vars, t_cmd *cmd)
 	return (get_exit_status((cmd + (vars->cmd_len - 1))->status));
 }
 
-void	bonus_get_fds(t_vars *vars)
-{
-	if (ft_strncmp(vars->argv[1], "here_doc", ft_strlen(vars->argv[1])) == 0 \
-		&& ft_strlen(vars->argv[1]) == ft_strlen("here_doc"))
-	{
-		vars->is_here_doc = 1;
-		unlink(".here_doc");
-		write_file(&(vars->here_doc_fd), ".here_doc", \
-			O_WRONLY | O_CREAT | O_TRUNC);
-		write_here_doc(vars, vars->argv[2]);
-		read_file(&(vars->file1_read_fd), ".here_doc", O_RDONLY);
-		write_file(&(vars->file2_write_fd), vars->argv[vars->argc - 1], \
-			O_WRONLY | O_CREAT | O_APPEND);
-	}
-	else
-	{
-		vars->is_here_doc = 0;
-		read_file(&(vars->file1_read_fd), vars->argv[1], O_RDONLY);
-		write_file(&(vars->file2_write_fd), vars->argv[vars->argc - 1], \
-			O_WRONLY | O_CREAT | O_TRUNC);
-	}
-}
-
-int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
+int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 {
 	t_cmd 			cmd[1024]; // 나중에 연결리스트 형태로 변경?
 	t_parsed_tree	*current_node;
 	t_parser_list	*parser_node;
 	int				index;
 	int				arg_index;
+	t_vars			*vars;
 
-
-	check_fd("main start");
-	// int				save_stdin = dup(STDIN_FILENO);
-	// int				save_stdout = dup(STDOUT_FILENO);
+	vars = status->one_line;;
 	// vars : main에서 argc, argv, envp, path 를 받아옴
-
-	// 리다이엑션은 나중에 고려
-	// bonus_get_fds(&vars);
 
 	vars->cmd_len = tree->cmd_len;
 	// cmd 로 바꾸는 과정(간단하게)
@@ -118,7 +90,7 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 	{
 		(cmd + index)->redirection_in = -1;
 		(cmd + index)->redirection_out = -1;
-		// fprintf(stderr, "arg_len : %d\n", current_node->arg_len);
+		// //fprintf(stderr, "arg_len : %d\n", current_node->arg_len);
 		(cmd + index)->args = malloc(sizeof(char *) * (current_node->arg_len + 1));
 		parser_node = current_node->cmd_list_head;
 		arg_index = 0;
@@ -136,7 +108,7 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 					if ((cmd + index)->redirection_in != -1)
 						close((cmd + index)->redirection_in);
 					read_file(&((cmd + index)->redirection_in),parser_node->token, O_RDONLY);
-					fprintf(stderr, "< [%s]\n", parser_node->token);
+					//fprintf(stderr, "< [%s]\n", parser_node->token);
 				}
 				else if (parser_node->token[0] == '>')
 				{
@@ -146,13 +118,13 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 					{
 						parser_node = parser_node->next;
 						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_APPEND);
-						fprintf(stderr, "> [%s]\n", parser_node->token);
+						//fprintf(stderr, "> [%s]\n", parser_node->token);
 					}
 					else
 					{
 						parser_node = parser_node->next;
 						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_TRUNC);
-						fprintf(stderr, ">> [%s]\n", parser_node->token);
+						//fprintf(stderr, ">> [%s]\n", parser_node->token);
 					}
 				}
 			}
@@ -162,14 +134,14 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 				parser_node = parser_node->next;
 				write_file(&(vars->here_doc_fd), ".here_doc", \
 					O_WRONLY | O_CREAT | O_TRUNC);
-				fprintf(stderr, "<< [%s]\n", parser_node->token);
+				//fprintf(stderr, "<< [%s]\n", parser_node->token);
 				write_here_doc(vars, parser_node->token);
 				read_file(&((cmd + index)->redirection_in), ".here_doc", O_RDONLY);
 			}
 			else
 			{
 				(cmd + index)->args[arg_index] = parser_node->token;
-				// fprintf(stderr, "arg %d : [%s]\n", arg_index, (cmd + index)->args[arg_index]);
+				// //fprintf(stderr, "arg %d : [%s]\n", arg_index, (cmd + index)->args[arg_index]);
 				arg_index++;
 			}
 			parser_node = parser_node->next;
@@ -199,11 +171,10 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 		index++;
 	}
 
-	check_fd("end cmd parsing");
 	int		count;
 	pid_t	fork_ret;
 
-	// 리다이엑션이 들어오면 STDIN_FILENO 이 아니라 file1_read_fd로
+	// 리다이엑션이 들어오면 STDIN_FILENO 이 아니라 해당 파일 fd로
 	// 위의 t_parser_list -> cmd 로 바꾸는 과정에서 prev_read를 바꾸어줌
 
 // if ((cmd + count)->redirection == 1)
@@ -219,7 +190,7 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 		*/
 		(cmd + count)->envp = vars->envp;
 		//parse_name_args(cmd, cmd_argv);
-		fprintf(stderr, "cmd%d : %d %d\n",count, (cmd + count)->redirection_in, (cmd + count)->redirection_out);
+		// //fprintf(stderr, "cmd%d : %d %d\n",count, (cmd + count)->redirection_in, (cmd + count)->redirection_out);
 
 		// 파이프는 마지막을 제외하고 열려있어야함
 		if (count != vars->cmd_len - 1)
@@ -245,7 +216,6 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 			else
 			{
 				vars->next_write = dup(STDOUT_FILENO);
-				//vars->next_write = dup(vars->file2_write_fd);
 			}
 		}
 		
@@ -261,7 +231,7 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 		}
 		else
 		{
-			check_fd("parant");
+			// check_fd("parant");
 			(cmd + count)->pid = fork_ret;
 			close(vars->prev_read);
 			close(vars->next_write);
@@ -276,12 +246,9 @@ int	run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree)
 		count++;
 	}
 	status->exit_status = main_return(vars, cmd);
+	check_fd("main");
 
 
-	// dup2(save_stdin, STDIN_FILENO);
-	// dup2(save_stdout, STDOUT_FILENO);
-	// close(save_stdin);
-	// close(save_stdout);
 	return (status->exit_status);
 	//return (0);
 }

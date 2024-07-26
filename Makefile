@@ -4,8 +4,8 @@ NAME 	= .parse_relink
 PARSE 	= parse
 AR 		= ar
 
-LIBFT 	= ./libft/libft.a
-LIBFT_DIR = ./libft/
+LIBFT 	= libft/libft.a
+LIBFT_DIR = libft/
 
 LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
@@ -27,7 +27,10 @@ SRCS_PIPE	= \
 	pipex/utils_bonus.c pipex/pipex_init_bonus.c \
 	pipex/path_join_bonus.c pipex/pipex_split_bonus.c 
 
-OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o)
+SRCS_GNL	= \
+	gnl/get_next_line.c gnl/get_next_line_utils.c
+
+OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o)
 HEADER	= parser.h
 
 ifdef DEBUG_FLAG

@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:43 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/22 21:03:48 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:26:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,4 @@ void	init(t_vars *vars, int argc, char *argv[], char *envp[])
 	vars->envp = envp;
 	if (import_path(vars) == 1)
 		exit(EXIT_FAILURE);
-}
-
-void	cmd_init(t_vars *vars, t_cmd *cmd, int count, char *cmd_argv)
-{
-	cmd->envp = vars->envp;
-	cmd->cmd_argv = ft_strdup(cmd_argv);
-	parse_name_args(cmd, cmd_argv);
-	if (count != vars->cmd_len - 1)
-	{
-		if (pipe(vars->pipe_fd) == -1)
-			exit(EXIT_FAILURE);
-		vars->next_write = dup(vars->pipe_fd[1]);
-		close(vars->pipe_fd[1]);
-	}
-	else
-	{
-		vars->next_write = dup(vars->file2_write_fd);
-		close(vars->file2_write_fd);
-	}
 }

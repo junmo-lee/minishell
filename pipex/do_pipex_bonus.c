@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/25 16:17:27 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:53:47 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	child(t_vars *vars, t_cmd *cmd)
 {
 	int	dup2_ret;
 
-	check_fd("child start");
+	// check_fd("child start");
 	if (cmd->redirection_in != -1)
 	{
 		dup2(cmd->redirection_in, STDIN_FILENO);
@@ -47,26 +47,15 @@ void	child(t_vars *vars, t_cmd *cmd)
 	if (dup2_ret != STDOUT_FILENO)
 		close(vars->next_write);
 
-	check_fd("cmd execve");
+	// check_fd("cmd execve");
 	check_cmd_access(vars, cmd);
-	// fprintf(stderr, "[%s]\n", cmd->cmd_path);
+	// //fprintf(stderr, "[%s]\n", cmd->cmd_path);
 	// if(cmd->args != NULL)
 	// 	for(int i=0;cmd->args[i]!=NULL;i++)
-	// 		fprintf(stderr, "[%s]\n", cmd->args[i]);
+	// 		//fprintf(stderr, "[%s]\n", cmd->args[i]);
 	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
 		exit(EXIT_FAILURE);
 	exit(EXIT_FAILURE);
-}
-
-void	close_fd_main(t_vars *vars, int count)
-{
-	close(vars->prev_read);
-	close(vars->next_write);
-	if (count != vars->cmd_len - 1)
-	{
-		vars->prev_read = dup(vars->pipe_fd[0]);
-		close(vars->pipe_fd[0]);
-	}
 }
 
 void	check_cmd_access(t_vars *vars, t_cmd *cmd)
@@ -97,29 +86,3 @@ void	check_cmd_access(t_vars *vars, t_cmd *cmd)
 	else
 		write_stderr_exit("Command not found: ", cmd->cmd_name, 127);
 }
-
-// void	do_pipex_bonus(t_vars *vars, t_cmd *cmd)
-// {
-// 	int		count;
-// 	pid_t	fork_ret;
-
-// 	vars->prev_read = dup(vars->file1_read_fd);
-// 	close(vars->file1_read_fd);
-// 	count = 0;
-// 	while (count < vars->cmd_len)
-// 	{
-// 		cmd_init(vars, (cmd + count), count, \
-// 			vars->argv[count + 2 + vars->is_here_doc]);
-// 		fork_ret = fork();
-// 		if (fork_ret == -1)
-// 			exit(EXIT_FAILURE);
-// 		else if (fork_ret == 0)
-// 			child(vars, (cmd + count));
-// 		else
-// 		{
-// 			(cmd + count)->pid = fork_ret;
-// 			close_fd_main(vars, count);
-// 		}
-// 		count++;
-// 	}
-// }

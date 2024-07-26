@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/25 17:15:50 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:22:50 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	do_pipex_bonus(t_vars *vars, t_cmd *cmd);
 void	check_cmd_access(t_vars *vars, t_cmd *cmd);
 
 void	child(t_vars *vars, t_cmd *cmd);
-void	close_fd_main(t_vars *vars, int count);
-
 int		write_stderr(char *error_msg, char *name);
 void	write_stderr_exit(char *error_msg, char *name, int errorcode);
 char	**pipex_split(char *str, char c);
@@ -46,6 +44,6 @@ void	free_cmds(t_cmd *cmd);
 
 void	wait_processes(t_vars *vars, t_cmd *cmd);
 int		main_return(t_vars *vars, t_cmd *cmd);
-int		run_cmd_tree(t_status *status, t_vars *vars, t_parsed_tree *tree);
+int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
 
 #endif
