@@ -15,7 +15,7 @@ char	*slice_string(int start_index, int end_index, char *str)
 }
 
 
-char	*get_envp_value(char *str, int *index)
+char	*get_envp_value(char *str, int *index, t_envp_list *envp_list)
 {
 	char	*envp_key;
 	int		start_index_of_key;
@@ -31,7 +31,7 @@ char	*get_envp_value(char *str, int *index)
 		*index += 1;
 	last_index_of_key = *index - 1;
 	envp_key = slice_string(start_index_of_key, last_index_of_key, str);
-	envp_value = getenv(envp_key);
+	envp_value = ft_getenv(envp_key, envp_list);
 	if (envp_value == NULL)
 		envp_value = ft_strdup("");
 	else

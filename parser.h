@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:04:54 by choolee           #+#    #+#             */
-/*   Updated: 2024/07/26 16:01:21 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/26 20:40:37 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <string.h> //strlen
 
 // parser.c
-t_parsed_tree	*parser(char *str, t_status *status);
+t_parsed_tree	*parser(char *str, t_status *status, t_envp_list *envp_list);
 
 // token_list_funcs.c
 t_token_list	*create_token_node(t_info *info_s, char *str);
@@ -39,6 +39,17 @@ t_parser_list	*create_parse_node(char *str, t_token_list *token_s);
 void			destroy_parse_node(t_parser_list *node);
 void			clear_parse_list(t_parser_list **head);
 void			append_parse_node(t_parser_list **head, t_parser_list *node);
+
+// envp_list_funcs.c
+t_envp_list		*create_envp_node(char *key_str, char *value_str);
+void			clear_envp_list(t_envp_list **head);
+void			remove_node_by_key(t_envp_list **head, char *key_str);
+void			append_envp_node(t_envp_list **head, t_envp_list *node);
+int				insert_envp_node(t_envp_list **head, char *key_str, char *value_str);
+t_envp_list		*get_envp(char **envp);
+char			*get_key(char *str);
+char			*get_value(char *str);
+char			*ft_getenv(char *key_str, t_envp_list *envp_list);
 
 // parsed_tree_funcs.c
 t_parsed_tree	*create_parsed_tree_node(int cmd_count, t_parser_list *cmd_list_head);
@@ -52,11 +63,11 @@ t_token_list	*tokenize_string(t_info *info_s, char *str);
 void			find_last_index_of_token(t_info *info_s, char *str);
 
 // expand_env_vars_1.c
-void			expand_env_vars_in_token_list(t_token_list **token_s, t_status *status);
+void			expand_env_vars_in_token_list(t_token_list **token_s, t_status *status, t_envp_list *envp_list);
 
 // expand_env_vars_2.c
 char			*slice_string(int start_index, int end_index, char *str);
-char			*get_envp_value(char *str, int *index);
+char			*get_envp_value(char *str, int *index, t_envp_list *envp_list);
 char			*concatenate_strings(char *word1, char *word2);
 void			handle_dilimiter_with_env(t_token_list **token_list);
 
@@ -71,6 +82,10 @@ size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s1);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
+
+// builtins
+int				echo(t_parser_list *cmd_list);
+int				*export(t_parser_list *cmd_head, t_envp_list **envp_list);
 
 // check_fd.c : fd 확인용
 int check_fd(char *str);

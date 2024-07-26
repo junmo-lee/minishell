@@ -73,6 +73,12 @@ typedef struct s_parsed_tree
 	int						arg_len;
 }	t_parsed_tree;
 
+typedef struct s_envp_list
+{
+	char 				*key;
+	char 				*value;
+	struct s_envp_list	*next;
+}	t_envp_list;
 
 // pipex type 추가
 typedef struct s_cmd
