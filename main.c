@@ -65,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	t_parsed_tree	*head;
 	t_vars			vars;
 	t_status		status;
+	t_envp_list		*envp_list;
 
 	// main의 지역변수로 vars 관리
 	status.one_line = &vars;
@@ -73,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	if (getcwd(status.pwd, PATH_MAX) == NULL)
 		exit(EXIT_FAILURE);
 	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
+	envp_list = get_envp(envp);
 	// atexit(leaks_check);
 	head = NULL;
 	str = NULL;
@@ -94,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*str != '\0')
 		{
 			add_history(str);
-			head = parser(str, &status);
+			head = parser(str, &status, envp_list);
 			// printf_parsed_list(parsed_list);
 			// clear_parse_list(&parsed_list);
 			if (head->error == NO_ERROR)
@@ -107,6 +109,7 @@ int	main(int argc, char **argv, char **envp)
 				// 실제 line 실행부
 				run_cmd_tree(&status, head);
 
+				export(head->cmd_list_head, &envp_list);
 				// stdin
 			}
 			else

@@ -19,7 +19,8 @@ SRCS_PARSE	= \
 	token_list_funcs.c tokenize_string_1.c tokenize_string_2.c \
 	expand_env_vars_1.c expand_env_vars_2.c \
 	combine_expanded_tokens.c \
-	check_fd.c 
+	check_fd.c envp_list_funcs.c \
+	builtins/echo.c builtins/export.c #built_in
 
 SRCS_PIPE	= \
 	pipex/do_pipex_bonus.c pipex/main_bonus.c \
