@@ -17,7 +17,7 @@ void	signal_handler(int signo)
 		// 현재 입력 줄이 새로운 내용으로 교체되지만, 이전의 편집 히스토리는 유지됩니다. 따라서 사용자는 여전히 undo 기능을 사용할 수 있습니다.
 		rl_replace_line("", 0);
 		rl_redisplay();
-		// status->exit_status = SIGINT_EXIT_CODE;
+		g_exit_code = SIGINT_EXIT_CODE;
 		// 전역변수에서 시그널을 받아와야 할듯
 	}
 	if (signo == SIGQUIT)
@@ -89,16 +89,18 @@ int	main(int argc, char **argv, char **envp)
 	tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
 	term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 	
 	while (1)
 	{
+		signal(SIGINT, signal_handler);
+		signal(SIGQUIT, SIG_IGN);
+		//signal(SIGQUIT, signal_handler);
 		str = readline("prompt : ");
 		if (str == NULL)
 		{
 			ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
 			ft_putstr_fd("\033[9C", STDOUT_FILENO);
+			// readline 에 들어가는 인수가 바뀌면 9가 바뀌어야 함
 			write(STDOUT_FILENO, "exit\n", sizeof("exit\n"));
 			break ;
 		}

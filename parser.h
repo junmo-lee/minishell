@@ -14,6 +14,8 @@
 # include <termios.h> // tcgetattr()
 # include <string.h> //strlen
 
+int	g_exit_code;
+
 // parser.c
 t_parsed_tree	*parser(char *str, t_status *status, t_envp_list *envp_list);
 
