@@ -78,6 +78,8 @@ t_token_list	*tokenize_string(t_info *info_s, char *str)
 	{
 		info_s->connect_flag = 0;
 		find_first_index_of_token(info_s, str);
+		if (info_s->start_index >= str_len) // 스트링에 공백으로 끝나서 비어 있는 노드가 나오는 것 방지
+			break ;
 		identify_meta_char(info_s, str);
 		if (info_s->type_code == STRING)
 			find_last_index_of_token(info_s, str);

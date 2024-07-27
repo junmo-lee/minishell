@@ -93,8 +93,21 @@ int	insert_envp_node(t_envp_list **head, char *key_str, char *value_str)
 	current_node = *(head);
 	while (current_node != NULL)
 	{
-		if (ft_strncmp(current_node->key, key_str, ft_strlen(current_node->key) + 1) == 0)
-			return (1);
+		if (ft_strncmp(current_node->key, key_str, ft_strlen(current_node->key) + 1) == 0) // 같은게 있으면 그 키값의 밸류 값을 지우고 새롭게 등록 시킴
+		{
+			if (value_str == NULL && current_node->value != NULL ) //현제 env노드에 밸류값이 널이 아니여야 하는 조건을 붙힐 필요가 있을까?
+			{
+				free (key_str);
+				return (1);
+			}
+			else
+			{
+				free (key_str);
+				free(current_node->value);
+				current_node->value = value_str;
+				return (1);
+			}
+		}
 		current_node = current_node->next;
 	}
 	new_node = create_envp_node(key_str, value_str);
