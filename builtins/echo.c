@@ -36,11 +36,11 @@ int	echo(t_parser_list *cmd_list)
 			continue ;
 		}
 		str_len = strlen(current_node->token);
-		write (1, current_node->token, str_len); //에러 처리 나중에
+		write (STDOUT_FILENO, current_node->token, str_len); //에러 처리 나중에
 		if (current_node->next == NULL && option_flag == 0)
-			write (1, "\n", 1);
+			write (STDOUT_FILENO, "\n", 1);
 		if (current_node->next != NULL)
-			write (1, " ", 1);
+			write (STDOUT_FILENO, " ", 1);
 		current_node = current_node->next;
 	}
 	return (0);

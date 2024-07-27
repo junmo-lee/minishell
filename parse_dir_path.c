@@ -20,6 +20,7 @@ void	update_pwd(char *pwd, const char *str)
 	int		depth;
 	char	**str_part;
 	int		len;
+	int		i;
 
 	if (pwd == NULL || str == NULL)
 		return ;
@@ -34,30 +35,42 @@ void	update_pwd(char *pwd, const char *str)
 	temp_list = malloc(sizeof(char *) * (pwd_part_len + strs_len(str_part) + 1));
 	if (temp_list == NULL)
 		exit(EXIT_FAILURE);
-	
-	int	i = 0;
-	while (pwd_part[i] != NULL)
+
+	if (str[0] != '/')
 	{
-		temp_list[i] = pwd_part[i];
-		i++;
+		i = 0;
+		// 상대 경로일때 현재 pwd 를 앞에 넣어줌
+		while (pwd_part[i] != NULL)
+		{
+			temp_list[i] = pwd_part[i];
+			// fprintf(stderr, "old_pwd : [%s]\n", temp_list[i]);
+			i++;
+		}
+		depth = i;
+	}
+	else
+	{
+		depth = 0;
 	}
 
-	depth = pwd_part_len;
-	i = 0;
-	while (str_part[i] != NULL)
+	i = -1;
+	while (str_part[++i] != NULL)
 	{
-		if (ft_strncmp(str_part[i], "..", ft_strlen(str_part[i])) == 0)
+		if (str_part[i][0] == '\0' || ft_strncmp(str_part[i], ".", 2) == 0)
+			continue;
+		else if (ft_strncmp(str_part[i], "..", 3) == 0)
 		{
 			depth--;
 		}
-		else if (ft_strncmp(str_part[i], ".", ft_strlen(str_part[i])) != 0)
+		else
 		{
 			temp_list[depth] = str_part[i];
 			depth++;
 		}
-		i++;
 	}
-	temp_list[depth] = NULL;
+
+	if (depth < 0)
+		exit(EXIT_FAILURE);
 
 	ft_memset(pwd, 0, ft_strlen(pwd));
 	i = 0;
@@ -66,7 +79,7 @@ void	update_pwd(char *pwd, const char *str)
 		len = ft_strlen(pwd);
 		pwd[len] = '/';
 		pwd[len + 1] = '\0';
-		ft_strlcat(pwd, temp_list[i], ft_strlen(pwd) + ft_strlen(temp_list[i]));
+		ft_strlcat(pwd, temp_list[i], ft_strlen(pwd) + ft_strlen(temp_list[i]) + 1);
 		//ft_strlcat 으로 1024 버퍼크기 넘어간거 확인?
 		i++;
 	}

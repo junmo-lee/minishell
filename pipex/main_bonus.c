@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/26 17:42:52 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/27 16:57:37 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	int				arg_index;
 	t_vars			*vars;
 
-	vars = status->one_line;;
+	// 메인에서의 지역변수를 가져와 쓰는 형태
 	// vars : main에서 argc, argv, envp, path 를 받아옴
-
+	vars = status->one_line;
+	vars->pwd = status->pwd;
 	vars->cmd_len = tree->cmd_len;
 	// cmd 로 바꾸는 과정(간단하게)
 	// 첫번째 string을 프로그램명이라고 가정
@@ -99,7 +100,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 					if ((cmd + index)->redirection_in != -1)
 						close((cmd + index)->redirection_in);
 					read_file(&((cmd + index)->redirection_in),parser_node->token, O_RDONLY);
-					//fprintf(stderr, "< [%s]\n", parser_node->token);
+					fprintf(stderr, "< [%s]\n", parser_node->token);
 				}
 				else if (parser_node->token[0] == '>')
 				{
@@ -109,13 +110,13 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 					{
 						parser_node = parser_node->next;
 						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_APPEND);
-						//fprintf(stderr, "> [%s]\n", parser_node->token);
+						fprintf(stderr, ">> [%s]\n", parser_node->token);
 					}
 					else
 					{
 						parser_node = parser_node->next;
 						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_TRUNC);
-						//fprintf(stderr, ">> [%s]\n", parser_node->token);
+						fprintf(stderr, "> [%s]\n", parser_node->token);
 					}
 				}
 			}
@@ -146,39 +147,20 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 				}
 				write_file(&(status->here_doc_fd), status->temp_here_doc, \
 					O_WRONLY | O_CREAT | O_TRUNC);
-				//fprintf(stderr, "<< [%s]\n", parser_node->token);
+				fprintf(stderr, "<< [%s]\n", parser_node->token);
 				write_here_doc(status->here_doc_fd, parser_node->token);
 				read_file(&((cmd + index)->redirection_in), status->temp_here_doc, O_RDONLY);
 			}
 			else
 			{
 				(cmd + index)->args[arg_index] = parser_node->token;
-				// //fprintf(stderr, "arg %d : [%s]\n", arg_index, (cmd + index)->args[arg_index]);
+				fprintf(stderr, "arg %d : [%s]\n", arg_index, (cmd + index)->args[arg_index]);
 				arg_index++;
 			}
 			parser_node = parser_node->next;
 		}
+		(cmd + index)->cmd_name = (cmd + index)->args[0];
 		(cmd + index)->args[arg_index] = NULL;
-		current_node = current_node->next;
-		index++;
-	}
-
-	// 일단 argv 로 받다가 가장 앞의 인자를 name이라고 간주한뒤 빌트인 -> local -> path 로 찾아나감
-	current_node = tree;
-	index = 0;
-	while (current_node != NULL)
-	{
-		parser_node = current_node->cmd_list_head;
-		arg_index = 0;
-		while (parser_node != NULL)
-		{
-			if (parser_node->type == STRING)
-			{
-				(cmd + index)->cmd_name = parser_node->token;
-				break;
-			}
-			parser_node = parser_node->next;
-		}
 		current_node = current_node->next;
 		index++;
 	}
@@ -186,13 +168,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	int		count;
 	pid_t	fork_ret;
 
-	// 리다이엑션이 들어오면 STDIN_FILENO 이 아니라 해당 파일 fd로
-	// 위의 t_parser_list -> cmd 로 바꾸는 과정에서 prev_read를 바꾸어줌
-
-// if ((cmd + count)->redirection == 1)
-	// 	vars->prev_read = open(file_path, OPTION)
-	// else
-		vars->prev_read = dup(STDIN_FILENO);
+	vars->prev_read = dup(STDIN_FILENO);
 	count = 0;
 	while (count < vars->cmd_len)
 	{
@@ -201,7 +177,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 			vars->argv[count + 2 + vars->is_here_doc]);
 		*/
 		(cmd + count)->envp = vars->envp;
-		//parse_name_args(cmd, cmd_argv);
 		// //fprintf(stderr, "cmd%d : %d %d\n",count, (cmd + count)->redirection_in, (cmd + count)->redirection_out);
 
 		// 파이프는 마지막을 제외하고 열려있어야함
@@ -258,15 +233,20 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 		count++;
 	}
 
-	// main return
 	wait_processes(vars, cmd);
-	// if (vars->is_here_doc == 1)
-	// 	unlink(".here_doc");
+
+	// solo built_in 부분 실행, 파이프가 모두 실행되고 나서
+	// 충헌님이 만든 프로그램이 여기서 실행될듯
+	// STDERR 출력은 pipe 단계에서 처리, 실행만 되도록
+	if (vars->cmd_len == 1)
+	{
+		
+	}
 	if (status->is_here_doc == 1)
 		unlink(status->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
-	check_fd("main");
+	//check_fd("main");
 
 	return (status->exit_status);
 	//return (0);

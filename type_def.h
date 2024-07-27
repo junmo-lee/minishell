@@ -9,6 +9,9 @@
 # define REDIRECTION_ERROR 3
 # define PIPE_ERROR 4
 
+# define STATUS_SUCCESS 0x0
+# define STATUS_FAILURE 0x0000100
+
 # define SIGINT_EXIT_CODE 130
 # define SIGQUIT_EXIT_CODE 131
 
@@ -88,12 +91,12 @@ typedef struct s_cmd
 	char	*cmd_name;
 	char	**args;
 	char	**envp;
-	char	*cmd_argv;
 	int		redirection_in;
 	int		redirection_out;
-	int		cant_execute;
+	int		is_exist;
 	int		status;
 	int		is_end;
+	int		is_built_in;
 }	t_cmd;
 
 typedef struct s_vars
@@ -107,6 +110,7 @@ typedef struct s_vars
 	int				prev_read;
 	int				next_write;
 	int				cmd_len;
+	char			*pwd;
 }	t_vars;
 
 typedef	struct	s_status

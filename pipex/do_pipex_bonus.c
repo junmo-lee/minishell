@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/26 15:53:47 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/27 16:55:47 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,41 +48,20 @@ void	child(t_vars *vars, t_cmd *cmd)
 		close(vars->next_write);
 
 	// check_fd("cmd execve");
-	check_cmd_access(vars, cmd);
+	pipe_built_in(vars, cmd);
+		// 빌트인이 아닐때 local -> path 순서로
+	if (check_cmd(vars, cmd) == 0)
+	{
+		if (cmd->is_exist == 1)
+			write_stderr_exit("Permission denied: ", cmd->cmd_name, 126);
+		else
+			write_stderr_exit("Command not found: ", cmd->cmd_name, 127);
+	}
+	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
+		exit(EXIT_FAILURE);
 	// //fprintf(stderr, "[%s]\n", cmd->cmd_path);
 	// if(cmd->args != NULL)
 	// 	for(int i=0;cmd->args[i]!=NULL;i++)
 	// 		//fprintf(stderr, "[%s]\n", cmd->args[i]);
-	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
-		exit(EXIT_FAILURE);
-	exit(EXIT_FAILURE);
-}
-
-void	check_cmd_access(t_vars *vars, t_cmd *cmd)
-{
-	char	*temp;
-	int		i;
-
-	i = 0;
-	while (vars->path[i] != NULL)
-	{
-		temp = path_join(vars->path[i], cmd->cmd_name);
-		if (temp == NULL)
-			exit(EXIT_FAILURE);
-		if (access(temp, F_OK) == 0)
-		{
-			cmd->cant_execute = 1;
-			if (access(temp, X_OK) == 0)
-			{
-				cmd->cmd_path = temp;
-				return ;
-			}
-		}
-		free(temp);
-		i++;
-	}
-	if (cmd->cant_execute)
-		write_stderr_exit("Permission denied: ", cmd->cmd_name, 126);
-	else
-		write_stderr_exit("Command not found: ", cmd->cmd_name, 127);
+	exit(EXIT_SUCCESS);
 }

@@ -6,25 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:05:02 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/23 20:17:14 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/27 16:17:21 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser.h"
-
-int	parse_name_args(t_cmd *cmd, char *cmd_argv)
-{
-	char	**temp;
-
-	temp = pipex_split(cmd_argv, ' ');
-	if (temp == NULL)
-		exit(EXIT_FAILURE);
-	if (*temp == NULL)
-		write_stderr_exit("Command not found: ", NULL, 127);
-	cmd->cmd_name = ft_strdup(*temp);
-	cmd->args = temp;
-	return (0);
-}
 
 char	**pipex_split(char *str, char c)
 {

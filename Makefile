@@ -19,10 +19,10 @@ SRCS_PARSE	= \
 	token_list_funcs.c tokenize_string_1.c tokenize_string_2.c \
 	expand_env_vars_1.c expand_env_vars_2.c \
 	combine_expanded_tokens.c \
-	check_fd.c envp_list_funcs.c \
-	builtins/echo.c builtins/export.c #built_in
+	check_fd.c envp_list_funcs.c
 
 SRCS_PIPE	= \
+	pipex/find_cmd.c \
 	pipex/do_pipex_bonus.c pipex/main_bonus.c \
 	pipex/read_file_bonus.c  pipex/write_file_bonus.c \
 	pipex/utils_bonus.c pipex/pipex_init_bonus.c \
@@ -32,7 +32,8 @@ SRCS_GNL	= \
 	gnl/get_next_line.c gnl/get_next_line_utils.c
 
 SRCS_BUITIN	= \
-	parse_dir_path.c
+	parse_dir_path.c pipex/pipe_built_in.c \
+	builtins/echo.c builtins/export.c
 
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o)
 HEADER	= parser.h

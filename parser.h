@@ -72,6 +72,7 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 
 // builtins
+int				option_check(const char *str);
 int				echo(t_parser_list *cmd_list);
 int				*export(t_parser_list *cmd_head, t_envp_list **envp_list);
 
