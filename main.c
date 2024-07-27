@@ -118,6 +118,8 @@ int	main(int argc, char **argv, char **envp)
 						export(head->cmd_list_head, &envp_list);
 					else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
 						unset(head->cmd_list_head, &envp_list);
+					else if (ft_strncmp(head->cmd_list_head->token, "env", 4) == 0)
+						env(head->cmd_list_head, &envp_list);
 				}
 			}
 			else

@@ -80,7 +80,8 @@ int				*export(t_parser_list *cmd_head, t_envp_list **envp_list);
 int				check_key_syntax(char *key_str);
 	// unset
 int				unset(t_parser_list *cmd_head, t_envp_list **envp_list);
-	
+	// env
+int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
 
 // check_fd.c : fd 확인용
 int check_fd(char *str);
