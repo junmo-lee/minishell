@@ -33,7 +33,7 @@ SRCS_GNL	= \
 
 SRCS_BUITIN	= \
 	parse_dir_path.c pipex/pipe_built_in.c \
-	builtins/echo.c builtins/export.c
+	builtins/echo.c builtins/export.c builtins/unset.c 
 
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o)
 HEADER	= parser.h

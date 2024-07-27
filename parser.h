@@ -72,9 +72,15 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 
 // builtins
+	// echo
 int				option_check(const char *str);
 int				echo(t_parser_list *cmd_list);
+	// export
 int				*export(t_parser_list *cmd_head, t_envp_list **envp_list);
+int				check_key_syntax(char *key_str);
+	// unset
+int				unset(t_parser_list *cmd_head, t_envp_list **envp_list);
+	
 
 // check_fd.c : fd 확인용
 int check_fd(char *str);

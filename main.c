@@ -108,8 +108,12 @@ int	main(int argc, char **argv, char **envp)
 
 				// 실제 line 실행부
 				run_cmd_tree(&status, head);
-
-				export(head->cmd_list_head, &envp_list);
+				if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
+					export(head->cmd_list_head, &envp_list);
+				else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
+					unset(head->cmd_list_head, &envp_list);
+				else if (ft_strncmp(head->cmd_list_head->token, "echo", 5) == 0)
+					echo(head->cmd_list_head);
 				// stdin
 			}
 			else
