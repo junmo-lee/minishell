@@ -9,7 +9,7 @@ void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		write (STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		// clear_undo가 1로 설정된 경우:
 		// 현재 입력 줄이 새로운 내용으로 교체되고, 이전의 편집 히스토리(undo 히스토리)는 삭제됩니다. 따라서 사용자는 더 이상 이전 상태로 되돌릴 수 없습니다.
@@ -91,11 +91,17 @@ int	main(int argc, char **argv, char **envp)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
+	
 	while (1)
 	{
 		str = readline("prompt : ");
-		if (!str)
-			return (0);
+		if (str == NULL)
+		{
+			ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
+			ft_putstr_fd("\033[9C", STDOUT_FILENO);
+			write(STDOUT_FILENO, "exit\n", sizeof("exit\n"));
+			break ;
+		}
 		if (*str != '\0')
 		{
 			add_history(str);
