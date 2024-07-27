@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 18:54:12 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/27 21:37:31 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 				while(1)
 				{
 					temp_number = ft_itoa(number);
-					temp_dir = path_join("/tmp",temp_number);
+					temp_dir = ft_strjoin("/tmp/minishell_heredoc",temp_number);
 					free(temp_number);
 					if (access(temp_dir, F_OK) != 0)
 					{
