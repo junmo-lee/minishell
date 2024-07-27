@@ -66,7 +66,8 @@ int	main(int argc, char **argv, char **envp)
 	t_vars			vars;
 	t_status		status;
 	t_envp_list		*envp_list;
-
+	
+	ft_memset(&status, 0, sizeof(status));
 	// main의 지역변수로 vars 관리
 	status.one_line = &vars;
 
@@ -74,6 +75,8 @@ int	main(int argc, char **argv, char **envp)
 	if (getcwd(status.pwd, PATH_MAX) == NULL)
 		exit(EXIT_FAILURE);
 	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
+
+	envp_list = status.env_list;
 	envp_list = get_envp(envp);
 	// atexit(leaks_check);
 	head = NULL;
@@ -108,13 +111,14 @@ int	main(int argc, char **argv, char **envp)
 
 				// 실제 line 실행부
 				run_cmd_tree(&status, head);
+
 				if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
 					export(head->cmd_list_head, &envp_list);
 				else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
 					unset(head->cmd_list_head, &envp_list);
 				else if (ft_strncmp(head->cmd_list_head->token, "echo", 5) == 0)
-					echo(head->cmd_list_head);
-				// stdin
+				;
+					//echo(head->cmd_list_head);
 			}
 			else
 			{

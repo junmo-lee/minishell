@@ -115,12 +115,13 @@ typedef struct s_vars
 
 typedef	struct	s_status
 {
-	int		exit_status;
-	t_vars	*one_line;
-	int		is_here_doc;
-	int		here_doc_fd;
-	char	*temp_here_doc;
-	char	pwd[PATH_MAX + 1];
+	int			exit_status;
+	t_vars		*one_line;
+	int			is_here_doc;
+	int			here_doc_fd;
+	char		*temp_here_doc;
+	char		pwd[PATH_MAX + 1];
+	t_envp_list	*env_list;
 }	t_status;
 
 # endif

@@ -20,12 +20,10 @@ int	option_check(const char *str)
 
 int	echo(t_parser_list *cmd_list)
 {
-	int				str_len;
 	int				option_flag;
 	int				print_flag;
 	t_parser_list	*current_node;
 
-	str_len = 0;
 	option_flag = 0;
 	print_flag = 0;
 	current_node = cmd_list->next;
@@ -38,8 +36,8 @@ int	echo(t_parser_list *cmd_list)
 			continue ;
 		}
 		print_flag = 1;
-		str_len = strlen(current_node->token);
-		write (STDOUT_FILENO, current_node->token, str_len); //에러 처리 나중에
+		
+		write (STDOUT_FILENO, current_node->token, ft_strlen(current_node->token)); //에러 처리 나중에
 		if (current_node->next == NULL && option_flag == 0)
 			write (STDOUT_FILENO, "\n", 1);
 		if (current_node->next != NULL)
