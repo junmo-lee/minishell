@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:57:37 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/27 18:54:12 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,10 +238,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	// solo built_in 부분 실행, 파이프가 모두 실행되고 나서
 	// 충헌님이 만든 프로그램이 여기서 실행될듯
 	// STDERR 출력은 pipe 단계에서 처리, 실행만 되도록
-	if (vars->cmd_len == 1)
-	{
-		
-	}
 	if (status->is_here_doc == 1)
 		unlink(status->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);

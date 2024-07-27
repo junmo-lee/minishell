@@ -111,14 +111,14 @@ int	main(int argc, char **argv, char **envp)
 
 				// 실제 line 실행부
 				run_cmd_tree(&status, head);
-
-				if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
-					export(head->cmd_list_head, &envp_list);
-				else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
-					unset(head->cmd_list_head, &envp_list);
-				else if (ft_strncmp(head->cmd_list_head->token, "echo", 5) == 0)
-				;
-					//echo(head->cmd_list_head);
+				// cmd 가 하나로만 왔을때 main shell 에 영향을 미침
+				if (vars.cmd_len == 1)
+				{
+					if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
+						export(head->cmd_list_head, &envp_list);
+					else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
+						unset(head->cmd_list_head, &envp_list);
+				}
 			}
 			else
 			{
