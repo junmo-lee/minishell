@@ -19,8 +19,11 @@ static void destroy_envp_list_node(t_envp_list **node)
 	current_node = *(node);
 	ft_memset(current_node->key, 0, ft_strlen(current_node->key));
 	free(current_node->key);
-	ft_memset(current_node->value, 0, ft_strlen(current_node->value));
-	free(current_node->value);
+	if (current_node->value != NULL)
+	{
+		ft_memset(current_node->value, 0, ft_strlen(current_node->value));
+		free(current_node->value);
+	}
 	free(current_node);
 }
 
