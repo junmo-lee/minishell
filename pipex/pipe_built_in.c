@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:58:54 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/27 18:42:30 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,20 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 {
 	int	option_flag;
 	int	i;
+	int	print_flag;
 
+	print_flag = 0;
 	i = 1;
 	option_flag = 0;
 	while (cmd->args[i] != NULL)
 	{
-		if (option_check(cmd->args[i]) == 1)
+		if (option_check(cmd->args[i]) == 1 && print_flag == 0)
 		{
 			option_flag = 1;
 			i++;
 			continue ;
 		}
+		print_flag = 1;
 		write (STDOUT_FILENO, cmd->args[i], ft_strlen(cmd->args[i]));
 		if (cmd->args[i + 1] == NULL && option_flag == 0)
 			write(STDOUT_FILENO, "\n", 1);
