@@ -15,11 +15,13 @@ CFLAGS 	= -Wall -Wextra -Werror
 
 SRCS_PARSE	= \
 	main.c \
-	parser.c parser_list_funcs.c parsed_tree_funcs.c \
-	token_list_funcs.c tokenize_string_1.c tokenize_string_2.c \
+	parser.c \
+	parser_list_funcs.c parsed_tree_funcs.c token_list_funcs.c envp_list_funcs.c\
+	check_syntax_funcs.c \
+	tokenize_string_1.c tokenize_string_2.c \
 	expand_env_vars_1.c expand_env_vars_2.c \
 	combine_expanded_tokens.c \
-	check_fd.c envp_list_funcs.c
+	check_fd.c
 
 SRCS_PIPE	= \
 	pipex/find_cmd.c \
