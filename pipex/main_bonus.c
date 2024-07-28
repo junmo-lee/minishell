@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 18:19:45 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 22:05:51 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	vars = status->one_line;
 	vars->pwd = status->pwd;
 	vars->cmd_len = tree->cmd_len;
+	vars->is_here_doc = 0;
 	// cmd 로 바꾸는 과정(간단하게)
 	// 첫번째 string을 프로그램명이라고 가정
 	// parsed_tree
@@ -115,7 +116,44 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 		arg_index = 0;
 		while (parser_node != NULL)
 		{
-			if (parser_node->type == REDIRECTION)
+			rl_done = 0;
+			signal(SIGINT, stdin_handler);
+			signal(SIGQUIT, stdin_handler);
+			if (parser_node->type == HERE_DOC)
+			{
+				// 이전에 here_doc 이나 리다이엑션을 받았는지 먼저 확인이 필요할거 같음
+				parser_node = parser_node->next;
+				switch (make_here_doc(vars, cmd + index, parser_node->token))
+				{
+				case SIGINT:
+					fprintf(stderr, "here_doc SIGINT\n");
+					write(STDOUT_FILENO, "\n", 1);
+					rl_on_new_line();
+					rl_replace_line("", 0);
+					rl_redisplay();
+					close_all_fd(vars, cmd);
+					unlink(vars->temp_here_doc);
+					free(vars->temp_here_doc);
+					return (SIGINT_EXIT_CODE);
+					break;
+				case SIGQUIT:
+					fprintf(stderr, "here_doc SIGQUIT\n");
+					write(STDOUT_FILENO, "\n", 1);
+					rl_on_new_line();
+					rl_replace_line("", 0);
+					rl_redisplay();
+					close_all_fd(vars, cmd);
+					unlink(vars->temp_here_doc);
+					free(vars->temp_here_doc);
+					return (SIGQUIT_EXIT_CODE);
+					break;
+				default:
+					//fprintf(stderr, "g_signal : %d\n", g_signal);
+					break;
+				}
+				//fprintf(stderr, "g_signal : %d\n", g_signal);
+			}
+			else if (parser_node->type == REDIRECTION)
 			{
 				// 기본적인 오류 
 				// ex) 리다이엑션 다음이 비어있을때 는 파싱부에서 처리
@@ -145,26 +183,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_TRUNC);
 						fprintf(stderr, "> [%s]\n", parser_node->token);
 					}
-				}
-			}
-			else if (parser_node->type == HERE_DOC)
-			{
-				// 이전에 here_doc 이나 리다이엑션을 받았는지 먼저 확인이 필요할거 같음
-				parser_node = parser_node->next;
-				switch (make_here_doc(vars, cmd + index, parser_node->token))
-				{
-				case SIGINT:
-					close_all_fd(vars, cmd);
-					free(vars->temp_here_doc);
-					return (SIGINT_EXIT_CODE);
-					break;
-				case SIGQUIT:
-					close_all_fd(vars, cmd);
-					free(vars->temp_here_doc);
-					return (SIGQUIT_EXIT_CODE);
-					break;
-				default:
-					break;
 				}
 			}
 			else
@@ -253,13 +271,14 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	}
 
 	wait_processes(vars, cmd);
-	if (vars->is_here_doc == 1)
-		unlink(vars->temp_here_doc);
-	free(vars->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");
-
+	if (vars->is_here_doc == 1)
+	{
+		unlink(vars->temp_here_doc);
+		free(vars->temp_here_doc);
+	}
 	return (status->exit_status);
 	//return (0);
 }

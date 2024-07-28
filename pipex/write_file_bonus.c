@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:53 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/26 17:20:08 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:34:18 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	write_here_doc(int here_doc_fd, char *limiter)
 	while (meet_limiter != 0)
 	{
 		if (meet_limiter++ == 1)
-			ft_putstr_fd("> ", STDOUT_FILENO);
+		ft_putstr_fd("> ", STDOUT_FILENO);
 		input = get_next_line(STDIN_FILENO);
 		if (input == NULL)
 		{

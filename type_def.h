@@ -15,6 +15,8 @@
 # define SIGINT_EXIT_CODE 130
 # define SIGQUIT_EXIT_CODE 131
 
+# define HERE_DOC_SIGINT 10
+
 # include <unistd.h>
 # include <sys/syslimits.h>
 typedef enum

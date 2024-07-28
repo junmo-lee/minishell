@@ -1,4 +1,5 @@
 #include "pipex_bonus.h"
+#include "../parser.h"
 #include <signal.h>
 // int	get_signal_code(int x)
 // {
@@ -8,6 +9,25 @@
 // 	// _WSTATUS(x)     (_W_INT(x) & 0177)
 //  	return (_WSTATUS(x) != _WSTOPPED && _WSTATUS(x) != 0);
 // }
+
+void	sig_here_doc(int signo)
+{
+	//fprintf(stderr, "sig_here_doc\n");
+	if (signo == SIGINT)
+	{
+		write(STDERR_FILENO, "\n", 1);
+	}
+}
+
+void	sig_h(int signo)
+{
+	//fprintf(stderr, "sig_h\n");
+	g_signal = HERE_DOC_SIGINT;
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	exit(signo);
+}
 
 int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 {
@@ -40,7 +60,7 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 	fork_ret = fork();
 	if (fork_ret == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, sig_h);
 		signal(SIGQUIT, SIG_IGN);
 		write_file(&(vars->fd_here_doc), vars->temp_here_doc, \
 			O_WRONLY | O_CREAT | O_TRUNC);
@@ -51,16 +71,19 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 	}
 	else
 	{
-		waitpid(fork_ret, &process_status, WUNTRACED);
+		signal(SIGINT, sig_here_doc);
+		signal(SIGQUIT, SIG_IGN);
+		waitpid(fork_ret, &process_status, 0);
+		//waitpid(fork_ret, &process_status, 0);
+		//fprintf(stderr, "wait end!\n");
+		// kill(fork_ret, SIGINT);
+		// signal(SIGINT, signal_handler);
+		// signal(SIGQUIT, stdin_handler);
 		if (WIFSIGNALED(process_status))
 		{
-			// WIFSIGNALED(status)
-			// 이 매크로가 참이라면 자식 프로세스가 비정상 종료했다는 뜻.
-			// WTERMSIG(status)
-			// WIFSIGNALED(status)매크로가 참일 경우 자식 프로세스를 종료시킨 시그널 번호를 얻는 매크로
+		// if (g_signal == HERE_DOC_SIGINT)
+		// {
 			fprintf(stderr, "heredoc process exit with signal : %d\n", WTERMSIG(process_status));
-			close(vars->fd_here_doc);
-			unlink(vars->temp_here_doc);
 			return (WTERMSIG(process_status));
 		}
 		else

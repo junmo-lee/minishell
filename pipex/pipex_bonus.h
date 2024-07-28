@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 17:57:13 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:54:03 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	write_here_doc(int here_doc_fd, char *limiter);
 int		free_strs(char *strs[], int exit_code);
 void	free_cmds(t_cmd *cmd);
 
+void	signal_handler(int signo);
+void	stdin_handler(int signo);
 void	wait_processes(t_vars *vars, t_cmd *cmd);
 int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
 
