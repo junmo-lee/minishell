@@ -78,4 +78,3 @@ t_envp_list *envp_list, t_info *s_info)
 	free(token);
 	return (s_info->expanded_token);
 }
-

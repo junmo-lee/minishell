@@ -31,11 +31,13 @@ void			destroy_parse_node(t_parser_list *node);
 void			clear_parse_list(t_parser_list **head);
 void			append_parse_node(t_parser_list **head, t_parser_list *node);
 
-	// envp_list_funcs.c
+	// envp_list_funcs1.c
 t_envp_list		*create_envp_node(char *key_str, char *value_str);
 void			clear_envp_list(t_envp_list **head);
 void			remove_node_by_key(t_envp_list **head, char *key_str);
 void			append_envp_node(t_envp_list **head, t_envp_list *node);
+
+	// envp_list_funcs2.c
 int				insert_envp_node(t_envp_list **head, char *key_str, char *value_str);
 t_envp_list		*get_envp(char **envp);
 char			*get_key(char *str);

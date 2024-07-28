@@ -78,7 +78,8 @@ void	handle_dilimiter_with_env(t_token_list **token_list)
 	}
 }
 
-void	expand_env_vars_in_token_list(t_token_list **token_s, t_status *status, t_envp_list *envp_list, t_info *s_info)
+void	expand_env_vars_in_token_list(t_token_list **token_s, t_status *status, \
+t_envp_list *envp_list, t_info *s_info)
 {
 	t_token_list	*head;
 	t_token_list	*node;
@@ -89,7 +90,8 @@ void	expand_env_vars_in_token_list(t_token_list **token_s, t_status *status, t_e
 	{
 		if (node->type == STRING || node->type == DOUBLEQUOTE)
 		{
-			node->token = expand_env_vars(node->token, status, envp_list, s_info);
+			node->token = expand_env_vars(node->token, status, \
+			envp_list, s_info);
 		}
 		node = node->next;
 	}

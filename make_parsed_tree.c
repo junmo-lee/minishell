@@ -16,7 +16,7 @@ static int	count_pipe(t_parser_list *parser_list)
 	return (pipe_count);
 }
 
-static t_parser_list	*find_cmd_head(t_parser_list *parser_list, int pipe_index)
+t_parser_list	*find_cmd_head(t_parser_list *parser_list, int pipe_index)
 {
 	t_parser_list	*current_node;
 	int				pipe_count;
