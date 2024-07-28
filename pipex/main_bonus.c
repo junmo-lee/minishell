@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 18:19:45 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:40:44 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	wait_processes(vars, cmd);
 	if (vars->is_here_doc == 1)
 		unlink(vars->temp_here_doc);
-	free(vars->temp_here_doc);
+	// free(vars->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");

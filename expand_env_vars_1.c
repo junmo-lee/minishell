@@ -72,7 +72,8 @@ t_envp_list *envp_list, t_info *s_info)
 			expand_started_digit(token, s_info);
 		else if (token[s_info->index] == '$' && token[s_info->index + 1] == '?')
 			expand_with_question_mark(token, s_info, status);
-		s_info->index ++;
+		else
+			s_info->index ++;
 	}
 	concat_text_without_env_vars(token, s_info);
 	free(token);
