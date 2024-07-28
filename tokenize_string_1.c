@@ -24,16 +24,16 @@ static void	identify_meta_char(t_info *info_s, char *str)
 	if (str[info_s->start_index] == '|')
 		info_s->type_code = PIPE;
 	else if (str[info_s->start_index] == '<' \
-	&& str[info_s->start_index + 1] == '<') // == "<<"
+	&& str[info_s->start_index + 1] == '<')
 	{
 		info_s->type_code = HERE_DOC;
 		info_s->end_index += 1;
 	}
 	else if (str[info_s->start_index] == '<' \
-	|| str[info_s->start_index] == '>') 
+	|| str[info_s->start_index] == '>')
 	{
 		if (str[info_s->start_index] == '>' \
-		&& str[info_s->start_index + 1] == '>') // == ">>"
+		&& str[info_s->start_index + 1] == '>')
 			info_s->end_index += 1;
 		info_s->type_code = REDIRECTION;
 	}
@@ -42,7 +42,7 @@ static void	identify_meta_char(t_info *info_s, char *str)
 }
 
 
-static char *extract_token(t_info *info_s, char *str)
+static char	*extract_token(t_info *info_s, char *str)
 {
 	int		token_len;
 	char	*result;
@@ -68,17 +68,16 @@ static char *extract_token(t_info *info_s, char *str)
 t_token_list	*tokenize_string(t_info *info_s, char *str)
 {
 	char			*token;
-	int				str_len;
 	t_token_list	*new_node;
 	t_token_list	*head;
 
 	head = NULL;
-	str_len = ft_strlen(str);
-	while (info_s->start_index < str_len)
+	info_s->str_len = ft_strlen(str);
+	while (info_s->start_index < info_s->str_len)
 	{
 		info_s->connect_flag = 0;
 		find_first_index_of_token(info_s, str);
-		if (info_s->start_index >= str_len) // 스트링에 공백으로 끝나서 비어 있는 노드가 나오는 것 방지
+		if (info_s->start_index >= info_s->str_len)
 			break ;
 		identify_meta_char(info_s, str);
 		if (info_s->type_code == STRING)

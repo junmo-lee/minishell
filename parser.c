@@ -2,6 +2,7 @@
 
 static void	init_info_struct(t_info *info_s)
 {
+	info_s->str_len = 0;
 	info_s->token_count = 0;
 	info_s->start_index = 0;
 	info_s->end_index = 0;

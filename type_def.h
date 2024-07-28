@@ -30,18 +30,8 @@ typedef enum
 	SINGLEQUOTE,
 }	tag;
 
-
-/*
-t_token_list	p;
-
-if (p.type == CMD)
- */
-
 typedef struct s_parser_list
 {
-	// int inFd;
-	// int outFd;
-	// char *cmd;
 	char					*token;
 	tag						type;
 	int						error;
@@ -59,6 +49,7 @@ typedef struct s_token_list
 
 typedef struct s_info
 {
+	int	str_len;
 	int	token_count;
 	int	start_index;
 	int	end_index;
@@ -78,8 +69,8 @@ typedef struct s_parsed_tree
 
 typedef struct s_envp_list
 {
-	char 				*key;
-	char 				*value;
+	char				*key;
+	char				*value;
 	struct s_envp_list	*next;
 }	t_envp_list;
 
@@ -113,7 +104,7 @@ typedef struct s_vars
 	char			*pwd;
 }	t_vars;
 
-typedef	struct	s_status
+typedef struct s_status
 {
 	int			exit_status;
 	t_vars		*one_line;
@@ -124,4 +115,4 @@ typedef	struct	s_status
 	t_envp_list	*env_list;
 }	t_status;
 
-# endif
+#endif
