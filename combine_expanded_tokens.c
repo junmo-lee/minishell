@@ -8,7 +8,7 @@ t_token_list *current_node, t_parser_list **parser_list_head)
 	t_parser_list	*tem_node;
 
 	tem_word2 = ft_strdup(token);
-	tem_str = concatenate_strings(*tem_word1, tem_word2);
+	tem_str = concat_strs(*tem_word1, tem_word2);
 	tem_node = create_parse_node(tem_str, current_node);
 	*tem_word1 = ft_strdup("");
 	append_parse_node(parser_list_head, tem_node);
@@ -19,7 +19,7 @@ static void	concat_tokens(char **tem_word1, char *token)
 	char			*tem_word2;
 
 	tem_word2 = ft_strdup(token);
-	*tem_word1 = concatenate_strings(*tem_word1, tem_word2);
+	*tem_word1 = concat_strs(*tem_word1, tem_word2);
 }
 
 static void	create_node(char **tem_word1, t_token_list *current_node, \

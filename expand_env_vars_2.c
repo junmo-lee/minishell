@@ -40,7 +40,7 @@ char	*get_envp_value(char *str, int *index, t_envp_list *envp_list)
 	return (envp_value);
 }
 
-char	*concatenate_strings(char *word1, char *word2)
+char	*concat_strs(char *word1, char *word2)
 {
 	int		word1_len;
 	int		word2_len;

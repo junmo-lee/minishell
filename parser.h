@@ -66,7 +66,7 @@ char			*expand_env_vars(char *token, t_status *status, t_envp_list *envp_list, t
 	// expand_env_vars_2.c
 char			*slice_string(int start_index, int end_index, char *str);
 char			*get_envp_value(char *str, int *index, t_envp_list *envp_list);
-char			*concatenate_strings(char *word1, char *word2);
+char			*concat_strs(char *word1, char *word2);
 void			handle_dilimiter_with_env(t_token_list **token_list);
 
 	// combine_expanded_tokens.c
