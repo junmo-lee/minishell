@@ -11,7 +11,7 @@ int	unset(t_parser_list *cmd_head, t_envp_list **envp_list)
 	{
 		if (check_key_syntax(current_node->token) == UNDEFINED_ERROR)
 		{
-			printf ("minishell: unset: \'%s\' : not a valid identifier", current_node->token);
+			// printf ("minishell: unset: \'%s\' : not a valid identifier", current_node->token);
 			current_node = current_node->next;
 			continue ;
 		}

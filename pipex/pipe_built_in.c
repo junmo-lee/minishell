@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 16:52:00 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:16:04 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,25 +73,89 @@ void	pipe_pwd(t_vars *vars, t_cmd *cmd)
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	exit(EXIT_SUCCESS);
 }
-
-void	pipe_export(t_vars *vars, t_cmd *cmd)
+// main 의 export 에서 탐색만 하도록
+void	pipe_export(t_vars *vars, t_cmd *cmd, t_status *status)
 {
+	int	i;
+	char			*key_str;
+
+	fprintf(stderr, "export args : %d\n", strs_len(cmd->args));
+	if (strs_len(cmd->args) == 1)
+	{
+		print_envp_in_export(status->env_list);
+		exit(EXIT_SUCCESS);
+	}
+	i = 0;
+	while (cmd->args[i] != NULL)
+	{
+		// fprintf(stderr, "export : %s\n", cmd->args[i]);
+		key_str = get_key(cmd->args[i]); // malloc 
+		if (check_key_syntax(key_str) == UNDEFINED_ERROR) // key규칙에 안 맞으면 에러메세지 띄어주고 다음 토큰으로 넘어 가는 듯
+		{
+			printf("\'%s\' : not a valid identifier\n", cmd->args[i]);
+			free(key_str);
+			i++;
+			continue ;
+		}
+		if (ft_strncmp(key_str, "_", 2) == 0)
+		{
+			free(key_str);
+			i++;
+			continue ;
+		}
+		// if (find_equal(cmd->args[i]))
+		// 	value_str = get_value(cmd->args[i]);
+		// else
+		// 	value_str = NULL;
+		//insert_envp_node(status->env_list, key_str, value_str);
+		i++;
+	}
 	vars++;
-	cmd++;
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_unset(t_vars *vars, t_cmd *cmd)
+void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status)
 {
+	int	i;
+
+	i = 0;
+	while (cmd->args[i] != NULL)
+	{
+		if (check_key_syntax(cmd->args[i]) == UNDEFINED_ERROR)
+			printf ("minishell: unset: \'%s\' : not a valid identifier", cmd->args[i]);
+		i++;
+	}
+	status++;
 	vars++;
-	cmd++;
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_env(t_vars *vars, t_cmd *cmd)
+void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
 {
+	int			i;
+	t_envp_list *current_node;
+
+	current_node = status->env_list;
+	i = 0;
+	if (cmd->args[1] != NULL)
+	{
+		printf ("env: %s: No such file or directory\n", cmd->args[1]);
+		return ;
+	}
+	while (current_node != NULL)
+	{
+		if (current_node->value == NULL)
+		{
+			current_node = current_node->next;
+			continue ;
+		}
+		write (1, current_node->key, ft_strlen(current_node->key));
+		write (1, "=", 1);
+		write (1, current_node->value, ft_strlen(current_node->value));
+		write (1, "\n", 1);
+		current_node = current_node->next;
+	}
 	vars++;
-	cmd++;
 	exit(EXIT_SUCCESS);
 }
 

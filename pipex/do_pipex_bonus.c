@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 16:09:19 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:20:00 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	check_local_path(t_cmd *cmd)
 	return (0);
 }
 
-void	child(t_vars *vars, t_cmd *cmd)
+void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	int	dup2_ret;
 
-	check_fd("child start");
+	//check_fd("child start");
 	if (cmd->redirection_in != -1)
 	{
 		dup2(cmd->redirection_in, STDIN_FILENO);
@@ -48,7 +48,7 @@ void	child(t_vars *vars, t_cmd *cmd)
 		close(vars->next_write);
 
 	// check_fd("cmd execve");
-	pipe_built_in(vars, cmd);
+	pipe_built_in(vars, cmd, status);
 		// 빌트인이 아닐때 local -> path 순서로
 	if (check_cmd(vars, cmd) == 0)
 	{

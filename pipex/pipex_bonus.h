@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 15:25:23 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 17:57:13 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,25 @@
 char	*path_join(char const *s1, char const *s2);
 void	init(t_vars *vars, int argc, char *argv[], char *envp[]);
 
-int		pipe_built_in(t_vars *var, t_cmd *cmd);
+int		pipe_built_in(t_vars *var, t_cmd *cmd, t_status *status);
 int		check_cmd(t_vars *vars, t_cmd *cmd);
 int		check_cmd_path(t_vars *vars, t_cmd *cmd);
+
+int		strs_len(char **strs);
 
 void	pipe_echo(t_vars *vars, t_cmd *cmd);
 void	pipe_cd(t_vars *vars, t_cmd *cmd);
 void	pipe_pwd(t_vars *vars, t_cmd *cmd);
-void	pipe_export(t_vars *vars, t_cmd *cmd);
-void	pipe_unset(t_vars *vars, t_cmd *cmd);
-void	pipe_env(t_vars *vars, t_cmd *cmd);
+
+void			print_envp_in_export(t_envp_list *envp_list);
+void	pipe_export(t_vars *vars, t_cmd *cmd, t_status *status);
+void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status);
+void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *stats);
 void	pipe_exit(t_vars *vars, t_cmd *cmd);
 
 int		make_here_doc(t_vars *vars, t_cmd *cmd, char *token);
 
-void	child(t_vars *vars, t_cmd *cmd);
+void	child(t_vars *vars, t_cmd *cmd, t_status *status);
 int		write_stderr(char *error_msg, char *name);
 void	write_stderr_exit(char *error_msg, char *name, int errorcode);
 char	**pipex_split(char *str, char c);

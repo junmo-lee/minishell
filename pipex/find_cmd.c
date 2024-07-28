@@ -6,14 +6,14 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 14:59:42 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:59:37 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:14:18 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
 // 빌트인이면 여기서 exit 되도록
-int pipe_built_in(t_vars *vars, t_cmd *cmd)
+int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", sizeof("echo")) == 0)
 		pipe_echo(vars, cmd);
@@ -22,11 +22,11 @@ int pipe_built_in(t_vars *vars, t_cmd *cmd)
 	else if (ft_strncmp(cmd->cmd_name, "pwd", sizeof("pwd")) == 0)
 		pipe_pwd(vars, cmd);
 	else if (ft_strncmp(cmd->cmd_name, "export", sizeof("export")) == 0)
-		pipe_export(vars, cmd);
+		pipe_export(vars, cmd, status);
 	else if (ft_strncmp(cmd->cmd_name, "unset", sizeof("unset")) == 0)
-		pipe_unset(vars, cmd);
+		pipe_unset(vars, cmd, status);
 	else if (ft_strncmp(cmd->cmd_name, "env", sizeof("env")) == 0)
-		pipe_env(vars, cmd);
+		pipe_env(vars, cmd, status);
 	else if (ft_strncmp(cmd->cmd_name, "exit", sizeof("exit")) == 0)
 		pipe_exit(vars, cmd);
 	return (0);
@@ -37,7 +37,7 @@ int	check_cmd(t_vars *vars, t_cmd *cmd)
 	if (access(cmd->cmd_name, F_OK) == 0)
 	{
 		cmd->is_exist = 1;
-		if (access(cmd->cmd_name, F_OK) == X_OK)
+		if (access(cmd->cmd_name, X_OK) == 0)
 		{
 			cmd->cmd_path = cmd->cmd_name;
 			return (1);

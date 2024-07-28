@@ -35,10 +35,10 @@ void	printf_parsed_tree(t_parsed_tree *head)
 
 	current_node = head;
 	index = 0;
-	fprintf(stderr, "cmd_len : %d\n", current_node->cmd_len);
+	// fprintf(stderr, "cmd_len : %d\n", current_node->cmd_len);
 	while (current_node != NULL)
 	{
-		fprintf(stderr, "cmd_list %d\n", index);
+		// fprintf(stderr, "cmd_list %d\n", index);
 		index ++;
 		current_node->arg_len = 0;
 		parser_node = current_node->cmd_list_head;
@@ -75,8 +75,8 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
 
+	status.env_list = get_envp(envp);;
 	envp_list = status.env_list;
-	envp_list = get_envp(envp);
 	// atexit(leaks_check);
 	head = NULL;
 	str = NULL;
