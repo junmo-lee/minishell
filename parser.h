@@ -47,8 +47,11 @@ t_parsed_tree	*create_parsed_tree_node(int cmd_count, t_parser_list *cmd_list_he
 void			append_parsed_tree_node(t_parsed_tree **head, t_parsed_tree *node);
 void			clear_parsed_tree(t_parsed_tree **head);
 
-	//check_syntax_funcs.c
+	// check_syntax_funcs.c
 void			check_syntax(t_info *info_s, t_parser_list *parse_list);
+
+	// make_parsed_tree.c
+t_parsed_tree	*make_parsed_tree(t_parser_list *parser_list);
 
 	// tokenize_string_1.c
 t_token_list	*tokenize_string(t_info *info_s, char *str);
