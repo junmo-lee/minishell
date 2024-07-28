@@ -3,7 +3,7 @@
 int	insert_envp_node(t_envp_list **head, char *key_str, char *value_str)
 {
 	t_envp_list	*current_node;
-	t_envp_list *new_node;
+	t_envp_list	*new_node;
 
 	current_node = *(head);
 	while (current_node != NULL)
