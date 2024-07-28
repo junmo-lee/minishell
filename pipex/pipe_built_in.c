@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_built_in.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 18:16:04 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:31:04 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	pipe_export(t_vars *vars, t_cmd *cmd, t_status *status)
 	int	i;
 	char			*key_str;
 
-	fprintf(stderr, "export args : %d\n", strs_len(cmd->args));
+	// fprintf(stderr, "export args : %d\n", strs_len(cmd->args));
 	if (strs_len(cmd->args) == 1)
 	{
 		print_envp_in_export(status->env_list);
