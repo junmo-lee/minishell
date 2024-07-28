@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:51:12 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 15:25:23 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	pipe_unset(t_vars *vars, t_cmd *cmd);
 void	pipe_env(t_vars *vars, t_cmd *cmd);
 void	pipe_exit(t_vars *vars, t_cmd *cmd);
 
+int		make_here_doc(t_vars *vars, t_cmd *cmd, char *token);
 
 void	child(t_vars *vars, t_cmd *cmd);
 int		write_stderr(char *error_msg, char *name);

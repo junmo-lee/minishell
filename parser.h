@@ -14,8 +14,6 @@
 # include <termios.h> // tcgetattr()
 # include <string.h> //strlen
 
-int	g_exit_code;
-
 // parsing
 	// parser.c
 t_parsed_tree	*parser(char *str, t_status *status, t_envp_list *envp_list);
@@ -85,6 +83,9 @@ int				check_key_syntax(char *key_str);
 int				unset(t_parser_list *cmd_head, t_envp_list **envp_list);
 	// env
 int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
+
+	// cd
+int 			cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd);
 
 // check_fd.c : fd 확인용
 int check_fd(char *str);

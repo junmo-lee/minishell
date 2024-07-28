@@ -6,12 +6,20 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 18:42:30 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 16:52:00 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser.h"
 
+/*
+					if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
+						export(head->cmd_list_head, &envp_list);
+					else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
+						unset(head->cmd_list_head, &envp_list);
+					else if (ft_strncmp(head->cmd_list_head->token, "env", 4) == 0)
+						env(head->cmd_list_head, &envp_list);
+*/
 void	pipe_echo(t_vars *vars, t_cmd *cmd)
 {
 	int	option_flag;
@@ -47,7 +55,7 @@ void	pipe_cd(t_vars *vars, t_cmd *cmd)
 		exit(EXIT_SUCCESS);
 	if (access(cmd->args[1], F_OK) == 0)
 	{
-		if (access(cmd->cmd_name, X_OK) == 0)
+		if (access(cmd->args[1], X_OK) == 0)
 		{
 			exit(EXIT_SUCCESS);
 		}

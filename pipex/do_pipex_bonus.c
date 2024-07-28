@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:55:47 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 16:09:19 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	child(t_vars *vars, t_cmd *cmd)
 {
 	int	dup2_ret;
 
-	// check_fd("child start");
+	check_fd("child start");
 	if (cmd->redirection_in != -1)
 	{
 		dup2(cmd->redirection_in, STDIN_FILENO);
