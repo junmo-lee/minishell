@@ -31,6 +31,8 @@ typedef enum
 }	tag;
 
 
+int	g_signal;
+
 /*
 t_token_list	p;
 
@@ -105,22 +107,22 @@ typedef struct s_vars
 	char			**argv;
 	char			**envp;
 	char			**path;
-	int				here_doc_fd;
 	int				pipe_fd[2];
 	int				prev_read;
 	int				next_write;
 	int				cmd_len;
+	int				is_here_doc;
+	char			*temp_here_doc;
+	int				fd_here_doc;
+	pid_t			*pid_here_doc;
 	char			*pwd;
 }	t_vars;
 
 typedef	struct	s_status
 {
 	int			exit_status;
-	t_vars		*one_line;
-	int			is_here_doc;
-	int			here_doc_fd;
-	char		*temp_here_doc;
 	char		pwd[PATH_MAX + 1];
+	t_vars		*one_line;
 	t_envp_list	*env_list;
 }	t_status;
 

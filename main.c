@@ -17,7 +17,6 @@ void	signal_handler(int signo)
 		// 현재 입력 줄이 새로운 내용으로 교체되지만, 이전의 편집 히스토리는 유지됩니다. 따라서 사용자는 여전히 undo 기능을 사용할 수 있습니다.
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_exit_code = SIGINT_EXIT_CODE;
 		// 전역변수에서 시그널을 받아와야 할듯
 	}
 	if (signo == SIGQUIT)
@@ -45,12 +44,12 @@ void	printf_parsed_tree(t_parsed_tree *head)
 		parser_node = current_node->cmd_list_head;
 		while (parser_node != NULL)
 		{
-			if (parser_node->type == STRING)
-			fprintf(stderr, "	%s		->STRING\n", parser_node->token);
-			else if (parser_node->type == REDIRECTION)
-			fprintf(stderr, "	%s		->REDIRECTION\n", parser_node->token);
-			else if (parser_node->type == HERE_DOC)
-			fprintf(stderr, "	%s		->HERE_DOC\n", parser_node->token);
+			// if (parser_node->type == STRING)
+			// fprintf(stderr, "	%s		->STRING\n", parser_node->token);
+			// else if (parser_node->type == REDIRECTION)
+			// fprintf(stderr, "	%s		->REDIRECTION\n", parser_node->token);
+			// else if (parser_node->type == HERE_DOC)
+			// fprintf(stderr, "	%s		->HERE_DOC\n", parser_node->token);
 			current_node->arg_len++;
 			parser_node = parser_node->next;
 		}
@@ -128,6 +127,9 @@ int	main(int argc, char **argv, char **envp)
 						unset(head->cmd_list_head, &envp_list);
 					else if (ft_strncmp(head->cmd_list_head->token, "env", 4) == 0)
 						env(head->cmd_list_head, &envp_list);
+					else if (ft_strncmp(head->cmd_list_head->token, "cd", 3) == 0)
+						cd(head->cmd_list_head, &envp_list, status.pwd);
+
 				}
 			}
 			else

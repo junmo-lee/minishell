@@ -6,14 +6,41 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 21:37:31 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/28 16:32:35 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parser.h"
-
+#include <signal.h>
 // 디버그용
 #include <stdio.h>
+
+void	stdin_handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(STDOUT_FILENO, "^C\n", 4);
+	}
+	if (signo == SIGQUIT)
+	{
+		write(STDOUT_FILENO, "^\\Quit: 3\n", 11);
+	}
+}
+
+int	close_all_fd(t_vars *vars, t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < vars->cmd_len)
+	{
+		if ((cmd + i)->redirection_in != -1)
+			close((cmd + i)->redirection_in);
+		if ((cmd + i)->redirection_out != -1)
+			close((cmd + i)->redirection_out);
+	}
+	return (0);
+}
 
 int	get_exit_status(int status)
 {
@@ -123,33 +150,22 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 			else if (parser_node->type == HERE_DOC)
 			{
 				// 이전에 here_doc 이나 리다이엑션을 받았는지 먼저 확인이 필요할거 같음
-
-				status->is_here_doc = 1;
-
 				parser_node = parser_node->next;
-				// .here_doc 이라는 파일이름을 고정적으로 하지 않고 이미 파일이 존재한다면 다른 파일로 변경해야함
-				// make_temp_here_doc()
-				char	*temp_dir = NULL;
-				char	*temp_number = NULL;
-				int		number = 0;
-				while(1)
+				switch (make_here_doc(vars, cmd + index, parser_node->token))
 				{
-					temp_number = ft_itoa(number);
-					temp_dir = ft_strjoin("/tmp/minishell_heredoc",temp_number);
-					free(temp_number);
-					if (access(temp_dir, F_OK) != 0)
-					{
-						status->temp_here_doc = temp_dir;
-						break ;
-					}
-					free(temp_dir);
-					number++;
+				case SIGINT:
+					close_all_fd(vars, cmd);
+					free(vars->temp_here_doc);
+					return (SIGINT_EXIT_CODE);
+					break;
+				case SIGQUIT:
+					close_all_fd(vars, cmd);
+					free(vars->temp_here_doc);
+					return (SIGQUIT_EXIT_CODE);
+					break;
+				default:
+					break;
 				}
-				write_file(&(status->here_doc_fd), status->temp_here_doc, \
-					O_WRONLY | O_CREAT | O_TRUNC);
-				fprintf(stderr, "<< [%s]\n", parser_node->token);
-				write_here_doc(status->here_doc_fd, parser_node->token);
-				read_file(&((cmd + index)->redirection_in), status->temp_here_doc, O_RDONLY);
 			}
 			else
 			{
@@ -167,6 +183,9 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 
 	int		count;
 	pid_t	fork_ret;
+
+	signal(SIGINT, stdin_handler);
+	signal(SIGQUIT, stdin_handler);
 
 	vars->prev_read = dup(STDIN_FILENO);
 	count = 0;
@@ -238,11 +257,12 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	// solo built_in 부분 실행, 파이프가 모두 실행되고 나서
 	// 충헌님이 만든 프로그램이 여기서 실행될듯
 	// STDERR 출력은 pipe 단계에서 처리, 실행만 되도록
-	if (status->is_here_doc == 1)
-		unlink(status->temp_here_doc);
+	if (vars->is_here_doc == 1)
+		unlink(vars->temp_here_doc);
+	free(vars->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
-	//check_fd("main");
+	// check_fd("main");
 
 	return (status->exit_status);
 	//return (0);
