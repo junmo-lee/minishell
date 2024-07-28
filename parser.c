@@ -2,12 +2,15 @@
 
 static void	init_info_struct(t_info *info_s)
 {
+	info_s->index = 0;
 	info_s->str_len = 0;
 	info_s->token_count = 0;
 	info_s->start_index = 0;
 	info_s->end_index = 0;
 	info_s->type_code = DEFAULT;
 	info_s->connect_flag = 0;
+	info_s->first_text_idx = 0;
+	info_s->expanded_token = NULL;
 	info_s->error = 0;
 }
 
@@ -22,7 +25,7 @@ t_parsed_tree	*parser(char *str, t_status *status, t_envp_list *envp_list)
 	init_info_struct(&info_s);
 	token_list = tokenize_string(&info_s, str);
 	handle_dilimiter_with_env(&token_list);
-	expand_env_vars_in_token_list(&token_list, status, envp_list);
+	expand_env_vars_in_token_list(&token_list, status, envp_list, &info_s);
 	parse_list = combine_expanded_tokens(&token_list);
 	check_syntax(&info_s, parse_list);
 	if (info_s.error != NO_ERROR)

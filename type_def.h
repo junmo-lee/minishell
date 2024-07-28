@@ -49,13 +49,16 @@ typedef struct s_token_list
 
 typedef struct s_info
 {
-	int	str_len;
-	int	token_count;
-	int	start_index;
-	int	end_index;
-	tag	type_code;
-	int	connect_flag;
-	int	error;
+	int		index;
+	int		str_len;
+	int		token_count;
+	int		start_index;
+	int		end_index;
+	tag		type_code;
+	int		connect_flag;
+	int		first_text_idx;
+	char	*expanded_token;
+	int		error;
 }	t_info;
 
 typedef struct s_parsed_tree

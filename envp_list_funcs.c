@@ -159,9 +159,9 @@ char	*ft_getenv(char *key_str, t_envp_list *envp_list)
 
 t_envp_list	*get_envp(char **envp)
 {
-	int		index;
-	char	*key;
-	char	*value;
+	int			index;
+	char		*key;
+	char		*value;
 	t_envp_list	*tem_node;
 	t_envp_list	*head;
 

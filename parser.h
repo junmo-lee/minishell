@@ -60,7 +60,8 @@ t_token_list	*tokenize_string(t_info *info_s, char *str);
 void			find_last_index_of_token(t_info *info_s, char *str);
 
 	// expand_env_vars_1.c
-void			expand_env_vars_in_token_list(t_token_list **token_s, t_status *status, t_envp_list *envp_list);
+void			expand_env_vars_in_token_list(t_token_list **token_s, t_status *status, t_envp_list *envp_list, t_info *s_info);
+char			*expand_env_vars(char *token, t_status *status, t_envp_list *envp_list, t_info *s_info);
 
 	// expand_env_vars_2.c
 char			*slice_string(int start_index, int end_index, char *str);
