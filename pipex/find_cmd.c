@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 14:59:42 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 20:13:22 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:21:59 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int	check_cmd(t_vars *vars, t_cmd *cmd)
 			}
 			else
 			{
-				errno = EACCES; // 나중에 빼도 되는지 확인
+				// errno = EACCES; // 나중에 빼도 되는지 확인
 				perror(cmd->cmd_name);
 				exit(EACCES_EXIT_CODE);
 			}
 		}
-		errno = ENOENT; // 나중에 빼도 되는지 확인
+		// errno = ENOENT; // 나중에 빼도 되는지 확인
 		perror(cmd->cmd_name);
 		exit(COMMAND_NOT_FOUND);
 	}
@@ -85,9 +85,7 @@ int	check_cmd_path(t_vars *vars, t_cmd *cmd)
 	}
 	if (is_exist == 1)
 	{
-		errno = EACCES; // 나중에 빼도 되는지 확인
-		perror(cmd->cmd_name);
-		exit(EACCES_EXIT_CODE);
+		write_stderr_exit(cmd->cmd_name, ": Permission denied", EACCES_EXIT_CODE);
 	}
 	else
 	{
