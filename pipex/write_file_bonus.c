@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:53 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 15:30:49 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:20:33 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,20 @@ void	write_here_doc(int here_doc_fd, char *limiter)
 	}
 }
 
-void	write_file(int *fd, char *file_path, int option)
+int	write_file(int *fd, char *file_path, int option)
 {
 	*fd = open(file_path, option, 0644);
 	if (access(file_path, F_OK) == 0)
 	{
 		if (access(file_path, W_OK) == 0)
-			return ;
+			return (0);
 		else
+		{
 			write_stderr("Permission denied: ", file_path);
+			return (1);
+		}
 	}
 	else
 		write_stderr("No such file or directory: ", file_path);
+	return (1);
 }

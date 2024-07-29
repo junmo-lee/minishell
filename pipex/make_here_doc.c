@@ -12,6 +12,12 @@
 
 volatile sig_atomic_t g_signal;
 
+void	sig_heredoc(int signo)
+{
+	(void)signo;
+	write(STDOUT_FILENO, "\n", 2);
+}
+
 int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 {
 	char	*temp_dir = NULL;
@@ -25,7 +31,6 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		unlink(vars->temp_here_doc);
 		free(vars->temp_here_doc);
 	}
-	vars->is_here_doc = 1;
 	while(1)
 	{
 		temp_number = ft_itoa(number);
@@ -48,7 +53,7 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		signal(SIGQUIT, SIG_IGN);
 		write_file(&(vars->fd_here_doc), vars->temp_here_doc, \
 			O_WRONLY | O_CREAT | O_TRUNC);
-		fprintf(stderr, "<< [%s]\n", token);
+		// fprintf(stderr, "<< [%s]\n", token);
 		write_here_doc(vars->fd_here_doc, token);
 		close(vars->fd_here_doc);
 		exit(EXIT_SUCCESS);
@@ -56,15 +61,19 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 	else
 	{
 		rl_catch_signals = 0;
-		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, sig_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(fork_ret, &process_status, 0);
 		signal(SIGINT, stdin_handler);
 		signal(SIGQUIT, stdin_handler);
 		if (WIFSIGNALED(process_status))
+		{
+			unlink(vars->temp_here_doc);
 			return (WTERMSIG(process_status));
+		}
 		else
 		{
+			vars->is_here_doc = 1;
 			read_file(&(cmd->redirection_in), vars->temp_here_doc, O_RDONLY);
 			return (0);
 		}

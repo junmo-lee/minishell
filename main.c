@@ -61,19 +61,22 @@ int	main(int argc, char **argv, char **envp)
 	t_vars			vars;
 	t_status		status;
 	t_envp_list		*envp_list;
+	int				exit_val;
 	
 	ft_memset(&status, 0, sizeof(status));
 	// main의 지역변수로 vars 관리
 	status.one_line = &vars;
 
-	//getcwd 로 현재 위치 pwd 에 저장
-	if (getcwd(status.pwd, PATH_MAX) == NULL)
-		exit(EXIT_FAILURE);
-	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
 
 	status.env_list = get_envp(envp);;
 	envp_list = status.env_list;
 	// atexit(leaks_check);
+
+	//getcwd 로 현재 위치 pwd 에 저장
+	if (getcwd(status.pwd, PATH_MAX) == NULL)
+		exit(EXIT_FAILURE);
+	insert_envp_node(&envp_list, ft_strdup("OLDPWD"), NULL);
+	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
 	head = NULL;
 	str = NULL;
 	if (argc != 1)
@@ -119,6 +122,11 @@ int	main(int argc, char **argv, char **envp)
 
 				// 실제 line 실행부
 				status.exit_status = run_cmd_tree(&status, head);
+				if (vars.is_here_doc == 1)
+				{
+					unlink(vars.temp_here_doc);
+					free(vars.temp_here_doc);
+				}
 				// cmd 가 하나로만 왔을때 main shell 에 영향을 미침
 				if (vars.cmd_len == 1)
 				{
@@ -130,6 +138,18 @@ int	main(int argc, char **argv, char **envp)
 						env(head->cmd_list_head, &envp_list);
 					else if (ft_strncmp(head->cmd_list_head->token, "cd", 3) == 0)
 						cd(head->cmd_list_head, &envp_list, status.pwd);
+					else if (ft_strncmp(head->cmd_list_head->token, "exit", 5) == 0)
+					{
+						if (head->cmd_list_head->next == NULL)
+							exit_val = 0;
+						else if (atoi_check_num(head->cmd_list_head->next->token, &exit_val))
+							exit_val = !(!(head->cmd_list_head->next->next));
+						else
+							exit_val = 255;
+						clear_parsed_tree(&head);
+						exit(exit_val);
+					}
+
 
 				}
 				// "_" 변수?

@@ -11,7 +11,7 @@ LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror
+CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRCS_PARSE	= \
 	main.c \
@@ -21,7 +21,7 @@ SRCS_PARSE	= \
 	envp_list_funcs1.c envp_list_funcs2.c \
 	tokenize_string_1.c tokenize_string_2.c \
 	expand_env_vars_1.c expand_env_vars_2.c \
-	combine_expanded_tokens.c \
+	combine_expanded_tokens.c atoi_check_num.c \
 	check_fd.c
 
 SRCS_PIPE	= \

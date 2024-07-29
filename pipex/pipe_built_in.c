@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_built_in.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 18:31:04 by choolee          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:40:39 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 			continue ;
 		}
 		print_flag = 1;
-		write (STDOUT_FILENO, cmd->args[i], ft_strlen(cmd->args[i]));
+		write (vars->next_write, cmd->args[i], ft_strlen(cmd->args[i]));
 		if (cmd->args[i + 1] == NULL && option_flag == 0)
-			write(STDOUT_FILENO, "\n", 1);
+			write(vars->next_write, "\n", 1);
 		if (cmd->args[i + 1] != NULL)
-			write(STDOUT_FILENO, " ", 1);
+			write(vars->next_write, " ", 1);
 		i++;
 	}
 	(void)vars;

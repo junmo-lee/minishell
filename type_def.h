@@ -100,6 +100,7 @@ typedef struct s_cmd
 	int		redirection_in;
 	int		redirection_out;
 	int		is_exist;
+	int		redirection_fail;
 	int		status;
 	int		is_end;
 	int		is_built_in;

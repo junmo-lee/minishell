@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 16:23:53 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:50:41 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 			signal(SIGQUIT, stdin_handler);
 			if (parser_node->type == HERE_DOC)
 			{
+				if ((cmd + index)->redirection_in != -1)
+					close((cmd + index)->redirection_in);
 				// 이전에 here_doc 이나 리다이엑션을 받았는지 먼저 확인이 필요할거 같음
 				parser_node = parser_node->next;
 				// fprintf(stderr, "here_doc ret : %d\n", make_here_doc(vars, cmd + index, parser_node->token));
@@ -133,6 +135,8 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 			}
 			else if (parser_node->type == REDIRECTION)
 			{
+				if ((cmd + index)->redirection_fail == 1)
+					break ;
 				// 기본적인 오류 
 				// ex) 리다이엑션 다음이 비어있을때 는 파싱부에서 처리
 				// 바로 다음 오는 string이 filename 이라고 간주
@@ -140,10 +144,12 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 				if (parser_node->token[0] == '<')
 				{
 					parser_node = parser_node->next;
+					// 이전에 리다이엑션을 받은 적이 있는지 확인해보는거
 					if ((cmd + index)->redirection_in != -1)
 						close((cmd + index)->redirection_in);
-					read_file(&((cmd + index)->redirection_in),parser_node->token, O_RDONLY);
-					fprintf(stderr, "< [%s]\n", parser_node->token);
+					if (read_file(&((cmd + index)->redirection_in),parser_node->token, O_RDONLY))
+						(cmd + index)->redirection_fail = 1;
+					// fprintf(stderr, "< [%s]\n", parser_node->token);
 				}
 				else if (parser_node->token[0] == '>')
 				{
@@ -152,14 +158,16 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 					if (parser_node->token[1] == '>')
 					{
 						parser_node = parser_node->next;
-						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_APPEND);
-						fprintf(stderr, ">> [%s]\n", parser_node->token);
+						if (write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_APPEND))
+							(cmd + index)->redirection_fail = 1;
+						// fprintf(stderr, ">> [%s]\n", parser_node->token);
 					}
 					else
 					{
 						parser_node = parser_node->next;
-						write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_TRUNC);
-						fprintf(stderr, "> [%s]\n", parser_node->token);
+						if (write_file(&((cmd + index)->redirection_out),parser_node->token, O_WRONLY | O_CREAT | O_TRUNC))
+							(cmd + index)->redirection_fail = 1;
+						// fprintf(stderr, "> [%s]\n", parser_node->token);
 					}
 				}
 			}
@@ -249,16 +257,9 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	}
 
 	wait_processes(vars, cmd);
-	if (vars->is_here_doc == 1)
-		unlink(vars->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");
-	if (vars->is_here_doc == 1)
-	{
-		unlink(vars->temp_here_doc);
-		free(vars->temp_here_doc);
-	}
 	return (status->exit_status);
 	//return (0);
 }

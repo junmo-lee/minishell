@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 18:20:00 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:46:42 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	int	dup2_ret;
 
+	if (cmd->redirection_fail == 1)
+		exit(EXIT_FAILURE);
 	//check_fd("child start");
 	if (cmd->redirection_in != -1)
 	{
