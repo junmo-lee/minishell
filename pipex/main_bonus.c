@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 22:06:51 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 15:15:47 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <signal.h>
 // 디버그용
 #include <stdio.h>
+
+volatile sig_atomic_t g_signal;
 
 void	stdin_handler(int signo)
 {
@@ -123,35 +125,35 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 			{
 				// 이전에 here_doc 이나 리다이엑션을 받았는지 먼저 확인이 필요할거 같음
 				parser_node = parser_node->next;
+				// fprintf(stderr, "here_doc ret : %d\n", make_here_doc(vars, cmd + index, parser_node->token));
 				switch (make_here_doc(vars, cmd + index, parser_node->token))
 				{
 				case SIGINT:
 					fprintf(stderr, "here_doc SIGINT\n");
-					write(STDOUT_FILENO, "\n", 1);
-					rl_on_new_line();
-					rl_replace_line("", 0);
-					rl_redisplay();
-					close_all_fd(vars, cmd);
+					// write(STDOUT_FILENO, "\n", 1);
+					// rl_on_new_line();
+					// rl_replace_line("", 0);
+					// rl_redisplay();
+					// close_all_fd(vars, cmd);
 					unlink(vars->temp_here_doc);
 					free(vars->temp_here_doc);
 					return (SIGINT_EXIT_CODE);
 					break;
 				case SIGQUIT:
 					fprintf(stderr, "here_doc SIGQUIT\n");
-					write(STDOUT_FILENO, "\n", 1);
-					rl_on_new_line();
-					rl_replace_line("", 0);
-					rl_redisplay();
+					// write(STDOUT_FILENO, "\n", 1);
+					// rl_on_new_line();
+					// rl_replace_line("", 0);
+					// rl_redisplay();
 					close_all_fd(vars, cmd);
 					unlink(vars->temp_here_doc);
 					free(vars->temp_here_doc);
 					return (SIGQUIT_EXIT_CODE);
 					break;
 				default:
-					//fprintf(stderr, "g_signal : %d\n", g_signal);
+					fprintf(stderr, "g_signal : %d\n", g_signal);
 					break;
 				}
-				//fprintf(stderr, "g_signal : %d\n", g_signal);
 			}
 			else if (parser_node->type == REDIRECTION)
 			{
@@ -273,7 +275,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	wait_processes(vars, cmd);
 	if (vars->is_here_doc == 1)
 		unlink(vars->temp_here_doc);
-	free(vars->temp_here_doc);
 	free_strs(vars->path, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");

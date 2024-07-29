@@ -10,23 +10,18 @@
 //  	return (_WSTATUS(x) != _WSTOPPED && _WSTATUS(x) != 0);
 // }
 
+volatile sig_atomic_t g_signal;
+
 void	sig_here_doc(int signo)
 {
-	//fprintf(stderr, "sig_here_doc\n");
-	if (signo == SIGINT)
-	{
-		write(STDERR_FILENO, "\n", 1);
-	}
-}
-
-void	sig_h(int signo)
-{
-	//fprintf(stderr, "sig_h\n");
+	(void)signo;
 	g_signal = HERE_DOC_SIGINT;
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
-	exit(signo);
+	fprintf(stderr, "sig_here_doc\n");
+	//fprintf(stderr, "sig_here_doc\n");
+	// if (signo == SIGINT)
+	// {
+	// 	write(STDERR_FILENO, "\n", 1);
+	// }
 }
 
 int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
@@ -60,34 +55,37 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 	fork_ret = fork();
 	if (fork_ret == 0)
 	{
-		signal(SIGINT, sig_h);
+		rl_catch_signals = 1;
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
 		write_file(&(vars->fd_here_doc), vars->temp_here_doc, \
 			O_WRONLY | O_CREAT | O_TRUNC);
 		fprintf(stderr, "<< [%s]\n", token);
 		write_here_doc(vars->fd_here_doc, token);
 		close(vars->fd_here_doc);
+		fprintf(stderr, "child g_signal : %d\n", g_signal);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		signal(SIGINT, sig_here_doc);
+		rl_catch_signals = 0;
+		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(fork_ret, &process_status, 0);
-		//waitpid(fork_ret, &process_status, 0);
-		//fprintf(stderr, "wait end!\n");
-		// kill(fork_ret, SIGINT);
-		// signal(SIGINT, signal_handler);
-		// signal(SIGQUIT, stdin_handler);
+		fprintf(stderr, "g_signal : %d\n", g_signal);
 		if (WIFSIGNALED(process_status))
 		{
 		// if (g_signal == HERE_DOC_SIGINT)
 		// {
+			signal(SIGINT, stdin_handler);
+			signal(SIGQUIT, stdin_handler);
 			fprintf(stderr, "heredoc process exit with signal : %d\n", WTERMSIG(process_status));
 			return (WTERMSIG(process_status));
 		}
 		else
 		{
+			signal(SIGINT, stdin_handler);
+			signal(SIGQUIT, stdin_handler);
 			read_file(&(cmd->redirection_in), vars->temp_here_doc, O_RDONLY);
 			return (0);
 		}

@@ -19,6 +19,7 @@
 
 # include <unistd.h>
 # include <sys/syslimits.h>
+# include <signal.h>
 typedef enum
 {
 	DEFAULT,
@@ -33,7 +34,7 @@ typedef enum
 }	tag;
 
 
-int	g_signal;
+volatile sig_atomic_t g_signal;
 
 /*
 t_token_list	p;

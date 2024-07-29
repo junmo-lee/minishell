@@ -39,12 +39,12 @@ void	printf_parsed_tree(t_parsed_tree *head)
 		parser_node = current_node->cmd_list_head;
 		while (parser_node != NULL)
 		{
-			// if (parser_node->type == STRING)
-			// fprintf(stderr, "	%s		->STRING\n", parser_node->token);
-			// else if (parser_node->type == REDIRECTION)
-			// fprintf(stderr, "	%s		->REDIRECTION\n", parser_node->token);
-			// else if (parser_node->type == HERE_DOC)
-			// fprintf(stderr, "	%s		->HERE_DOC\n", parser_node->token);
+			if (parser_node->type == STRING)
+			fprintf(stderr, "	%s		->STRING\n", parser_node->token);
+			else if (parser_node->type == REDIRECTION)
+			fprintf(stderr, "	%s		->REDIRECTION\n", parser_node->token);
+			else if (parser_node->type == HERE_DOC)
+			fprintf(stderr, "	%s		->HERE_DOC\n", parser_node->token);
 			current_node->arg_len++;
 			parser_node = parser_node->next;
 		}
@@ -55,7 +55,6 @@ void	printf_parsed_tree(t_parsed_tree *head)
 int	main(int argc, char **argv, char **envp)
 {
 	char			*str;
-	struct termios	term;
 	t_parsed_tree	*head;
 	t_vars			vars;
 	t_status		status;
@@ -80,14 +79,16 @@ int	main(int argc, char **argv, char **envp)
 		//fprintf(stderr, "argument input error");
 		return (0);
 	}
+	
+	struct termios	term;
 	tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
 	term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
 	
 	// readline 에서 시그널 처리를 안하도록 변경
-	//rl_catch_signals = 0;
 	while (1)
 	{
+		rl_catch_signals = 0;
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		//signal(SIGQUIT, signal_handler);
