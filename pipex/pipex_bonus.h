@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 19:55:05 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 21:36:25 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@
 //디버그용
 # include <stdio.h>
 
+void	print_full_path(char *pwd, char *str);
 char	*path_join(char const *s1, char const *s2);
 void	init(t_vars *vars, int argc, char *argv[], char *envp[]);
 
 int		pipe_built_in(t_vars *var, t_cmd *cmd, t_status *status);
-int		check_cmd(t_vars *vars, t_cmd *cmd);
-int		check_cmd_path(t_vars *vars, t_cmd *cmd);
+int		check_cmd(t_status *status, t_vars *vars, t_cmd *cmd);
+int		check_cmd_path(t_status *status, t_vars *vars, t_cmd *cmd);
 
 int		strs_len(char **strs);
 

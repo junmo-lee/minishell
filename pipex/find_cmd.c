@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 14:59:42 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 20:21:59 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 21:37:07 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 	return (0);
 }
 
-int	check_cmd(t_vars *vars, t_cmd *cmd)
+int	check_cmd(t_status *status, t_vars *vars, t_cmd *cmd)
 {
 	if (cmd->cmd_name[0] == '.' || cmd->cmd_name[0] == '/')
 	{
@@ -55,10 +55,10 @@ int	check_cmd(t_vars *vars, t_cmd *cmd)
 		exit(COMMAND_NOT_FOUND);
 	}
 	else
-		return (check_cmd_path(vars, cmd));
+		return (check_cmd_path(status, vars, cmd));
 }
 
-int	check_cmd_path(t_vars *vars, t_cmd *cmd)
+int	check_cmd_path(t_status *status, t_vars *vars, t_cmd *cmd)
 {
 	char	*temp;
 	int		i;
@@ -85,7 +85,8 @@ int	check_cmd_path(t_vars *vars, t_cmd *cmd)
 	}
 	if (is_exist == 1)
 	{
-		write_stderr_exit(cmd->cmd_name, ": Permission denied", EACCES_EXIT_CODE);
+		print_full_path(status->pwd, cmd->cmd_name);
+		write_stderr_exit(NULL, ": Permission denied", EACCES_EXIT_CODE);
 	}
 	else
 	{

@@ -92,6 +92,8 @@ int check_fd(char *str);
 
 void	update_pwd(char *pwd, char *str);
 
+void	print_full_path(char *pwd, char *str);
+
 int	atoi_check_num(const char *str, int *target);
 
 #endif
