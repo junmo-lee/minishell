@@ -10,8 +10,6 @@
 //  	return (_WSTATUS(x) != _WSTOPPED && _WSTATUS(x) != 0);
 // }
 
-volatile sig_atomic_t g_signal;
-
 void	sig_heredoc(int signo)
 {
 	(void)signo;

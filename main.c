@@ -4,13 +4,11 @@
 // {
 // 	system("leaks parse");
 // }
-volatile sig_atomic_t g_signal;
 
 void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		g_signal = SIGINT;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -93,7 +91,6 @@ int	main(int argc, char **argv, char **envp)
 	// readline 에서 시그널 처리를 안하도록 변경
 	while (1)
 	{
-		g_signal = 0;
 		rl_catch_signals = 0;
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);

@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 17:50:41 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 21:48:15 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <signal.h>
 // 디버그용
 #include <stdio.h>
-
-volatile sig_atomic_t g_signal;
 
 void	stdin_handler(int signo)
 {
