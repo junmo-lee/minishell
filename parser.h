@@ -90,7 +90,7 @@ int 			cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd);
 // check_fd.c : fd 확인용
 int check_fd(char *str);
 
-void	update_pwd(char *pwd, const char *str);
+void	update_pwd(char *pwd, char *str);
 
 int	atoi_check_num(const char *str, int *target);
 
