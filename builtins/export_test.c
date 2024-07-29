@@ -6,7 +6,7 @@
 extern char **environ;
 
 int main(int argc, char **argv, char **envp)
-// int main(void)
+
 {
 	int i = 0;
 

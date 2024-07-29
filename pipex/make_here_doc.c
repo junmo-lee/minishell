@@ -1,14 +1,14 @@
 #include "pipex_bonus.h"
 #include "../parser.h"
 #include <signal.h>
-// int	get_signal_code(int x)
-// {
-// 	// _W_INT(w)       (*(int *)&(w))
-// 	// _WSTATUS(x)     (_W_INT(x) & 0177)
-// 	// _WSTOPPED       0177
-// 	// _WSTATUS(x)     (_W_INT(x) & 0177)
-//  	return (_WSTATUS(x) != _WSTOPPED && _WSTATUS(x) != 0);
-// }
+
+
+
+
+
+
+
+
 
 void	sig_heredoc(int signo)
 {
@@ -42,7 +42,7 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		free(temp_dir);
 		number++;
 	}
-	// here_doc 을 stdin 에서 받아오는 과정을 새로운 프로세스에서
+	
 	fork_ret = fork();
 	if (fork_ret == 0)
 	{
@@ -51,7 +51,7 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		signal(SIGQUIT, SIG_IGN);
 		write_file(&(vars->fd_here_doc), vars->temp_here_doc, \
 			O_WRONLY | O_CREAT | O_TRUNC);
-		// fprintf(stderr, "<< [%s]\n", token);
+		
 		write_here_doc(vars->fd_here_doc, token);
 		close(vars->fd_here_doc);
 		exit(EXIT_SUCCESS);

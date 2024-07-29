@@ -11,12 +11,12 @@ int	unset(t_parser_list *cmd_head, t_envp_list **envp_list)
 	{
 		if (check_key_syntax(current_node->token) == UNDEFINED_ERROR)
 		{
-			// printf ("minishell: unset: \'%s\' : not a valid identifier", current_node->token);
+			
 			current_node = current_node->next;
 			continue ;
 		}
 		remove_node_by_key(envp_list, current_node->token);
 		current_node = current_node->next;
 	}
-	return (0); // 성공시 0, 실패시 1인데, 실패하는 경우가 어떤 경우지?
+	return (0); 
 }

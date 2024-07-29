@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 21:36:25 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 22:13:10 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 
-//디버그용
+
 # include <stdio.h>
 
 void	print_full_path(char *pwd, char *str);

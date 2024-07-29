@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 21:36:09 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 22:13:10 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 
 	if (cmd->redirection_fail == 1)
 		exit(EXIT_FAILURE);
-	//check_fd("child start");
+	
 	if (cmd->redirection_in != -1)
 	{
 		dup2(cmd->redirection_in, STDIN_FILENO);
@@ -49,15 +49,15 @@ void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 	if (dup2_ret != STDOUT_FILENO)
 		close(vars->next_write);
 
-	// check_fd("cmd execve");
+	
 	pipe_built_in(vars, cmd, status);
-		// 빌트인이 아닐때 local -> path 순서로
+		
 	check_cmd(status, vars, cmd);
 	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
 		exit(EXIT_FAILURE);
-	// //fprintf(stderr, "[%s]\n", cmd->cmd_path);
-	// if(cmd->args != NULL)
-	// 	for(int i=0;cmd->args[i]!=NULL;i++)
-	// 		//fprintf(stderr, "[%s]\n", cmd->args[i]);
+	
+	
+	
+	
 	exit(EXIT_SUCCESS);
 }

@@ -40,11 +40,7 @@ typedef enum
 
 volatile sig_atomic_t g_signal;
 
-/*
-t_token_list	p;
 
-if (p.type == CMD)
- */
 
 typedef struct s_parser_list
 {
@@ -93,7 +89,7 @@ typedef struct s_envp_list
 	struct s_envp_list	*next;
 }	t_envp_list;
 
-// pipex type 추가
+
 typedef struct s_cmd
 {
 	pid_t	pid;

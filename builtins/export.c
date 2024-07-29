@@ -55,16 +55,16 @@ int	*export(t_parser_list *cmd_head, t_envp_list **envp_list)
 	current_node = cmd_head->next;
 	if (cmd_head->next == NULL)
 	{
-		// print_envp_in_export(*envp_list);
+		
 	}
 	else
 	{
 		while (current_node != NULL)
 		{
-			key_str = get_key(current_node->token); // key 규칙 추가 
-			if (check_key_syntax(key_str) == UNDEFINED_ERROR) // key규칙에 안 맞으면 에러메세지 띄어주고 다음 토큰으로 넘어 가는 듯
+			key_str = get_key(current_node->token); 
+			if (check_key_syntax(key_str) == UNDEFINED_ERROR) 
 				{
-					//printf("\'%s\' : not a valid identifier\n", current_node->token);
+					
 					free (key_str);
 					current_node = current_node->next;
 					continue ;

@@ -6,13 +6,13 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 14:59:42 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 21:37:07 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 22:13:10 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-// 빌트인이면 여기서 exit 되도록
+
 int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", sizeof("echo")) == 0)
@@ -45,12 +45,12 @@ int	check_cmd(t_status *status, t_vars *vars, t_cmd *cmd)
 			}
 			else
 			{
-				// errno = EACCES; // 나중에 빼도 되는지 확인
+				
 				perror(cmd->cmd_name);
 				exit(EACCES_EXIT_CODE);
 			}
 		}
-		// errno = ENOENT; // 나중에 빼도 되는지 확인
+		
 		perror(cmd->cmd_name);
 		exit(COMMAND_NOT_FOUND);
 	}

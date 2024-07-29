@@ -1,6 +1,6 @@
 #include "../parser.h"
-// t_parser_list *cmd_list, t_envp_list **envp_list
-// cd(head->cmd_list_head, status.pwd);
+
+
 int cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd)
 {
 	if (cmd_list->next == NULL)
