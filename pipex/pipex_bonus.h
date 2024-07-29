@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 17:48:11 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:55:05 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		make_here_doc(t_vars *vars, t_cmd *cmd, char *token);
 
 void	child(t_vars *vars, t_cmd *cmd, t_status *status);
 int		write_stderr(char *error_msg, char *name);
-void	write_stderr_exit(char *error_msg, char *name, int errorcode);
+void	write_stderr_exit(char *name, char *error_msg, int errorcode);
 char	**pipex_split(char *str, char c);
 
 int		read_file(int *fd, char *file_path, int option);

@@ -17,9 +17,13 @@
 
 # define HERE_DOC_SIGINT 10
 
+# define EACCES_EXIT_CODE 126
+# define COMMAND_NOT_FOUND 127
+
 # include <unistd.h>
 # include <sys/syslimits.h>
 # include <signal.h>
+# include <errno.h>
 typedef enum
 {
 	DEFAULT,
@@ -99,7 +103,6 @@ typedef struct s_cmd
 	char	**envp;
 	int		redirection_in;
 	int		redirection_out;
-	int		is_exist;
 	int		redirection_fail;
 	int		status;
 	int		is_end;

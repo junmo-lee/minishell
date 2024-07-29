@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:30 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:17:38 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:54:54 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	write_stderr(char *error_msg, char *name)
 	return (0);
 }
 
-void	write_stderr_exit(char *error_msg, char *name, int errorcode)
+void	write_stderr_exit(char *name, char *error_msg, int errorcode)
 {
-	ft_putstr_fd(error_msg, STDERR_FILENO);
 	ft_putstr_fd(name, STDERR_FILENO);
+	ft_putstr_fd(error_msg, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	exit(errorcode);
 }

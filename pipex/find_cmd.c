@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 14:59:42 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/28 18:14:18 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:13:22 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,37 @@ int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 
 int	check_cmd(t_vars *vars, t_cmd *cmd)
 {
-	if (access(cmd->cmd_name, F_OK) == 0)
+	if (cmd->cmd_name[0] == '.' || cmd->cmd_name[0] == '/')
 	{
-		cmd->is_exist = 1;
-		if (access(cmd->cmd_name, X_OK) == 0)
+		if (access(cmd->cmd_name, F_OK) == 0)
 		{
-			cmd->cmd_path = cmd->cmd_name;
-			return (1);
+			if (access(cmd->cmd_name, X_OK) == 0)
+			{
+				cmd->cmd_path = cmd->cmd_name;
+				return (1);
+			}
+			else
+			{
+				errno = EACCES; // 나중에 빼도 되는지 확인
+				perror(cmd->cmd_name);
+				exit(EACCES_EXIT_CODE);
+			}
 		}
+		errno = ENOENT; // 나중에 빼도 되는지 확인
+		perror(cmd->cmd_name);
+		exit(COMMAND_NOT_FOUND);
 	}
-	return (check_cmd_path(vars, cmd));
+	else
+		return (check_cmd_path(vars, cmd));
 }
 
 int	check_cmd_path(t_vars *vars, t_cmd *cmd)
 {
 	char	*temp;
 	int		i;
+	int		is_exist;
 
+	is_exist = 0;
 	i = 0;
 	while (vars->path[i] != NULL)
 	{
@@ -59,7 +73,7 @@ int	check_cmd_path(t_vars *vars, t_cmd *cmd)
 			exit(EXIT_FAILURE);
 		if (access(temp, F_OK) == 0)
 		{
-			cmd->is_exist = 1;
+			is_exist = 1;
 			if (access(temp, X_OK) == 0)
 			{
 				cmd->cmd_path = temp;
@@ -68,6 +82,16 @@ int	check_cmd_path(t_vars *vars, t_cmd *cmd)
 		}
 		free(temp);
 		i++;
+	}
+	if (is_exist == 1)
+	{
+		errno = EACCES; // 나중에 빼도 되는지 확인
+		perror(cmd->cmd_name);
+		exit(EACCES_EXIT_CODE);
+	}
+	else
+	{
+		write_stderr_exit(cmd->cmd_name, ": command not found", COMMAND_NOT_FOUND);
 	}
 	return (0);
 }

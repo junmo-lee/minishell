@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 17:46:42 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:05:45 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,7 @@ void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 	// check_fd("cmd execve");
 	pipe_built_in(vars, cmd, status);
 		// 빌트인이 아닐때 local -> path 순서로
-	if (check_cmd(vars, cmd) == 0)
-	{
-		if (cmd->is_exist == 1)
-			write_stderr_exit("Permission denied: ", cmd->cmd_name, 126);
-		else
-			write_stderr_exit("Command not found: ", cmd->cmd_name, 127);
-	}
+	check_cmd(vars, cmd);
 	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
 		exit(EXIT_FAILURE);
 	// //fprintf(stderr, "[%s]\n", cmd->cmd_path);
