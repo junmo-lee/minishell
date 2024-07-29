@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:53 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 14:51:52 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 15:30:49 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	write_here_doc(int here_doc_fd, char *limiter)
 	meet_limiter = 1;
 	while (meet_limiter != 0)
 	{
-		if (meet_limiter++ == 1)
-			ft_putstr_fd("> ", STDOUT_FILENO);
+		meet_limiter++;
 		// input = get_next_line(STDIN_FILENO);
-		input = readline("\001\033[s\002");
+		input = readline("> \001\033[s\002");
 		if (input == NULL)
 		{
 			meet_limiter = 0;

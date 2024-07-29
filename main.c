@@ -4,11 +4,13 @@
 // {
 // 	system("leaks parse");
 // }
+volatile sig_atomic_t g_signal;
 
 void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
+		g_signal = SIGINT;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -88,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 	// readline 에서 시그널 처리를 안하도록 변경
 	while (1)
 	{
+		g_signal = 0;
 		rl_catch_signals = 0;
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
@@ -115,7 +118,7 @@ int	main(int argc, char **argv, char **envp)
 				init(status.one_line, argc, argv, envp);
 
 				// 실제 line 실행부
-				run_cmd_tree(&status, head);
+				status.exit_status = run_cmd_tree(&status, head);
 				// cmd 가 하나로만 왔을때 main shell 에 영향을 미침
 				if (vars.cmd_len == 1)
 				{
@@ -129,6 +132,8 @@ int	main(int argc, char **argv, char **envp)
 						cd(head->cmd_list_head, &envp_list, status.pwd);
 
 				}
+				// "_" 변수?
+				// PWD 변수도 cd에서 추가
 			}
 			else
 			{

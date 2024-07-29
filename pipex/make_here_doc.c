@@ -12,18 +12,6 @@
 
 volatile sig_atomic_t g_signal;
 
-void	sig_here_doc(int signo)
-{
-	(void)signo;
-	g_signal = HERE_DOC_SIGINT;
-	fprintf(stderr, "sig_here_doc\n");
-	//fprintf(stderr, "sig_here_doc\n");
-	// if (signo == SIGINT)
-	// {
-	// 	write(STDERR_FILENO, "\n", 1);
-	// }
-}
-
 int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 {
 	char	*temp_dir = NULL;
@@ -63,7 +51,6 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		fprintf(stderr, "<< [%s]\n", token);
 		write_here_doc(vars->fd_here_doc, token);
 		close(vars->fd_here_doc);
-		fprintf(stderr, "child g_signal : %d\n", g_signal);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -72,20 +59,12 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(fork_ret, &process_status, 0);
-		fprintf(stderr, "g_signal : %d\n", g_signal);
+		signal(SIGINT, stdin_handler);
+		signal(SIGQUIT, stdin_handler);
 		if (WIFSIGNALED(process_status))
-		{
-		// if (g_signal == HERE_DOC_SIGINT)
-		// {
-			signal(SIGINT, stdin_handler);
-			signal(SIGQUIT, stdin_handler);
-			fprintf(stderr, "heredoc process exit with signal : %d\n", WTERMSIG(process_status));
 			return (WTERMSIG(process_status));
-		}
 		else
 		{
-			signal(SIGINT, stdin_handler);
-			signal(SIGQUIT, stdin_handler);
 			read_file(&(cmd->redirection_in), vars->temp_here_doc, O_RDONLY);
 			return (0);
 		}
