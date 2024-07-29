@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 17:40:39 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:18:06 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	pipe_cd(t_vars *vars, t_cmd *cmd)
 		{
 			exit(EXIT_SUCCESS);
 		}
-		write_stderr("Permission denied: ", cmd->args[1]);
+		perror(cmd->args[1]);
 		exit(EXIT_FAILURE);
 	}
-	write_stderr("No such file or directory: ", cmd->args[1]);
+	perror(cmd->args[1]);
 	exit(EXIT_FAILURE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:59 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 17:47:56 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:16:07 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 int	read_file(int *fd, char *file_path, int option)
 {
 	*fd = open(file_path, option);
+	if (*fd == -1)
+	{
+		perror(file_path);
+		return (-1);
+	}
 	if (access(file_path, F_OK) == 0)
 	{
 		if (access(file_path, R_OK) == 0)
 			return (0);
 		else
 		{
-			write_stderr("Permission denied: ", file_path);
+			perror(file_path);
 			return (1);
 		}
 	}
 	else
-	{
-		write_stderr("No such file or directory: ", file_path);
-		return (1);
-	}
+		perror(file_path);
+	return (1);
 }
