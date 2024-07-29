@@ -41,12 +41,12 @@ void	printf_parsed_tree(t_parsed_tree *head)
 		parser_node = current_node->cmd_list_head;
 		while (parser_node != NULL)
 		{
-			if (parser_node->type == STRING)
-			fprintf(stderr, "	%s		->STRING\n", parser_node->token);
-			else if (parser_node->type == REDIRECTION)
-			fprintf(stderr, "	%s		->REDIRECTION\n", parser_node->token);
-			else if (parser_node->type == HERE_DOC)
-			fprintf(stderr, "	%s		->HERE_DOC\n", parser_node->token);
+			// if (parser_node->type == STRING)
+			// fprintf(stderr, "	%s		->STRING\n", parser_node->token);
+			// else if (parser_node->type == REDIRECTION)
+			// fprintf(stderr, "	%s		->REDIRECTION\n", parser_node->token);
+			// else if (parser_node->type == HERE_DOC)
+			// fprintf(stderr, "	%s		->HERE_DOC\n", parser_node->token);
 			current_node->arg_len++;
 			parser_node = parser_node->next;
 		}

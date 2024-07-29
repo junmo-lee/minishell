@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 15:39:15 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 16:23:53 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	wait_processes(t_vars *vars, t_cmd *cmd)
 
 int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 {
-	t_cmd 			cmd[1024]; // 나중에 연결리스트 형태로 변경?
+	t_cmd 			cmd[OPEN_MAX]; // 나중에 연결리스트 형태로 변경?
 	t_parsed_tree	*current_node;
 	t_parser_list	*parser_node;
 	int				index;
