@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		//signal(SIGQUIT, signal_handler);
-		str = readline("prompt : \033[s");
+		str = readline("prompt : \001\033[s\002");
 		// str = readline("prompt : ");
 		if (str == NULL)
 		{
