@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 15:15:47 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/29 15:17:44 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 				{
 				case SIGINT:
 					fprintf(stderr, "here_doc SIGINT\n");
-					// write(STDOUT_FILENO, "\n", 1);
+					write(STDOUT_FILENO, "\n", 1);
 					// rl_on_new_line();
 					// rl_replace_line("", 0);
 					// rl_redisplay();
@@ -138,17 +138,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 					unlink(vars->temp_here_doc);
 					free(vars->temp_here_doc);
 					return (SIGINT_EXIT_CODE);
-					break;
-				case SIGQUIT:
-					fprintf(stderr, "here_doc SIGQUIT\n");
-					// write(STDOUT_FILENO, "\n", 1);
-					// rl_on_new_line();
-					// rl_replace_line("", 0);
-					// rl_redisplay();
-					close_all_fd(vars, cmd);
-					unlink(vars->temp_here_doc);
-					free(vars->temp_here_doc);
-					return (SIGQUIT_EXIT_CODE);
 					break;
 				default:
 					fprintf(stderr, "g_signal : %d\n", g_signal);
