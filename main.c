@@ -147,13 +147,16 @@ int	main(int argc, char **argv, char **envp)
 					else if (ft_strncmp(head->cmd_list_head->token, "exit", 5) == 0)
 					{
 						if (head->cmd_list_head->next == NULL)
-							exit_val = 0;
-						else if (atoi_check_num(head->cmd_list_head->next->token, &exit_val))
-							exit_val = !(!(head->cmd_list_head->next->next));
-						else
-							exit_val = 255;
-						clear_parsed_tree(&head);
-						exit(exit_val);
+							exit(0);
+						else if (atoi_check_num(head->cmd_list_head->next->token, &exit_val)) // 첫번째가 숫자인지 확인 + 숫자를 넣음
+						{
+							if (head->cmd_list_head->next->next == NULL) // 두번째 넘어가 존재하는지 확인
+								exit((unsigned char)exit_val); // 존재하지 않는다면 그 숫자로 리턴
+							else
+								status.exit_status = 1; // (exit \n bash: exit: too many arguments) exit는 되면 안됨, 
+						}
+						else // 처음 오는 게 숫자가 아닐때
+							exit(255); //exit\n bash: exit: a: numeric argument required
 					}
 				}
 				// "_" 변수?
