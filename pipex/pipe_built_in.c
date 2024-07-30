@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 18:18:06 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:17:40 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,16 +130,23 @@ void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status)
 	exit(EXIT_SUCCESS);
 }
 
+void	pipe_env_print_error(char *str)
+{
+	ft_putstr_fd("env: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+}
+
 void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	int			i;
-	t_envp_list *current_node;
+	t_envp_list	*current_node;
 
 	current_node = status->env_list;
 	i = 0;
 	if (cmd->args[1] != NULL)
 	{
-		printf ("env: %s: No such file or directory\n", cmd->args[1]);
+		pipe_env_print_error(cmd->args[1]);
 		return ;
 	}
 	while (current_node != NULL)
@@ -149,10 +156,10 @@ void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
 			current_node = current_node->next;
 			continue ;
 		}
-		write (1, current_node->key, ft_strlen(current_node->key));
-		write (1, "=", 1);
-		write (1, current_node->value, ft_strlen(current_node->value));
-		write (1, "\n", 1);
+		write(1, current_node->key, ft_strlen(current_node->key));
+		write(1, "=", 1);
+		write(1, current_node->value, ft_strlen(current_node->value));
+		write(1, "\n", 1);
 		current_node = current_node->next;
 	}
 	vars++;
