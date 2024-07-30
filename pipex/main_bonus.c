@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 21:48:15 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:57:55 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	ft_memset(cmd, 0, sizeof(cmd));
 	current_node = tree;
 	index = 0; // cmd 0, cmd 1
-
+	if (tree->cmd_list_head == NULL)
+		return (EXIT_SUCCESS);
 	while (current_node != NULL)
 	{
 		(cmd + index)->redirection_in = -1;
@@ -193,10 +194,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	count = 0;
 	while (count < vars->cmd_len)
 	{
-		/*
-		//cmd_init(vars, (cmd + count), count, \
-			vars->argv[count + 2 + vars->is_here_doc]);
-		*/
 		(cmd + count)->envp = vars->envp;
 		// //fprintf(stderr, "cmd%d : %d %d\n",count, (cmd + count)->redirection_in, (cmd + count)->redirection_out);
 

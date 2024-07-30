@@ -47,6 +47,8 @@ void	clear_parsed_tree(t_parsed_tree **head)
 	t_parsed_tree	*current_node;
 	t_parsed_tree	*next_node;
 
+	if (head == NULL)
+		return ;
 	current_node = *(head);
 	while (current_node != NULL)
 	{

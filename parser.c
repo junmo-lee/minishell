@@ -36,8 +36,8 @@ t_parsed_tree	*parser(char *str, t_status *status, t_envp_list *envp_list)
 	}
 	else
 		parsed_tree = make_parsed_tree(parse_list);
-	free(str);
-	str = NULL;
+	if (parsed_tree->cmd_list_head == NULL && parsed_tree->error == NO_ERROR)
+		parsed_tree->cmd_len = 0;
 	clear_token_list(&token_list);
 	return (parsed_tree);
 }
