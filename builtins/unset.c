@@ -4,6 +4,8 @@ int	unset(t_parser_list *cmd_head, t_envp_list **envp_list)
 {
 	t_parser_list	*current_node;
 
+	if (cmd_head == NULL || envp_list == NULL) // 널 가드 추가 필요한가?
+		return (0);
 	current_node = cmd_head->next;
 	if (current_node == NULL)
 		return (0);

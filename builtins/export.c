@@ -32,6 +32,8 @@ int	check_key_syntax(char *key_str)
 {
 	int	index;
 
+	if (key_str == NULL) //  널 가드 추가
+		return (UNDEFINED_ERROR);
 	index = 0;
 	if (ft_strlen(key_str) == 0)
 		return (UNDEFINED_ERROR);

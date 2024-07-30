@@ -75,6 +75,8 @@ t_envp_list	*get_envp(char **envp)
 
 	index = 0;
 	head = NULL;
+	if (envp == NULL)
+		return (NULL);
 	while (envp[index] != NULL)
 	{
 		key = get_key(envp[index]);

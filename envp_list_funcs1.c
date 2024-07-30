@@ -17,6 +17,8 @@ static void	destroy_envp_list_node(t_envp_list **node)
 {
 	t_envp_list	*current_node;
 
+	if (node == NULL)
+		return ;
 	current_node = *(node);
 	ft_memset(current_node->key, 0, ft_strlen(current_node->key));
 	free(current_node->key);
@@ -26,6 +28,7 @@ static void	destroy_envp_list_node(t_envp_list **node)
 		free(current_node->value);
 	}
 	free(current_node);
+	current_node = NULL;
 }
 
 void	clear_envp_list(t_envp_list **head)
@@ -33,6 +36,8 @@ void	clear_envp_list(t_envp_list **head)
 	t_envp_list	*current_node;
 	t_envp_list	*next_node;
 
+	if (head == NULL)
+		return ;
 	current_node = *(head);
 	while (current_node != NULL)
 	{
