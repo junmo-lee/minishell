@@ -109,6 +109,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(str);
 			head = parser(str, &status, envp_list);
+			bubble_sort(envp_list);
 			init(status.one_line, envp_list);
 			// if (head->cmd_list_head == NULL)
 			// {
