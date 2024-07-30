@@ -117,6 +117,8 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 				// fprintf(stderr, "here_doc ret : %d\n", make_here_doc(vars, cmd + index, parser_node->token));
 				if (make_here_doc(vars, cmd + index, parser_node->token) == SIGINT)
 				{
+					free((cmd + index)->args);
+					free(vars->temp_here_doc);
 					return (EXIT_FAILURE);
 				}
 			}
