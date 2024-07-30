@@ -4,7 +4,6 @@ void	print_envp_in_export(t_envp_list *envp_list)
 {
 	while (envp_list != NULL)
 	{
-		write (1, "declare -x ", 11);
 		write (1, envp_list->key, ft_strlen(envp_list->key));
 		if (envp_list->value != NULL)
 		{
