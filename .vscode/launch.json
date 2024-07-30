@@ -8,7 +8,7 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "${workspaceFolder}/parse",
+			"program": "${workspaceFolder}/minishell",
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "Build Debug"
 		}

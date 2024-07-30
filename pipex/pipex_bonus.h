@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:56:28 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 21:36:25 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:18:46 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 void	print_full_path(char *pwd, char *str);
 char	*path_join(char const *s1, char const *s2);
-void	init(t_vars *vars, int argc, char *argv[], char *envp[]);
+void	init(t_vars *vars, t_envp_list *env_list);
 
 int		pipe_built_in(t_vars *var, t_cmd *cmd, t_status *status);
 int		check_cmd(t_status *status, t_vars *vars, t_cmd *cmd);
@@ -56,7 +56,7 @@ int		read_file(int *fd, char *file_path, int option);
 int		write_file(int *fd, char *file_path, int option);
 void	write_here_doc(int here_doc_fd, char *limiter);
 
-int		free_strs(char *strs[], int exit_code);
+int		free_strs(char **strs, int exit_code);
 void	free_cmds(t_cmd *cmd);
 
 void	signal_handler(int signo);

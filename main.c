@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 	int				exit_val;
 	
 	ft_memset(&status, 0, sizeof(status));
+	ft_memset(&vars, 0, sizeof(vars));
 	// main의 지역변수로 vars 관리
 	status.one_line = &vars;
 
@@ -108,14 +109,20 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(str);
 			head = parser(str, &status, envp_list);
+			init(status.one_line, status.env_list);
+			// if (head->cmd_list_head == NULL)
+			// {
+			// 	clear_parsed_tree(&head);
+			// 	continue ;
+			// }
 			// printf_parsed_list(parsed_list);
 			// clear_parse_list(&parsed_list);
 			if (head->error == NO_ERROR)
 			{
 				printf_parsed_tree(head);
+
 				// 명령어 실행
 				// vars 에 argc, argv, envp, path를 넣는 단계
-				init(status.one_line, argc, argv, envp);
 
 				// 실제 line 실행부
 				status.exit_status = run_cmd_tree(&status, head);
@@ -146,8 +153,6 @@ int	main(int argc, char **argv, char **envp)
 						clear_parsed_tree(&head);
 						exit(exit_val);
 					}
-
-
 				}
 				// "_" 변수?
 				// PWD 변수도 cd에서 추가
@@ -163,9 +168,11 @@ int	main(int argc, char **argv, char **envp)
 				else if (head->error == PIPE_ERROR)
 				fprintf(stderr, "PIPE_ERROR\n");
 			}
-			clear_parsed_tree(&head); // leaks 잡은거 merge할때 안 합쳐 진듯
 			// free(str);
+			clear_parsed_tree(&head); // leaks 잡은거 merge할때 안 합쳐 진듯
 		}
+		free(str);
+		str = NULL;
 	}
 	(void)argc;
 	(void)argv;

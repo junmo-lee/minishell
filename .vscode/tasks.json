@@ -34,7 +34,7 @@
             "label": "Build Debug",
             "type": "shell",
             "command": "make",
-			"args": ["-j4", "parse", "DEBUG_FLAG=1"],
+			"args": ["-j4", "all", "DEBUG_FLAG=1"],
             "group": {
                 "kind": "build",
                 "isDefault": true

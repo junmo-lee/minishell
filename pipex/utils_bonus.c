@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:30 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 19:54:54 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:48:58 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	write_stderr_exit(char *name, char *error_msg, int errorcode)
 	exit(errorcode);
 }
 
-int	free_strs(char *strs[], int exit_code)
+int	free_strs(char **strs, int exit_code)
 {
 	size_t	i;
 	char	**temp;
