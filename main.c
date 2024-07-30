@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(str);
 			head = parser(str, &status, envp_list);
-			init(status.one_line, status.env_list);
+			init(status.one_line, envp_list);
 			// if (head->cmd_list_head == NULL)
 			// {
 			// 	clear_parsed_tree(&head);
@@ -125,6 +125,7 @@ int	main(int argc, char **argv, char **envp)
 				// vars 에 argc, argv, envp, path를 넣는 단계
 
 				// 실제 line 실행부
+				status.env_list = envp_list;
 				status.exit_status = run_cmd_tree(&status, head);
 				if (vars.is_here_doc == 1)
 				{

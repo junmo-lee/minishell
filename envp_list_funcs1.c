@@ -51,6 +51,7 @@ void	remove_node_by_key(t_envp_list **head, char *key_str)
 {
 	t_envp_list	*current_node;
 	t_envp_list	*prev_node;
+	t_envp_list	*next_node;
 
 	current_node = *(head);
 	prev_node = *(head);
@@ -64,14 +65,15 @@ void	remove_node_by_key(t_envp_list **head, char *key_str)
 	{
 		while (current_node != NULL)
 		{
+			next_node = current_node->next;
 			if (ft_strncmp(current_node->key, key_str, \
 			ft_strlen(current_node->key) + 1) == 0)
 			{
-				prev_node->next = current_node->next;
 				destroy_envp_list_node(&current_node);
+				prev_node->next = next_node;
 			}
 			prev_node = current_node;
-			current_node = current_node->next;
+			current_node = next_node;
 		}
 	}
 }
