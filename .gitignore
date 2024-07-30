@@ -7,4 +7,4 @@ LAST_ALL
 .parse_relink
 parse_relink
 a.out.dSYM/
-parse
+minishell
