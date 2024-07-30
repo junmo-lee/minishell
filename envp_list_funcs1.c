@@ -49,31 +49,29 @@ void	clear_envp_list(t_envp_list **head)
 
 void	remove_node_by_key(t_envp_list **head, char *key_str)
 {
-	t_envp_list	*current_node;
+	t_envp_list	*node;
 	t_envp_list	*prev_node;
 	t_envp_list	*next_node;
 
-	current_node = *(head);
+	node = *(head);
 	prev_node = *(head);
-	if (ft_strncmp(current_node->key, key_str, \
-	ft_strlen(current_node->key) + 1) == 0)
+	if (ft_strncmp(node->key, key_str, ft_strlen(node->key) + 1) == 0)
 	{
-		*(head) = current_node->next;
-		destroy_envp_list_node(&current_node);
+		*(head) = node->next;
+		destroy_envp_list_node(&node);
 	}
 	else
 	{
-		while (current_node != NULL)
+		while (node != NULL)
 		{
-			next_node = current_node->next;
-			if (ft_strncmp(current_node->key, key_str, \
-			ft_strlen(current_node->key) + 1) == 0)
+			next_node = node->next;
+			if (ft_strncmp(node->key, key_str, ft_strlen(node->key) + 1) == 0)
 			{
-				destroy_envp_list_node(&current_node);
+				destroy_envp_list_node(&node);
 				prev_node->next = next_node;
 			}
-			prev_node = current_node;
-			current_node = next_node;
+			prev_node = node;
+			node = next_node;
 		}
 	}
 }
