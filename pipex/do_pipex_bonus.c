@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 21:36:09 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/30 20:05:34 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 		exit(EXIT_FAILURE);
 	if (dup2_ret != STDOUT_FILENO)
 		close(vars->next_write);
-
 	// check_fd("cmd execve");
 	pipe_built_in(vars, cmd, status);
 		// 빌트인이 아닐때 local -> path 순서로

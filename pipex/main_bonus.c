@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/30 18:32:53 by junmlee          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../parser.h"
 #include <signal.h>
 // 디버그용
@@ -223,7 +211,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 				vars->next_write = dup(STDOUT_FILENO);
 			}
 		}
-		
 		// in 은 부모와 자식 다르게 설정
 		fork_ret = fork();
 		if (fork_ret == -1)

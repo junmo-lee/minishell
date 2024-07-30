@@ -107,6 +107,7 @@ typedef struct s_cmd
 	int		status;
 	int		is_end;
 	int		is_built_in;
+	int		is_exist;
 }	t_cmd;
 
 typedef struct s_vars

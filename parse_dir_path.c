@@ -89,6 +89,7 @@ void	print_full_path(char *pwd, char *str)
 	}
 	write(STDERR_FILENO, buf, ft_strlen(buf));
 	free_strs(temp_list, EXIT_SUCCESS);
+	write_stderr_exit(NULL, ": Permission denied", EACCES_EXIT_CODE);
 }
 
 void	update_pwd(char *pwd, char *str)
