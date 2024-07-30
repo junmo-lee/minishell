@@ -170,6 +170,10 @@ int	main(int argc, char **argv, char **envp)
 				fprintf(stderr, "PIPE_ERROR\n");
 			}
 			// free(str);
+			if (vars.path != NULL)
+				free_strs(vars.path, EXIT_SUCCESS);
+			if (vars.envp != NULL)
+				free_strs(vars.envp, EXIT_SUCCESS);
 			clear_parsed_tree(&head); // leaks 잡은거 merge할때 안 합쳐 진듯
 		}
 		free(str);

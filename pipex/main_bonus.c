@@ -239,10 +239,7 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	}
 
 	wait_processes(vars, cmd);
-	if (vars->path != NULL)
-		free_strs(vars->path, EXIT_SUCCESS);
-	if (vars->envp != NULL)
-		free_strs(vars->envp, EXIT_SUCCESS);
+
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");
 	return (status->exit_status);
