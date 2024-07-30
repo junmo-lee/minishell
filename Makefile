@@ -1,7 +1,7 @@
-.DEFAULT_GOAL := parse
+.DEFAULT_GOAL := minishell
 
 NAME 	= .parse_relink
-PARSE 	= parse
+PARSE 	= minishell
 AR 		= ar
 
 LIBFT 	= libft/libft.a
