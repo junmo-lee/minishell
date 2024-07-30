@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 18:53:05 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/30 14:57:55 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:51:28 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,9 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	}
 
 	wait_processes(vars, cmd);
-	free_strs(vars->path, EXIT_SUCCESS);
+	// free_strs(vars->path, EXIT_SUCCESS);
+	// if (vars->envp != NULL)
+	// 	free_strs(vars->envp, EXIT_SUCCESS);
 	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");
 	return (status->exit_status);

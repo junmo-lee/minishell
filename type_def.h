@@ -111,8 +111,6 @@ typedef struct s_cmd
 
 typedef struct s_vars
 {
-	int				argc;
-	char			**argv;
 	char			**envp;
 	char			**path;
 	int				pipe_fd[2];
