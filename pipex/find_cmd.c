@@ -4,7 +4,15 @@
 int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	if (ft_strncmp(cmd->cmd_name, "echo", sizeof("echo")) == 0)
-		pipe_echo(vars, cmd);
+	{
+		if (cmd->args[1] == NULL)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			exit(EXIT_SUCCESS);
+		}
+		else
+			pipe_echo(vars, cmd);
+	}
 	else if (ft_strncmp(cmd->cmd_name, "cd", sizeof("cd")) == 0)
 		pipe_cd(vars, cmd);
 	else if (ft_strncmp(cmd->cmd_name, "pwd", sizeof("pwd")) == 0)

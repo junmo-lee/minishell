@@ -1,25 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe_built_in.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 15:42:24 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/30 15:17:40 by junmlee          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../parser.h"
 
-/*
-					if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
-						export(head->cmd_list_head, &envp_list);
-					else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
-						unset(head->cmd_list_head, &envp_list);
-					else if (ft_strncmp(head->cmd_list_head->token, "env", 4) == 0)
-						env(head->cmd_list_head, &envp_list);
-*/
 void	pipe_echo(t_vars *vars, t_cmd *cmd)
 {
 	int	option_flag;
