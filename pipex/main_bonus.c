@@ -7,10 +7,12 @@ void	stdin_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
+		g_signal = SIGINT;
 		write(STDOUT_FILENO, "^C\n", 4);
 	}
 	if (signo == SIGQUIT)
 	{
+		g_signal = SIGQUIT;
 		write(STDOUT_FILENO, "^\\Quit: 3\n", 11);
 	}
 }
@@ -35,7 +37,7 @@ int	get_exit_status(int status)
 	return (((*(int *)&(status)) >> 8) & 0x000000ff);
 }
 
-void	wait_processes(t_vars *vars, t_cmd *cmd)
+int	wait_processes(t_vars *vars, t_cmd *cmd)
 {
 	int	count;
 	int	exit_count;
@@ -44,6 +46,7 @@ void	wait_processes(t_vars *vars, t_cmd *cmd)
 	exit_count = 0;
 	while (exit_count < vars->cmd_len)
 	{
+
 		count = 0;
 		while (count < vars->cmd_len)
 		{
@@ -66,6 +69,12 @@ void	wait_processes(t_vars *vars, t_cmd *cmd)
 			count++;
 		}
 	}
+	if (g_signal == SIGINT)
+		return (SIGINT_EXIT_CODE);
+	else if (g_signal == SIGQUIT)
+		return (SIGQUIT_EXIT_CODE);
+	else
+		return (0);
 }
 
 int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
@@ -177,9 +186,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	int		count;
 	pid_t	fork_ret;
 
-	signal(SIGINT, stdin_handler);
-	signal(SIGQUIT, stdin_handler);
-
 	vars->prev_read = dup(STDIN_FILENO);
 	count = 0;
 	while (count < vars->cmd_len)
@@ -240,9 +246,9 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 		count++;
 	}
 
-	wait_processes(vars, cmd);
-
-	status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
+	status->exit_status = wait_processes(vars, cmd);
+	if (status->exit_status == 0)
+		status->exit_status = get_exit_status((cmd + (vars->cmd_len - 1))->status);
 	// check_fd("main");
 	return (status->exit_status);
 	//return (0);

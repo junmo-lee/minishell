@@ -49,7 +49,7 @@ void	free_cmds(t_cmd *cmd);
 
 void	signal_handler(int signo);
 void	stdin_handler(int signo);
-void	wait_processes(t_vars *vars, t_cmd *cmd);
+int		wait_processes(t_vars *vars, t_cmd *cmd);
 int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
 
 #endif
