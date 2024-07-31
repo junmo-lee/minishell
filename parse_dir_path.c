@@ -21,10 +21,9 @@ char	**make_part(char ***tpwd, char *pwd, char ***tstr, char *str)
 	*tstr = ft_split(str, '/');
 	if (*tpwd == NULL || *tstr == NULL)
 		exit(EXIT_FAILURE);
-	ret = malloc(sizeof(char *) * (strs_len(*tpwd) + strs_len(*tstr) + 3));
+	ret = ft_calloc(strs_len(*tpwd) + strs_len(*tstr) + 3, sizeof(char *));
 	if (ret == NULL)
 		exit(EXIT_FAILURE);
-	ft_memset(ret, 0, sizeof(ret));
 	i = 0;
 	if (str[0] != '/')
 	{
@@ -100,7 +99,7 @@ void	update_pwd(char *pwd, char *str)
 	ft_memset(pwd, 0, PATH_MAX);
 	if (temp_list[0] == NULL)
 	{
-		free(temp_list);
+		free_strs(temp_list, EXIT_SUCCESS);
 		pwd[0] = '/';
 	}
 	else
