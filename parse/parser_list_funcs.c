@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../parser.h"
 
 t_parser_list	*create_parse_node(char *str, t_token_list *token_s)
 {

@@ -11,18 +11,20 @@ LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS 	= -Wall -Wextra -Werror 
+
+PARSE_DIR = ./parse/
 
 SRCS_PARSE	= \
 	main.c \
-	parser.c \
-	parser_list_funcs.c parsed_tree_funcs.c token_list_funcs.c \
-	check_syntax_funcs.c make_parsed_tree.c \
-	envp_list_funcs1.c envp_list_funcs2.c \
-	tokenize_string_1.c tokenize_string_2.c \
-	expand_env_vars_1.c expand_env_vars_2.c \
-	combine_expanded_tokens.c atoi_check_num.c \
-	check_fd.c
+	$(PARSE_DIR)parser.c \
+	$(PARSE_DIR)parser_list_funcs.c $(PARSE_DIR)parsed_tree_funcs.c $(PARSE_DIR)token_list_funcs.c \
+	$(PARSE_DIR)check_syntax_funcs.c $(PARSE_DIR)make_parsed_tree.c \
+	$(PARSE_DIR)envp_list_funcs1.c $(PARSE_DIR)envp_list_funcs2.c \
+	$(PARSE_DIR)tokenize_string_1.c $(PARSE_DIR)tokenize_string_2.c \
+	$(PARSE_DIR)expand_env_vars_1.c $(PARSE_DIR)expand_env_vars_2.c \
+	$(PARSE_DIR)combine_expanded_tokens.c \
+	atoi_check_num.c check_fd.c \
 
 SRCS_PIPE	= \
 	pipex/find_cmd.c pipex/make_here_doc.c \

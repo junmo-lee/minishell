@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../parser.h"
 
 static void	init_info_struct(t_info *info_s)
 {
