@@ -124,6 +124,8 @@ int	main(int argc, char **argv, char **envp)
 				// vars 에 argc, argv, envp, path를 넣는 단계
 
 				// 실제 line 실행부
+				g_signal = 0;
+				status.exit_status = 0;
 				status.env_list = envp_list;
 				status.exit_status = run_cmd_tree(&status, head);
 				if (vars.is_here_doc == 1)

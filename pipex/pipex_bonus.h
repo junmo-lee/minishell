@@ -46,10 +46,12 @@ void	write_here_doc(int here_doc_fd, char *limiter);
 
 int		free_strs(char **strs, int exit_code);
 void	free_cmds(t_cmd *cmd);
+int		dup_close(int *dst, int *src_close);
 
 void	signal_handler(int signo);
 void	stdin_handler(int signo);
 int		wait_processes(t_vars *vars, t_cmd *cmd);
 int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
+int		tree_parse(t_parsed_tree *tree, t_vars *vars, t_cmd *cmd);
 
 #endif
