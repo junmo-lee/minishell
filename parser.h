@@ -87,6 +87,9 @@ int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
 	// cd
 int 			cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd);
 
+	// exit
+int				builtin_exit(t_parser_list *head_next, t_status *status);
+
 // check_fd.c : fd 확인용
 int check_fd(char *str);
 

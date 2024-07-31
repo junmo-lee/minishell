@@ -148,11 +148,28 @@ void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
 
 void	pipe_exit(t_vars *vars, t_cmd *cmd)
 {
-	unsigned char	exit_code;
+	int	exit_code;
 
 	vars++;
 	if (cmd->args[1] == NULL)
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
-	exit_code = ft_atoi(cmd->args[1]);
-	exit(exit_code);
+	}
+	else if (atoi_check_num(cmd->args[1], &exit_code)) // 첫번째가 숫자인지 확인 + 숫자를 넣음
+	{
+		if (cmd->args[2] == NULL) // 두번째 넘어가 존재하는지 확인
+			exit((unsigned char)(exit_code)); // 존재하지 않는다면 그 숫자로 리턴
+		else
+		{
+			ft_putstr_fd("exit\nexit: too many arguments\n", STDERR_FILENO);
+			exit(EXIT_FAILURE);
+			//status->exit_status = 1; // (exit \n bash: exit: too many arguments) exit는 되면 안됨, 
+		}
+	}
+	else // 처음 오는 게 숫자가 아닐때
+	{
+		ft_putstr_fd("exit\nexit: a: numeric argument required\n", STDERR_FILENO);
+		exit(EXIT_NUMERIC); //exit\n bash: exit: a: numeric argument required
+	}
 }

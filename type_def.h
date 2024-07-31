@@ -19,6 +19,7 @@
 
 # define EACCES_EXIT_CODE 126
 # define COMMAND_NOT_FOUND 127
+# define EXIT_NUMERIC 255
 
 # include <unistd.h>
 # include <sys/syslimits.h>

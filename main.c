@@ -59,7 +59,6 @@ int	main(int argc, char **argv, char **envp)
 	t_vars			vars;
 	t_status		status;
 	t_envp_list		*envp_list;
-	int				exit_val;
 	
 	ft_memset(&status, 0, sizeof(status));
 	ft_memset(&vars, 0, sizeof(vars));
@@ -145,19 +144,7 @@ int	main(int argc, char **argv, char **envp)
 					else if (ft_strncmp(head->cmd_list_head->token, "cd", 3) == 0)
 						cd(head->cmd_list_head, &envp_list, status.pwd);
 					else if (ft_strncmp(head->cmd_list_head->token, "exit", 5) == 0)
-					{
-						if (head->cmd_list_head->next == NULL)
-							exit(0);
-						else if (atoi_check_num(head->cmd_list_head->next->token, &exit_val)) // 첫번째가 숫자인지 확인 + 숫자를 넣음
-						{
-							if (head->cmd_list_head->next->next == NULL) // 두번째 넘어가 존재하는지 확인
-								exit((unsigned char)exit_val); // 존재하지 않는다면 그 숫자로 리턴
-							else
-								status.exit_status = 1; // (exit \n bash: exit: too many arguments) exit는 되면 안됨, 
-						}
-						else // 처음 오는 게 숫자가 아닐때
-							exit(255); //exit\n bash: exit: a: numeric argument required
-					}
+						builtin_exit(head->cmd_list_head->next, &status);
 				}
 				// "_" 변수?
 				// PWD 변수도 cd에서 추가
