@@ -9,6 +9,8 @@
 # define REDIRECTION_ERROR 3
 # define PIPE_ERROR 4
 
+# define EXIT_BREAK 2
+
 # define STATUS_SUCCESS 0x0
 # define STATUS_FAILURE 0x0000100
 

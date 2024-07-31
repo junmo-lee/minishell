@@ -90,7 +90,8 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree)
 	ft_memset(cmd, 0, sizeof(cmd));
 	if (tree->cmd_list_head == NULL)
 		return (EXIT_SUCCESS);
-	tree_parse(tree, vars, cmd);
+	if (tree_parse(tree, vars, cmd) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	// while (current_node != NULL)
 	// {
 	// 	(cmd + index)->redirection_in = -1;

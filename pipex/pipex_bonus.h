@@ -53,5 +53,7 @@ void	stdin_handler(int signo);
 int		wait_processes(t_vars *vars, t_cmd *cmd);
 int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
 int		tree_parse(t_parsed_tree *tree, t_vars *vars, t_cmd *cmd);
+int		list_parse(t_vars *vars, t_cmd *cmd, t_parsed_tree *current_node);
+int		node_parse(t_vars *vars, t_cmd *cmd, t_parser_list	**cur, int *arg_index);
 
 #endif

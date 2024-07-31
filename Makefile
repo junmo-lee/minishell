@@ -26,7 +26,8 @@ SRCS_PARSE	= \
 
 SRCS_PIPE	= \
 	pipex/find_cmd.c pipex/make_here_doc.c \
-	pipex/do_pipex_bonus.c pipex/main_bonus.c pipex/pipe_tree_parse.c \
+	pipex/do_pipex_bonus.c pipex/main_bonus.c \
+	pipex/pipe_tree_parse.c pipex/pipe_node_parse.c \
 	pipex/read_file_bonus.c  pipex/write_file_bonus.c \
 	pipex/utils_bonus.c pipex/pipex_init_bonus.c \
 	pipex/path_join_bonus.c pipex/pipex_split_bonus.c 
