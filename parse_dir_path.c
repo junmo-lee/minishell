@@ -21,7 +21,7 @@ char	**make_part(char ***tpwd, char *pwd, char ***tstr, char *str)
 	*tstr = ft_split(str, '/');
 	if (*tpwd == NULL || *tstr == NULL)
 		exit(EXIT_FAILURE);
-	ret = malloc(sizeof(char *) * (strs_len(*tpwd) + strs_len(*tstr) + 1));
+	ret = malloc(sizeof(char *) * (strs_len(*tpwd) + strs_len(*tstr) + 3));
 	if (ret == NULL)
 		exit(EXIT_FAILURE);
 	ft_memset(ret, 0, sizeof(ret));
@@ -74,6 +74,8 @@ void	pwd_cat_temp_list(char *pwd, char **temp_list, int depth)
 	i = 0;
 	while (i < depth)
 	{
+		if (temp_list[i] == NULL)
+			return ;
 		len = ft_strlen(pwd);
 		pwd[len] = '/';
 		pwd[len + 1] = '\0';
@@ -81,6 +83,7 @@ void	pwd_cat_temp_list(char *pwd, char **temp_list, int depth)
 			ft_strlen(pwd) + ft_strlen(temp_list[i]) + 1);
 		i++;
 	}
+	pwd[ft_strlen(pwd)] = '\0';
 }
 
 void	update_pwd(char *pwd, char *str)
@@ -94,7 +97,7 @@ void	update_pwd(char *pwd, char *str)
 		return ;
 	temp_list = parse_dir(pwd, str);
 	depth = strs_len(temp_list);
-	ft_memset(pwd, 0, ft_strlen(pwd));
+	ft_memset(pwd, 0, PATH_MAX);
 	if (temp_list[0] == NULL)
 	{
 		free(temp_list);

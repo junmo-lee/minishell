@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:43 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/30 17:52:48 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:57:50 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ char	*make_str_env(char *key, char *value)
 	const int		key_len = ft_strlen(key);
 	const int		value_len = ft_strlen(value);
 
-	ret = malloc(sizeof(char) * (key_len + value_len + 2));
-	ft_memset(ret, 0, ft_strlen(ret));
+	ret = ft_calloc(key_len + value_len + 2, sizeof(char));
 	ft_strlcat(ret, key, key_len + value_len + 2);
 	ret[key_len] = '=';
 	ft_strlcat(ret, value, key_len + value_len + 2);

@@ -40,6 +40,7 @@ void	pipe_cd(t_vars *vars, t_cmd *cmd)
 		{
 			exit(EXIT_SUCCESS);
 		}
+		ft_putstr_fd("cd: ", STDERR_FILENO);
 		perror(cmd->args[1]);
 		exit(EXIT_FAILURE);
 	}

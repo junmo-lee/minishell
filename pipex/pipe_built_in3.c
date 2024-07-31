@@ -9,6 +9,13 @@ void	pipe_export_print(t_cmd *cmd, t_status *status)
 	}
 }
 
+void	pipe_export_error(char *args)
+{
+	ft_putstr_fd("export: `", STDERR_FILENO);
+	ft_putstr_fd(args, STDERR_FILENO);
+	ft_putstr_fd(" : not a valid identifier\n", STDERR_FILENO);
+}
+
 void	pipe_export(t_cmd *cmd, t_status *status)
 {
 	int		i;
@@ -21,7 +28,7 @@ void	pipe_export(t_cmd *cmd, t_status *status)
 		key_str = get_key(cmd->args[i]);
 		if (check_key_syntax(key_str) == UNDEFINED_ERROR)
 		{
-			printf("\'%s\' : not a valid identifier\n", cmd->args[i]);
+			pipe_export_error(cmd->args[i]);
 			free(key_str);
 			i++;
 			continue ;
