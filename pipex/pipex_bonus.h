@@ -26,8 +26,8 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd);
 void	pipe_cd(t_vars *vars, t_cmd *cmd);
 void	pipe_pwd(t_vars *vars, t_cmd *cmd);
 
-void			print_envp_in_export(t_envp_list *envp_list);
-void	pipe_export(t_vars *vars, t_cmd *cmd, t_status *status);
+void	print_envp_in_export(t_envp_list *envp_list);
+void	pipe_export(t_cmd *cmd, t_status *status);
 void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status);
 void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *stats);
 void	pipe_exit(t_vars *vars, t_cmd *cmd);
@@ -48,14 +48,14 @@ int		free_strs(char **strs, int exit_code);
 void	free_cmds(t_cmd *cmd);
 int		dup_close(int *dst, int *src_close);
 
+
 void	signal_handler(int signo);
 void	stdin_handler(int signo);
 int		get_exit_status(int status);
 int		wait_processes(t_vars *vars, t_cmd *cmd);
-int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
+int		run_cmd_tree(t_status *status, t_parsed_tree *tree, t_vars *vars);
 int		tree_parse(t_parsed_tree *tree, t_vars *vars, t_cmd *cmd);
 int		list_parse(t_vars *vars, t_cmd *cmd, t_parsed_tree *current_node);
-int		node_parse(t_vars *vars, t_cmd *cmd, t_parser_list	**cur, int *arg_index);
-
+int		node_parse(t_vars *vars, t_cmd *cmd, t_parser_list **cur, int *arg_index);
 void	pipe_fork(t_status *status, t_vars *vars, t_cmd *cmd, int count);
 #endif

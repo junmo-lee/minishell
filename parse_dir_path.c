@@ -52,7 +52,7 @@ char	**parse_dir(char *pwd, char *str)
 	while (str_part[++i] != NULL)
 	{
 		if (depth < 0)
-			exit(EXIT_FAILURE);
+			break ;
 		if (str_part[i][0] == '\0' || ft_strncmp(str_part[i], ".", 2) == 0)
 			continue ;
 		else if (ft_strncmp(str_part[i], "..", 3) == 0)
@@ -60,52 +60,17 @@ char	**parse_dir(char *pwd, char *str)
 		else
 			ret[depth++] = ft_strdup(str_part[i]);
 	}
-	ret[depth++] = NULL;
+	ret[depth + 1] = NULL;
 	free_strs(pwd_part, EXIT_SUCCESS);
 	free_strs(str_part, EXIT_SUCCESS);
 	return (ret);
 }
 
-void	print_full_path(char *pwd, char *str)
+void	pwd_cat_temp_list(char *pwd, char **temp_list, int depth)
 {
-	char	buf[PATH_MAX + 1];
-	char	**temp_list;
-	int		depth;
-	int		len;
-	int		i;
+	int	i;
+	int	len;
 
-	temp_list = parse_dir(pwd, str);
-	depth = strs_len(temp_list);
-	ft_memset(buf, 0, ft_strlen(buf));
-	i = 0;
-	while (i < depth)
-	{
-		len = ft_strlen(buf);
-		buf[len] = '/';
-		buf[len + 1] = '\0';
-		ft_strlcat(buf, temp_list[i], \
-			ft_strlen(buf) + ft_strlen(temp_list[i]) + 1);
-		i++;
-	}
-	write(STDERR_FILENO, buf, ft_strlen(buf));
-	free_strs(temp_list, EXIT_SUCCESS);
-	write_stderr_exit(NULL, ": Permission denied", EACCES_EXIT_CODE);
-}
-
-void	update_pwd(char *pwd, char *str)
-{
-	char	**temp_list;
-	int		depth;
-	int		len;
-	int		i;
-
-	if (pwd == NULL || str == NULL)
-		return ;
-	if (access(str, X_OK) != 0)
-		return ;
-	temp_list = parse_dir(pwd, str);
-	depth = strs_len(temp_list);
-	ft_memset(pwd, 0, ft_strlen(pwd));
 	i = 0;
 	while (i < depth)
 	{
@@ -116,5 +81,28 @@ void	update_pwd(char *pwd, char *str)
 			ft_strlen(pwd) + ft_strlen(temp_list[i]) + 1);
 		i++;
 	}
-	free_strs(temp_list, EXIT_SUCCESS);
+}
+
+void	update_pwd(char *pwd, char *str)
+{
+	char	**temp_list;
+	int		depth;
+
+	if (pwd == NULL || str == NULL)
+		return ;
+	if (access(str, X_OK) != 0)
+		return ;
+	temp_list = parse_dir(pwd, str);
+	depth = strs_len(temp_list);
+	ft_memset(pwd, 0, ft_strlen(pwd));
+	if (temp_list[0] == NULL)
+	{
+		free(temp_list);
+		pwd[0] = '/';
+	}
+	else
+	{
+		pwd_cat_temp_list(pwd, temp_list, depth);
+		free_strs(temp_list, EXIT_SUCCESS);
+	}
 }

@@ -11,7 +11,7 @@ LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror 
+CFLAGS 	= -Wall -Wextra -Werror  -g3 -fsanitize=address
 
 PARSE_DIR = ./parse/
 
@@ -39,7 +39,8 @@ SRCS_GNL	= \
 	gnl/get_next_line.c gnl/get_next_line_utils.c
 
 SRCS_BUITIN	= \
-	parse_dir_path.c pipex/pipe_built_in.c \
+	parse_dir_path.c pipex/pipe_built_in.c pipex/pipe_built_in2.c \
+	pipex/pipe_built_in3.c \
 	builtins/echo.c builtins/export.c builtins/unset.c builtins/env.c \
 	builtins/cd.c builtins/sort_env.c builtins/builtin_exit.c
 

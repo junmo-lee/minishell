@@ -1,10 +1,5 @@
 #include "parser.h"
 
-// void	leaks_check(void)
-// {
-// 	system("leaks parse");
-// }
-
 void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
@@ -18,7 +13,6 @@ void	signal_handler(int signo)
 	{
 		rl_on_new_line();
 		rl_redisplay();
-		// status->exit_status = SIGQUIT_EXIT_CODE;
 	}
 }
 
@@ -56,8 +50,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	char			*str;
 	t_parsed_tree	*head;
-	t_vars			vars;
 	t_status		status;
+	t_vars			vars;
 	t_envp_list		*envp_list;
 	
 	ft_memset(&status, 0, sizeof(status));
@@ -73,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	if (getcwd(status.pwd, PATH_MAX) == NULL)
 		exit(EXIT_FAILURE);
 	insert_envp_node(&envp_list, ft_strdup("OLDPWD"), NULL);
+	//printf("pwd :%s\n", status.pwd);
 	// fprintf(stderr, "pwd : [%s]\n", status.pwd);
 	head = NULL;
 	str = NULL;
@@ -127,7 +122,7 @@ int	main(int argc, char **argv, char **envp)
 				g_signal = 0;
 				status.exit_status = 0;
 				status.env_list = envp_list;
-				status.exit_status = run_cmd_tree(&status, head);
+				status.exit_status = run_cmd_tree(&status, head, &vars);
 				if (vars.is_here_doc == 1)
 				{
 					unlink(vars.temp_here_doc);
@@ -140,8 +135,6 @@ int	main(int argc, char **argv, char **envp)
 						export(head->cmd_list_head, &envp_list);
 					else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
 						unset(head->cmd_list_head, &envp_list);
-					else if (ft_strncmp(head->cmd_list_head->token, "env", 4) == 0)
-						env(head->cmd_list_head, &envp_list);
 					else if (ft_strncmp(head->cmd_list_head->token, "cd", 3) == 0)
 						cd(head->cmd_list_head, &envp_list, status.pwd);
 					else if (ft_strncmp(head->cmd_list_head->token, "exit", 5) == 0)
