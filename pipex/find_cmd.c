@@ -1,4 +1,4 @@
-#include "pipex_bonus.h"
+#include "../parser.h"
 
 // 빌트인이면 여기서 exit 되도록
 int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
@@ -13,17 +13,17 @@ int pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 		else
 			pipe_echo(vars, cmd);
 	}
-	else if (ft_strncmp(cmd->cmd_name, "cd", sizeof("cd")) == 0)
+	else if (ft_strcmp(cmd->cmd_name, "cd") == 0)
 		pipe_cd(vars, cmd);
-	else if (ft_strncmp(cmd->cmd_name, "pwd", sizeof("pwd")) == 0)
+	else if (ft_strcmp(cmd->cmd_name, "pwd") == 0)
 		pipe_pwd(vars, cmd);
-	else if (ft_strncmp(cmd->cmd_name, "export", sizeof("export")) == 0)
+	else if (ft_strcmp(cmd->cmd_name, "export") == 0)
 		pipe_export(vars, cmd, status);
-	else if (ft_strncmp(cmd->cmd_name, "unset", sizeof("unset")) == 0)
+	else if (ft_strcmp(cmd->cmd_name, "unset") == 0)
 		pipe_unset(vars, cmd, status);
-	else if (ft_strncmp(cmd->cmd_name, "env", sizeof("env")) == 0)
+	else if (ft_strcmp(cmd->cmd_name, "env") == 0)
 		pipe_env(vars, cmd, status);
-	else if (ft_strncmp(cmd->cmd_name, "exit", sizeof("exit")) == 0)
+	else if (ft_strcmp(cmd->cmd_name, "exit") == 0)
 		pipe_exit(vars, cmd);
 	return (0);
 }

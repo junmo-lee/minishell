@@ -100,5 +100,5 @@ void	print_full_path(char *pwd, char *str);
 int	atoi_check_num(const char *str, int *target);
 
 void 	bubble_sort(t_envp_list *start);
-
+int		ft_strcmp(const char *s1, const char *s2);
 #endif
