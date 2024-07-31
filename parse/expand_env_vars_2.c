@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../parser.h"
 
 char	*slice_string(int start_index, int end_index, char *str)
 {

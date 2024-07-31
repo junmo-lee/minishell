@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../parser.h"
 
 t_parsed_tree	*create_parsed_tree_node(int cmd_count, \
 t_parser_list *cmd_list_head)

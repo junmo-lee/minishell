@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../parser.h"
 
 static void	check_redirection_syntax(t_info *info_s, t_parser_list *parser_list)
 {

@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../parser.h"
 
 void	expand_started_alpha(char *str, t_info *s_info, t_envp_list *envp_list)
 {
