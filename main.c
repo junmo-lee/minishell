@@ -65,8 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	// main의 지역변수로 vars 관리
 	status.one_line = &vars;
 
-
-	status.env_list = get_envp(envp);;
+	status.env_list = get_envp(envp);
 	envp_list = status.env_list;
 	// atexit(leaks_check);
 
