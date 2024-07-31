@@ -50,10 +50,12 @@ int		dup_close(int *dst, int *src_close);
 
 void	signal_handler(int signo);
 void	stdin_handler(int signo);
+int		get_exit_status(int status);
 int		wait_processes(t_vars *vars, t_cmd *cmd);
 int		run_cmd_tree(t_status *status, t_parsed_tree *tree);
 int		tree_parse(t_parsed_tree *tree, t_vars *vars, t_cmd *cmd);
 int		list_parse(t_vars *vars, t_cmd *cmd, t_parsed_tree *current_node);
 int		node_parse(t_vars *vars, t_cmd *cmd, t_parser_list	**cur, int *arg_index);
 
+void	pipe_fork(t_status *status, t_vars *vars, t_cmd *cmd, int count);
 #endif
