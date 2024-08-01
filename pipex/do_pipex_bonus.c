@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/31 20:43:10 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:40:53 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	child_init_fd(t_vars *vars, t_cmd *cmd)
 void	child(t_vars *vars, t_cmd *cmd, t_status *status)
 {
 	child_init_fd(vars, cmd);
+	if (cmd->cmd_name == NULL)
+		exit(EXIT_SUCCESS);
 	pipe_built_in(vars, cmd, status);
 	check_cmd(status, vars, cmd);
 	if (execve(cmd->cmd_path, cmd->args, cmd->envp) == -1)
