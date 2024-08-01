@@ -23,7 +23,7 @@ int		check_cmd_path(t_status *status, t_vars *vars, t_cmd *cmd);
 int		strs_len(char **strs);
 
 void	pipe_echo(t_vars *vars, t_cmd *cmd);
-void	pipe_cd(t_status *status, t_vars *vars, t_cmd *cmd);
+void	pipe_cd(t_status *status, t_cmd *cmd);
 void	pipe_pwd(t_vars *vars, t_cmd *cmd);
 
 void	print_envp_in_export(t_envp_list *envp_list);

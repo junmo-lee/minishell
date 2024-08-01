@@ -29,11 +29,18 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_cd(t_status *status, t_vars *vars, t_cmd *cmd)
+void	pipe_cd_print_error(char *str)
+{
+	ft_putstr_fd("cd: ", STDERR_FILENO);
+	perror(str);
+	exit(EXIT_FAILURE);
+}
+
+void	pipe_cd(t_status *status, t_cmd *cmd)
 {
 	char	*env_home;
+	char	*cd_arg;
 
-	vars++;
 	if (cmd->args[1] == NULL)
 	{
 		env_home = ft_getenv("HOME", status->env_list);
@@ -42,24 +49,18 @@ void	pipe_cd(t_status *status, t_vars *vars, t_cmd *cmd)
 			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 			exit(EXIT_FAILURE);
 		}
-		cmd->args[1] = env_home;
+		cd_arg = env_home;
 	}
+	else
+		cd_arg = cmd->args[1];
 	if (access(cmd->args[1], F_OK) == 0)
 	{
 		if (access(cmd->args[1], X_OK) == 0)
-		{
 			exit(EXIT_SUCCESS);
-		}
-		ft_putstr_fd("cd: ", STDERR_FILENO);
-		perror(cmd->args[1]);
-		exit(EXIT_FAILURE);
+		pipe_cd_print_error(cmd->args[1]);
 	}
 	else
-	{
-		ft_putstr_fd("cd: ", STDERR_FILENO);
-		perror(cmd->args[1]);
-		exit(EXIT_FAILURE);
-	}
+		pipe_cd_print_error(cmd->args[1]);
 }
 
 void	pipe_pwd(t_vars *vars, t_cmd *cmd)

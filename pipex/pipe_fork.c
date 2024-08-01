@@ -19,7 +19,6 @@ void	pipe_fork_init(t_vars *vars, t_cmd *cmd, int count)
 	}
 }
 
-
 void	pipe_fork(t_status *status, t_vars *vars, t_cmd *cmd, int count)
 {
 	pid_t	fork_ret;
