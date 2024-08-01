@@ -101,6 +101,6 @@ int	atoi_check_num(const char *str, int *target);
 
 void 	bubble_sort(t_envp_list *start);
 int		ft_strcmp(const char *s1, const char *s2);
-char	**parse_dir(char *pwd, char *str);
+void	parse_dir(char *target, char *pwd, char *str);
 
 #endif

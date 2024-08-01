@@ -1,19 +1,37 @@
 #include "../parser.h"
+
+void change_directory(t_envp_list **envp_list, char *pwd, char *str)
+{
+	//fprintf(stderr, "change_directory : [%s] [%s]\n", pwd, str);
+	if (access(str, X_OK) == 0)
+	{
+		insert_envp_node(envp_list, ft_strdup("OLDPWD"), ft_strdup(pwd));
+		update_pwd(pwd, str);
+		chdir(pwd);
+		insert_envp_node(envp_list, ft_strdup("PWD"), ft_strdup(pwd));
+	}
+}
+
 // t_parser_list *cmd_list, t_envp_list **envp_list
 // cd(head->cmd_list_head, status.pwd);
 int cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd)
 {
+	char	*env_home;
 	if (cmd_list->next == NULL)
-		return (0);
-	if (cmd_list->next->token == NULL)
-		return (0);
-	if (access(cmd_list->next->token, X_OK) == 0)
 	{
-		insert_envp_node(envp_list, ft_strdup("OLDPWD"), ft_strdup(pwd));
-		update_pwd(pwd, cmd_list->next->token);
-		insert_envp_node(envp_list, ft_strdup("PWD"), ft_strdup(pwd));
-		(void)envp_list;
-		chdir(pwd);
+		// HOME 으로 가는거
+		env_home = ft_getenv("HOME", *envp_list);
+		if (env_home == NULL)
+		{
+			// ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+		change_directory(envp_list, pwd, env_home);
+		return (EXIT_SUCCESS);
 	}
-	return (0);
+	if (cmd_list->next->token == NULL)
+		return (EXIT_FAILURE);
+	if (access(cmd_list->next->token, X_OK) == 0)
+		change_directory(envp_list, pwd, cmd_list->next->token);
+	return (EXIT_SUCCESS);
 }

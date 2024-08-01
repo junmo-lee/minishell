@@ -13,7 +13,7 @@ int	pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 			pipe_echo(vars, cmd);
 	}
 	else if (ft_strcmp(cmd->cmd_name, "cd") == 0)
-		pipe_cd(vars, cmd);
+		pipe_cd(status, vars, cmd);
 	else if (ft_strcmp(cmd->cmd_name, "pwd") == 0)
 		pipe_pwd(vars, cmd);
 	else if (ft_strcmp(cmd->cmd_name, "export") == 0)

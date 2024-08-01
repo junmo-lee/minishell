@@ -29,11 +29,21 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_cd(t_vars *vars, t_cmd *cmd)
+void	pipe_cd(t_status *status, t_vars *vars, t_cmd *cmd)
 {
+	char	*env_home;
+
 	vars++;
 	if (cmd->args[1] == NULL)
-		exit(EXIT_SUCCESS);
+	{
+		env_home = ft_getenv("HOME", status->env_list);
+		if (env_home == NULL)
+		{
+			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+			exit(EXIT_FAILURE);
+		}
+		cmd->args[1] = env_home;
+	}
 	if (access(cmd->args[1], F_OK) == 0)
 	{
 		if (access(cmd->args[1], X_OK) == 0)
@@ -44,8 +54,12 @@ void	pipe_cd(t_vars *vars, t_cmd *cmd)
 		perror(cmd->args[1]);
 		exit(EXIT_FAILURE);
 	}
-	perror(cmd->args[1]);
-	exit(EXIT_FAILURE);
+	else
+	{
+		ft_putstr_fd("cd: ", STDERR_FILENO);
+		perror(cmd->args[1]);
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	pipe_pwd(t_vars *vars, t_cmd *cmd)

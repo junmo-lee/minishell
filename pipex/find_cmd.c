@@ -28,27 +28,9 @@ void	print_command_not_found(char *name)
 void	print_full_path(char *pwd, char *str)
 {
 	char	buf[PATH_MAX + 1];
-	char	**temp_list;
-	int		depth;
-	int		len;
-	int		i;
 
-	temp_list = parse_dir(pwd, str);
-	depth = strs_len(temp_list);
-	ft_memset(buf, 0, ft_strlen(buf));
-	i = 0;
-	buf[0] = '/';
-	while (i < depth)
-	{
-		len = ft_strlen(buf);
-		buf[len] = '/';
-		buf[len + 1] = '\0';
-		ft_strlcat(buf, temp_list[i], \
-			ft_strlen(buf) + ft_strlen(temp_list[i]) + 1);
-		i++;
-	}
+	parse_dir(buf, pwd, str);
 	write(STDERR_FILENO, buf, ft_strlen(buf));
-	free_strs(temp_list, EXIT_SUCCESS);
 	write_stderr_exit(NULL, ": Permission denied", EACCES_EXIT_CODE);
 }
 
