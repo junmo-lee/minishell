@@ -82,7 +82,7 @@ int				check_key_syntax(char *key_str);
 	// unset
 int				unset(t_parser_list *cmd_head, t_envp_list **envp_list);
 	// env
-int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
+//int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
 
 	// cd
 int 			cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd);
@@ -103,4 +103,5 @@ void 	bubble_sort(t_envp_list *start);
 int		ft_strcmp(const char *s1, const char *s2);
 void	parse_dir(char *target, char *pwd, char *str);
 
+void	main_status_init(t_status *status, t_vars *vars, t_envp_list **envp_list, char **envp);
 #endif

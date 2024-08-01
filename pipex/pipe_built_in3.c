@@ -76,9 +76,7 @@ void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
 	current_node = status->env_list;
 	i = 0;
 	if (cmd->args[1] != NULL)
-	{
 		return ;
-	}
 	while (current_node != NULL)
 	{
 		if (current_node->value == NULL)
