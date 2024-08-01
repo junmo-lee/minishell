@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:35:31 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	leaks_check(void)
-{
-	system("leaks minishell");
-}
 
 void	signal_handler(int signo)
 {
@@ -75,7 +70,6 @@ int	main(int argc, char **argv, char **envp)
 	t_vars			vars;
 	t_envp_list		*envp_list;
 
-	atexit(leaks_check);
 	(void)argv;
 	if (argc != 1)
 	{

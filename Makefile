@@ -11,7 +11,7 @@ LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror  -g3  -fsanitize=address
+CFLAGS 	= -Wall -Wextra -Werror
 
 PARSE_DIR = ./parse/
 
