@@ -40,6 +40,8 @@ void	clear_parse_list(t_parser_list **head)
 	t_parser_list	*current_node;
 	t_parser_list	*next_node;
 
+	if (head == NULL || *(head) == NULL)
+		return ;
 	current_node = *head;
 	while (current_node != NULL)
 	{

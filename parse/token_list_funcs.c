@@ -31,6 +31,8 @@ void	clear_token_list(t_token_list **head)
 	t_token_list	*current_node;
 	t_token_list	*next_node;
 
+	if (*(head) == NULL || head == NULL)
+		return ;
 	current_node = *head;
 	while (current_node != NULL)
 	{

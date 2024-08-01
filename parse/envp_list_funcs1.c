@@ -36,7 +36,7 @@ void	clear_envp_list(t_envp_list **head)
 	t_envp_list	*current_node;
 	t_envp_list	*next_node;
 
-	if (head == NULL)
+	if (head == NULL || *(head) == NULL)
 		return ;
 	current_node = *(head);
 	while (current_node != NULL)
