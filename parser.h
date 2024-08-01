@@ -103,4 +103,5 @@ void 	bubble_sort(t_envp_list *start);
 int		ft_strcmp(const char *s1, const char *s2);
 void	parse_dir(char *target, char *pwd, char *str);
 
+void	main_status_init(t_status *status, t_vars *vars, t_envp_list **envp_list, char **envp);
 #endif

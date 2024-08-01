@@ -14,7 +14,7 @@
 
 void	print_full_path(char *pwd, char *str);
 char	*path_join(char const *s1, char const *s2);
-void	main_init(t_vars *vars, t_envp_list *env_list);
+void	vars_init(t_vars *vars, t_envp_list *env_list);
 
 int		pipe_built_in(t_vars *var, t_cmd *cmd, t_status *status);
 int		check_cmd(t_status *status, t_vars *vars, t_cmd *cmd);
