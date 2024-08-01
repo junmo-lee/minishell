@@ -11,12 +11,12 @@ LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror  -g3 -fsanitize=address
+CFLAGS 	= -Wall -Wextra -Werror  -g3  -fsanitize=address
 
 PARSE_DIR = ./parse/
 
 SRCS_PARSE	= \
-	main.c \
+	main.c main_splited.c \
 	$(PARSE_DIR)parser.c \
 	$(PARSE_DIR)parser_list_funcs.c $(PARSE_DIR)parsed_tree_funcs.c $(PARSE_DIR)token_list_funcs.c \
 	$(PARSE_DIR)check_syntax_funcs.c $(PARSE_DIR)make_parsed_tree.c \

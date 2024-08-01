@@ -1,6 +1,6 @@
 #include "../parser.h"
 
-void change_directory(t_envp_list **envp_list, char *pwd, char *str)
+void	change_directory(t_envp_list **envp_list, char *pwd, char *str)
 {
 	if (access(str, X_OK) == 0)
 	{
@@ -11,7 +11,7 @@ void change_directory(t_envp_list **envp_list, char *pwd, char *str)
 	}
 }
 
-int cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd)
+int	cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd)
 {
 	char	*env_home;
 

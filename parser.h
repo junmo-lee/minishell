@@ -36,7 +36,8 @@ void			remove_node_by_key(t_envp_list **head, char *key_str);
 void			append_envp_node(t_envp_list **head, t_envp_list *node);
 
 	// envp_list_funcs2.c
-int				insert_envp_node(t_envp_list **head, char *key_str, char *value_str);
+int				insert_envp_node(t_envp_list **head, \
+char *key_str, char *value_str);
 t_envp_list		*get_envp(char **envp);
 char			*get_key(char *str);
 char			*get_value(char *str);
@@ -46,7 +47,7 @@ char			*ft_getenv(char *key_str, t_envp_list *envp_list);
 t_parsed_tree	*create_parsed_tree_node(int cmd_count, t_parser_list *cmd_list_head);
 void			append_parsed_tree_node(t_parsed_tree **head, t_parsed_tree *node);
 void			clear_parsed_tree(t_parsed_tree **head);
-
+int				insert_envp_node(t_envp_list **head, char *key_str, char *value_str);
 	// check_syntax_funcs.c
 void			check_syntax(t_info *info_s, t_parser_list *parse_list);
 
@@ -104,4 +105,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	parse_dir(char *target, char *pwd, char *str);
 
 void	main_status_init(t_status *status, t_vars *vars, t_envp_list **envp_list, char **envp);
+int		str_exist(char *str, t_status *status, t_vars *vars, t_envp_list *envp_list);
+
 #endif

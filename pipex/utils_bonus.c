@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:30 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/31 15:24:18 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 19:05:12 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	free_cmds(t_cmd *cmd)
 	free(cmd->cmd_name);
 	free_strs(cmd->args, EXIT_SUCCESS);
 }
+
 int	dup_close(int *dst, int *src_close)
 {
 	*dst = dup(*src_close);

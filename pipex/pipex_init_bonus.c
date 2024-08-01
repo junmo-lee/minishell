@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:43 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 18:15:16 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 19:06:56 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	main_init_envp_parse(t_vars *vars, t_envp_list *env_list)
 	vars->envp = malloc(sizeof(char *) * (envp_len + 1));
 	if (vars->envp == NULL)
 		exit(EXIT_FAILURE);
-
 	envp_len = 0;
 	current_node = env_list;
 	while (current_node != NULL)
 	{
 		if (current_node->value != NULL)
-			vars->envp[envp_len++] = make_str_env(current_node->key, current_node->value);
+			vars->envp[envp_len++] = make_str_env(current_node->key, \
+				current_node->value);
 		current_node = current_node->next;
 	}
 	vars->envp[envp_len] = NULL;

@@ -23,7 +23,7 @@ void	make_here_doc_name(t_vars *vars)
 	while (1)
 	{
 		temp_number = ft_itoa(number);
-		temp_dir = ft_strjoin("/tmp/minishell_heredoc",temp_number);
+		temp_dir = ft_strjoin("/tmp/minishell_heredoc", temp_number);
 		free(temp_number);
 		if (access(temp_dir, F_OK) != 0)
 		{
@@ -45,16 +45,6 @@ void	make_here_doc_process(t_vars *vars, char *token)
 	write_here_doc(vars->fd_here_doc, token);
 	close(vars->fd_here_doc);
 	exit(EXIT_SUCCESS);
-}
-
-void	wait_here_doc_process(pid_t fork_ret, int *process_status)
-{
-	rl_catch_signals = 0;
-	signal(SIGINT, sig_heredoc);
-	signal(SIGQUIT, SIG_IGN);
-	waitpid(fork_ret, process_status, 0);
-	signal(SIGINT, stdin_handler);
-	signal(SIGQUIT, stdin_handler);
 }
 
 int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)

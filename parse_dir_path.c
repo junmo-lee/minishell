@@ -28,7 +28,7 @@ void	parse_relative_dir(char *target, char *str)
 {
 	int		i;
 	char	**str_part;
-	
+
 	str_part = ft_split(str, '/');
 	i = 0;
 	while (str_part[i] != NULL)
@@ -52,7 +52,6 @@ void	parse_relative_dir(char *target, char *str)
 
 void	parse_dir(char *target, char *pwd, char *str)
 {
-
 	ft_memset(target, 0, PATH_MAX);
 	if (str == NULL)
 		ft_strlcpy(target, pwd, PATH_MAX);
@@ -74,7 +73,7 @@ void	parse_dir(char *target, char *pwd, char *str)
 
 void	update_pwd(char *pwd, char *str)
 {
-	char buf[PATH_MAX + 1];
+	char	buf[PATH_MAX + 1];
 
 	parse_dir(buf, pwd, str);
 	ft_memset(pwd, 0, PATH_MAX);
