@@ -1,4 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize_string_2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 18:17:04 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 static void	tokenize_singlequote(t_info *info_s, char *str, int *index)
 {

@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   atoi_check_num.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
+/*   Created: 2024/07/29 17:00:00 by junmlee           #+#    #+#             */
 /*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	unset(t_parser_list *cmd_head, t_envp_list **envp_list)
+int	atoi_check_num(const char *str, int *target)
 {
-	t_parser_list	*current_node;
+	long long	ret;
+	int			sign;
 
-	if (cmd_head == NULL || envp_list == NULL || *envp_list == NULL)
-		return (0);
-	current_node = cmd_head->next;
-	if (current_node == NULL)
-		return (0);
-	while (current_node != NULL)
+	sign = 1;
+	ret = 0;
+	while (*str != '\0' && *str == ' ')
+		str++;
+	if (*str == '-' && ('0' <= *(str + 1) && *(str + 1) <= '9'))
 	{
-		if (check_key_syntax(current_node->token) == UNDEFINED_ERROR)
-		{
-			current_node = current_node->next;
-			continue ;
-		}
-		remove_node_by_key(envp_list, current_node->token);
-		current_node = current_node->next;
+		sign = -1;
+		str++;
 	}
-	return (0);
+	else if (*str == '+' && ('0' <= *(str + 1) && *(str + 1) <= '9'))
+		str++;
+	while (*str != '\0' && *str != ' ')
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		ret *= 10;
+		ret += *str - '0';
+		str++;
+	}
+	*target = sign * ret;
+	return (1);
 }

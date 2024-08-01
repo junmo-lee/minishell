@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:05:02 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/27 16:17:21 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "../minishell.h"
 
 char	**pipex_split(char *str, char c)
 {

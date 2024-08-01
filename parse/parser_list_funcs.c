@@ -1,4 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_list_funcs.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 18:42:57 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 t_parser_list	*create_parse_node(char *str, t_token_list *token_s)
 {
@@ -40,6 +52,8 @@ void	clear_parse_list(t_parser_list **head)
 	t_parser_list	*current_node;
 	t_parser_list	*next_node;
 
+	if (head == NULL || *(head) == NULL)
+		return ;
 	current_node = *head;
 	while (current_node != NULL)
 	{

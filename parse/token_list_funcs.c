@@ -1,4 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_list_funcs.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 18:42:57 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 t_token_list	*create_token_node(t_info *info_s, char *str)
 {
@@ -31,6 +43,8 @@ void	clear_token_list(t_token_list **head)
 	t_token_list	*current_node;
 	t_token_list	*next_node;
 
+	if (*(head) == NULL || head == NULL)
+		return ;
 	current_node = *head;
 	while (current_node != NULL)
 	{

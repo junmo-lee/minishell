@@ -1,4 +1,16 @@
-#include "../parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 14:04:11 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 int	option_check(const char *str)
 {
@@ -31,13 +43,13 @@ int	echo(t_parser_list *cmd_list)
 	{
 		if (option_check(current_node->token) == 1 && print_flag == 0)
 		{
-			option_flag = 1; // 옵션 플레그가 1이면 옵션이 켜진 거임
+			option_flag = 1;
 			current_node = current_node->next;
 			continue ;
 		}
 		print_flag = 1;
-		
-		write (STDOUT_FILENO, current_node->token, ft_strlen(current_node->token)); //에러 처리 나중에
+		write(STDOUT_FILENO, current_node->token, \
+			ft_strlen(current_node->token));
 		if (current_node->next == NULL && option_flag == 0)
 			write (STDOUT_FILENO, "\n", 1);
 		if (current_node->next != NULL)

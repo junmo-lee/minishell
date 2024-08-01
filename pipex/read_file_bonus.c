@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:59 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 18:16:07 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../minishell.h"
 
 int	read_file(int *fd, char *file_path, int option)
 {

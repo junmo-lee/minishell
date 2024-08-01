@@ -1,4 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsed_tree_funcs.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/01 18:42:57 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 t_parsed_tree	*create_parsed_tree_node(int cmd_count, \
 t_parser_list *cmd_list_head)
@@ -47,6 +59,8 @@ void	clear_parsed_tree(t_parsed_tree **head)
 	t_parsed_tree	*current_node;
 	t_parsed_tree	*next_node;
 
+	if (*(head) == NULL || head == NULL)
+		return ;
 	current_node = *(head);
 	while (current_node != NULL)
 	{

@@ -1,4 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envp_list_funcs2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 18:17:04 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 int	insert_envp_node(t_envp_list **head, char *key_str, char *value_str)
 {
@@ -75,6 +87,8 @@ t_envp_list	*get_envp(char **envp)
 
 	index = 0;
 	head = NULL;
+	if (envp == NULL)
+		return (NULL);
 	while (envp[index] != NULL)
 	{
 		key = get_key(envp[index]);

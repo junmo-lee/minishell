@@ -1,16 +1,16 @@
-#include "pipex_bonus.h"
-#include "../parser.h"
-#include <signal.h>
-// int	get_signal_code(int x)
-// {
-// 	// _W_INT(w)       (*(int *)&(w))
-// 	// _WSTATUS(x)     (_W_INT(x) & 0177)
-// 	// _WSTOPPED       0177
-// 	// _WSTATUS(x)     (_W_INT(x) & 0177)
-//  	return (_WSTATUS(x) != _WSTOPPED && _WSTATUS(x) != 0);
-// }
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   make_here_doc.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 14:04:11 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-volatile sig_atomic_t g_signal;
+#include "../minishell.h"
 
 void	sig_heredoc(int signo)
 {
@@ -18,23 +18,24 @@ void	sig_heredoc(int signo)
 	write(STDOUT_FILENO, "\n", 2);
 }
 
-int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
+void	make_here_doc_name(t_vars *vars)
 {
-	char	*temp_dir = NULL;
-	char	*temp_number = NULL;
-	int		number = 0;
-	int		process_status;
-	pid_t	fork_ret;
+	char	*temp_dir;
+	char	*temp_number;
+	int		number;
 
+	temp_dir = NULL;
+	temp_number = NULL;
+	number = 0;
 	if (vars->is_here_doc == 1)
 	{
 		unlink(vars->temp_here_doc);
 		free(vars->temp_here_doc);
 	}
-	while(1)
+	while (1)
 	{
 		temp_number = ft_itoa(number);
-		temp_dir = ft_strjoin("/tmp/minishell_heredoc",temp_number);
+		temp_dir = ft_strjoin("/tmp/minishell_heredoc", temp_number);
 		free(temp_number);
 		if (access(temp_dir, F_OK) != 0)
 		{
@@ -44,28 +45,42 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 		free(temp_dir);
 		number++;
 	}
-	// here_doc 을 stdin 에서 받아오는 과정을 새로운 프로세스에서
+}
+
+void	make_here_doc_process(t_vars *vars, char *token)
+{
+	rl_catch_signals = 1;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+	write_file(&(vars->fd_here_doc), vars->temp_here_doc, \
+		O_WRONLY | O_CREAT | O_TRUNC);
+	write_here_doc(vars->fd_here_doc, token);
+	close(vars->fd_here_doc);
+	exit(EXIT_SUCCESS);
+}
+
+void	wait_here_doc_process(pid_t fork_ret, int *process_status)
+{
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(fork_ret, process_status, 0);
+	signal(SIGINT, stdin_handler);
+	signal(SIGQUIT, stdin_handler);
+}
+
+int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
+{
+	int		process_status;
+	pid_t	fork_ret;
+
+	make_here_doc_name(vars);
 	fork_ret = fork();
 	if (fork_ret == 0)
-	{
-		rl_catch_signals = 1;
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_IGN);
-		write_file(&(vars->fd_here_doc), vars->temp_here_doc, \
-			O_WRONLY | O_CREAT | O_TRUNC);
-		// fprintf(stderr, "<< [%s]\n", token);
-		write_here_doc(vars->fd_here_doc, token);
-		close(vars->fd_here_doc);
-		exit(EXIT_SUCCESS);
-	}
+		make_here_doc_process(vars, token);
 	else
 	{
-		rl_catch_signals = 0;
-		signal(SIGINT, sig_heredoc);
-		signal(SIGQUIT, SIG_IGN);
-		waitpid(fork_ret, &process_status, 0);
-		signal(SIGINT, stdin_handler);
-		signal(SIGQUIT, stdin_handler);
+		wait_here_doc_process(fork_ret, &process_status);
 		if (WIFSIGNALED(process_status))
 		{
 			unlink(vars->temp_here_doc);
@@ -78,4 +93,5 @@ int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 			return (0);
 		}
 	}
+	return (0);
 }

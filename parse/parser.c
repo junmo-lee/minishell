@@ -1,4 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/31 18:17:04 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
 
 static void	init_info_struct(t_info *info_s)
 {
@@ -36,8 +48,8 @@ t_parsed_tree	*parser(char *str, t_status *status, t_envp_list *envp_list)
 	}
 	else
 		parsed_tree = make_parsed_tree(parse_list);
-	free(str);
-	str = NULL;
+	if (parsed_tree->cmd_list_head == NULL && parsed_tree->error == NO_ERROR)
+		parsed_tree->cmd_len = 0;
 	clear_token_list(&token_list);
 	return (parsed_tree);
 }

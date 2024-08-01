@@ -1,35 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   utils_bonus2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
+/*   Created: 2024/07/31 18:13:39 by junmlee           #+#    #+#             */
 /*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	unset(t_parser_list *cmd_head, t_envp_list **envp_list)
+void	stdin_handler(int signo)
 {
-	t_parser_list	*current_node;
-
-	if (cmd_head == NULL || envp_list == NULL || *envp_list == NULL)
-		return (0);
-	current_node = cmd_head->next;
-	if (current_node == NULL)
-		return (0);
-	while (current_node != NULL)
+	if (signo == SIGINT)
 	{
-		if (check_key_syntax(current_node->token) == UNDEFINED_ERROR)
-		{
-			current_node = current_node->next;
-			continue ;
-		}
-		remove_node_by_key(envp_list, current_node->token);
-		current_node = current_node->next;
+		g_signal = SIGINT;
+		write(STDOUT_FILENO, "^C\n", 4);
+	}
+	if (signo == SIGQUIT)
+	{
+		g_signal = SIGQUIT;
+		write(STDOUT_FILENO, "^\\Quit: 3\n", 11);
+	}
+}
+
+int	close_all_fd(t_vars *vars, t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < vars->cmd_len)
+	{
+		if ((cmd + i)->redirection_in != -1)
+			close((cmd + i)->redirection_in);
+		if ((cmd + i)->redirection_out != -1)
+			close((cmd + i)->redirection_out);
 	}
 	return (0);
+}
+
+int	get_exit_status(int status)
+{
+	return (((*(int *)&(status)) >> 8) & 0x000000ff);
 }

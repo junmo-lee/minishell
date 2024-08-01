@@ -6,11 +6,11 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:59:30 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/29 19:54:54 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "../minishell.h"
 
 int	write_stderr(char *error_msg, char *name)
 {
@@ -28,7 +28,7 @@ void	write_stderr_exit(char *name, char *error_msg, int errorcode)
 	exit(errorcode);
 }
 
-int	free_strs(char *strs[], int exit_code)
+int	free_strs(char **strs, int exit_code)
 {
 	size_t	i;
 	char	**temp;
@@ -53,4 +53,10 @@ void	free_cmds(t_cmd *cmd)
 	ft_memset(cmd->cmd_name, 0, ft_strlen(cmd->cmd_name));
 	free(cmd->cmd_name);
 	free_strs(cmd->args, EXIT_SUCCESS);
+}
+
+int	dup_close(int *dst, int *src_close)
+{
+	*dst = dup(*src_close);
+	return (close(*src_close));
 }

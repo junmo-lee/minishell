@@ -26,8 +26,7 @@ OBJS_B	= $(SRCS_B:.c=.o)
 DEF		= $(SRCS:.c=.d) $(SRCS_B:.c=.d)
 -include $(DEP)
 
-all: LAST_ALL
-bonus: LAST_BONUS
+all: $(NAME)
 
 clean :
 	rm -f $(OBJS) $(OBJS_B) $(DEF)
@@ -39,20 +38,11 @@ re :
 	make fclean
 	make all
 
-$(NAME) :
-	make all
-
 %.o : %.c
 	$(CC) $(CFLAGS) $(CDEF) -c $< -o $@ -I $(INC)
 
-.PHONY : all bonus clean fclean re
+.PHONY : all clean fclean re
 
-LAST_ALL: $(OBJS)
-	rm -f LAST_BONUS
-	$(AR) $(ARFLAGS) $(NAME) $^
-	touch $@
-
-LAST_BONUS: $(OBJS) $(OBJS_B)
-	rm -f LAST_ALL
+$(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $^
 	touch $@

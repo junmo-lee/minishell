@@ -1,30 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   type_def.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
+/*   Updated: 2024/08/01 21:12:08 by junmlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TYPE_DEF_H
-#  define TYPE_DEF_H
+# define TYPE_DEF_H
+
+# include <stdlib.h>
+# include <termios.h>
+# include <unistd.h>
+# include <signal.h>
+# include <errno.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/syslimits.h>
+# include <limits.h>
+# include <sys/wait.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define UNDEFINED_ERROR -1
 # define NO_ERROR 0
-
 # define NOT_CLOSED_ERROR 1
 # define MALLOC_ERROR 2
 # define REDIRECTION_ERROR 3
 # define PIPE_ERROR 4
-
+# define EXIT_BREAK 2
 # define STATUS_SUCCESS 0x0
 # define STATUS_FAILURE 0x0000100
-
 # define SIGINT_EXIT_CODE 130
 # define SIGQUIT_EXIT_CODE 131
-
 # define HERE_DOC_SIGINT 10
-
 # define EACCES_EXIT_CODE 126
 # define COMMAND_NOT_FOUND 127
+# define EXIT_NUMERIC 255
 
-# include <unistd.h>
-# include <sys/syslimits.h>
-# include <signal.h>
-# include <errno.h>
-typedef enum
+volatile sig_atomic_t	g_signal;
+
+typedef enum s_tag
 {
 	DEFAULT,
 	CMD,
@@ -35,21 +56,12 @@ typedef enum
 	PIPE,
 	DOUBLEQUOTE,
 	SINGLEQUOTE,
-}	tag;
-
-
-volatile sig_atomic_t g_signal;
-
-/*
-t_token_list	p;
-
-if (p.type == CMD)
- */
+}	t_tag;
 
 typedef struct s_parser_list
 {
 	char					*token;
-	tag						type;
+	t_tag					type;
 	int						error;
 	struct s_parser_list	*next;
 }	t_parser_list;
@@ -57,7 +69,7 @@ typedef struct s_parser_list
 typedef struct s_token_list
 {
 	char				*token;
-	tag					type;
+	t_tag				type;
 	int					error;
 	int					connect_flag;
 	struct s_token_list	*next;
@@ -70,7 +82,7 @@ typedef struct s_info
 	int		token_count;
 	int		start_index;
 	int		end_index;
-	tag		type_code;
+	t_tag	type_code;
 	int		connect_flag;
 	int		first_text_idx;
 	char	*expanded_token;
@@ -93,7 +105,6 @@ typedef struct s_envp_list
 	struct s_envp_list	*next;
 }	t_envp_list;
 
-// pipex type 추가
 typedef struct s_cmd
 {
 	pid_t	pid;
@@ -107,12 +118,11 @@ typedef struct s_cmd
 	int		status;
 	int		is_end;
 	int		is_built_in;
+	int		is_exist;
 }	t_cmd;
 
 typedef struct s_vars
 {
-	int				argc;
-	char			**argv;
 	char			**envp;
 	char			**path;
 	int				pipe_fd[2];

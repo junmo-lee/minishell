@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
+/*   Created: 2024/07/31 14:20:04 by junmlee           #+#    #+#             */
 /*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	unset(t_parser_list *cmd_head, t_envp_list **envp_list)
+int	builtin_exit(t_parser_list *head_next, t_status *status)
 {
-	t_parser_list	*current_node;
+	int	exit_val;
 
-	if (cmd_head == NULL || envp_list == NULL || *envp_list == NULL)
-		return (0);
-	current_node = cmd_head->next;
-	if (current_node == NULL)
-		return (0);
-	while (current_node != NULL)
+	if (head_next == NULL)
+		exit(EXIT_SUCCESS);
+	if (atoi_check_num(head_next->token, &exit_val))
 	{
-		if (check_key_syntax(current_node->token) == UNDEFINED_ERROR)
-		{
-			current_node = current_node->next;
-			continue ;
-		}
-		remove_node_by_key(envp_list, current_node->token);
-		current_node = current_node->next;
+		if (head_next->next == NULL)
+			exit((unsigned char)(exit_val));
+		else
+			status->exit_status = 1;
 	}
+	else
+		exit(EXIT_NUMERIC);
 	return (0);
 }
