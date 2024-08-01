@@ -84,4 +84,5 @@ int	str_exist(char *str, t_status *status, t_vars *vars, t_envp_list *envp_list)
 	if (vars->envp != NULL)
 		free_strs(vars->envp, EXIT_SUCCESS);
 	clear_parsed_tree(&head);
+	return (EXIT_SUCCESS);
 }
