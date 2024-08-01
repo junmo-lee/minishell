@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../minishell.h"
 
 void	leaks_check(void)
 {
@@ -51,19 +51,19 @@ t_vars *vars, t_envp_list *envp_list)
 {
 	struct termios	term;
 
-	tcgetattr(STDIN_FILENO, &term); // 왜 두번 하지?
-	term.c_lflag &= ~(ECHOCTL); // c_lflag는 input 관련 속성을 변경할 수 있다. ECHOCTL은 제어문자를 echo시킴 ~는 끄는 것일듯.
-	tcsetattr(STDIN_FILENO, TCSANOW, &term); // 터미널 속성을 설정, TCSANOW는 "속성을 바로 병경한다"는 뜻
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (do_loop(status, vars, envp_list));
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	atexit(leaks_check);
 	t_status		status;
 	t_vars			vars;
 	t_envp_list		*envp_list;
 
+	atexit(leaks_check);
 	(void)argv;
 	if (argc != 1)
 	{

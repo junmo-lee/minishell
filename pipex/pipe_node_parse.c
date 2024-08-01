@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 int	here_doc_node(t_vars *vars, t_cmd *cmd, t_parser_list **cur)
 {

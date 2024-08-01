@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 char	*list_get_cmd_name(t_parsed_tree *current_node)
 {

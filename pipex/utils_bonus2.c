@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	stdin_handler(int signo)
 {

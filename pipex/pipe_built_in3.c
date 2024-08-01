@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	pipe_export_print(t_cmd *cmd, t_status *status)
 {

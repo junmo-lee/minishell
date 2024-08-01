@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	pipe_fork_init(t_vars *vars, t_cmd *cmd, int count)
 {

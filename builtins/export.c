@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	print_envp_in_export(t_envp_list *envp_list)
 {
@@ -53,7 +53,7 @@ void	export_free_next_node(char *key_str, t_parser_list	**current_node)
 	(*current_node) = (*current_node)->next;
 }
 
-int	*export(t_parser_list *cmd_head, t_envp_list **envp_list)
+int	*builtin_export(t_parser_list *cmd_head, t_envp_list **envp_list)
 {
 	t_parser_list	*current_node;
 	char			*key_str;

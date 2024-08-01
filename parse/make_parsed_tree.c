@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 static int	count_pipe(t_parser_list *parser_list)
 {

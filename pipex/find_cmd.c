@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 int	check_cmd_local(t_cmd *cmd)
 {
@@ -23,15 +23,6 @@ int	check_cmd_local(t_cmd *cmd)
 void	print_command_not_found(char *name)
 {
 	write_stderr_exit(name, ": command not found", COMMAND_NOT_FOUND);
-}
-
-void	print_full_path(char *pwd, char *str)
-{
-	char	buf[PATH_MAX + 1];
-
-	parse_dir(buf, pwd, str);
-	write(STDERR_FILENO, buf, ft_strlen(buf));
-	write_stderr_exit(NULL, ": Permission denied", EACCES_EXIT_CODE);
 }
 
 int	check_cmd_path(t_status *status, t_vars *vars, t_cmd *cmd)

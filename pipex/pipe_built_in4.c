@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	pipe_env_print_error(char *str)
 {

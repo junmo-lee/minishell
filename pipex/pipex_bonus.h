@@ -4,14 +4,6 @@
 # include "../type_def.h"
 # include "../libft/libft.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <limits.h>
-
-//디버그용
-# include <stdio.h>
-
 void	print_full_path(char *pwd, char *str);
 char	*path_join(char const *s1, char const *s2);
 void	vars_init(t_vars *vars, t_envp_list *env_list);

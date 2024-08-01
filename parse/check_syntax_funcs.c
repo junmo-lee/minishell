@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 static void	check_redirection_syntax(t_info *info_s, t_parser_list *parser_list)
 {
@@ -20,7 +20,7 @@ static void	check_redirection_syntax(t_info *info_s, t_parser_list *parser_list)
 static void	check_pipe_syntax(t_info *info_s, t_parser_list *parser_list)
 {
 	t_parser_list	*current_node;
-	tag				prev_type;
+	t_tag			prev_type;
 
 	current_node = parser_list;
 	prev_type = DEFAULT;

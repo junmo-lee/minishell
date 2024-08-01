@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	pipe_echo(t_vars *vars, t_cmd *cmd)
 {

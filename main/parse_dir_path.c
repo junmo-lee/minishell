@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../minishell.h"
 
 int	strs_len(char **strs)
 {
@@ -33,7 +33,8 @@ void	parse_relative_dir(char *target, char *str)
 	i = 0;
 	while (str_part[i] != NULL)
 	{
-		if (str_part[i][0] == '\0' || ft_strcmp(str_part[i], ".") == 0);
+		if (str_part[i][0] == '\0' || ft_strcmp(str_part[i], ".") == 0)
+			(void)i;
 		else if (ft_strcmp(str_part[i], "..") == 0)
 		{
 			if (ft_strcmp(target, "/") != 0)

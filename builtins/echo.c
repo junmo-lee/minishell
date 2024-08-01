@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 int	option_check(const char *str)
 {

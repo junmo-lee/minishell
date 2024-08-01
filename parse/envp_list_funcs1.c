@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 t_envp_list	*create_envp_node(char *key_str, char *value_str)
 {

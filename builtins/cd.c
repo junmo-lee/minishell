@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	change_directory(t_envp_list **envp_list, char *pwd, char *str)
 {

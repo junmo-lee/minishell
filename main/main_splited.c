@@ -1,4 +1,4 @@
-#include "parser.h"
+#include "../minishell.h"
 
 void	count_parsed_tree(t_parsed_tree *head)
 {
@@ -48,7 +48,7 @@ t_parsed_tree *head, t_envp_list *envp_list)
 	if (vars->cmd_len == 1)
 	{
 		if (ft_strncmp(head->cmd_list_head->token, "export", 7) == 0)
-			export(head->cmd_list_head, &envp_list);
+			builtin_export(head->cmd_list_head, &envp_list);
 		else if (ft_strncmp(head->cmd_list_head->token, "unset", 6) == 0)
 			unset(head->cmd_list_head, &envp_list);
 		else if (ft_strncmp(head->cmd_list_head->token, "cd", 3) == 0)

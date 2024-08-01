@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 int	pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 {

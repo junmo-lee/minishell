@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 t_token_list	*create_token_node(t_info *info_s, char *str)
 {

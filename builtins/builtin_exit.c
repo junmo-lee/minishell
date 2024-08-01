@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 int	builtin_exit(t_parser_list *head_next, t_status *status)
 {

@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../minishell.h"
 
 void	check_all_cmd(t_vars *vars, t_cmd *cmd, int *exit_count)
 {
