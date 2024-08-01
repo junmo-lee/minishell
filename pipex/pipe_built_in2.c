@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:38:37 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:26:22 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:33:05 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,17 @@ void	pipe_cd(t_status *status, t_cmd *cmd)
 		pipe_cd_print_error(cmd->args[1]);
 }
 
-void	pipe_pwd(t_vars *vars, t_cmd *cmd)
+void	pipe_pwd(t_vars *vars)
 {
-	cmd++;
 	ft_putstr_fd(vars->pwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_exit(t_vars *vars, t_cmd *cmd)
+void	pipe_exit(t_cmd *cmd)
 {
 	int	exit_code;
 
-	vars++;
 	if (cmd->args[1] == NULL)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);

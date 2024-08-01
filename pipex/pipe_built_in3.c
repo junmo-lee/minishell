@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:58:23 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:23:59 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:31:41 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	pipe_export(t_cmd *cmd, t_status *status)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status)
+void	pipe_unset(t_cmd *cmd)
 {
 	int	i;
 
@@ -71,7 +71,5 @@ void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status)
 		}
 		i++;
 	}
-	status++;
-	vars++;
 	exit(EXIT_SUCCESS);
 }

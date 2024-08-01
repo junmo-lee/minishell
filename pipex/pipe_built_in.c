@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_built_in.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 21:18:02 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:33:15 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 	else if (ft_strcmp(cmd->cmd_name, "cd") == 0)
 		pipe_cd(status, cmd);
 	else if (ft_strcmp(cmd->cmd_name, "pwd") == 0)
-		pipe_pwd(vars, cmd);
+		pipe_pwd(vars);
 	else if (ft_strcmp(cmd->cmd_name, "export") == 0)
 		pipe_export(cmd, status);
 	else if (ft_strcmp(cmd->cmd_name, "unset") == 0)
-		pipe_unset(vars, cmd, status);
+		pipe_unset(cmd);
 	else if (ft_strcmp(cmd->cmd_name, "env") == 0)
-		pipe_env(vars, cmd, status);
+		pipe_env(cmd, status);
 	else if (ft_strcmp(cmd->cmd_name, "exit") == 0)
-		pipe_exit(vars, cmd);
+		pipe_exit(cmd);
 	return (0);
 }

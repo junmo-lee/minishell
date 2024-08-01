@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_built_in4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:05:48 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:33:50 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	pipe_env_print_error(char *str)
 	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 }
 
-void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
+void	pipe_env(t_cmd *cmd, t_status *status)
 {
 	int			i;
 	t_envp_list	*current_node;
@@ -41,6 +41,5 @@ void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *status)
 		write(1, "\n", 1);
 		current_node = current_node->next;
 	}
-	vars++;
 	exit(EXIT_SUCCESS);
 }

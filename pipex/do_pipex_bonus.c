@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:30:34 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	child_init_fd(t_vars *vars, t_cmd *cmd)
 		exit(EXIT_FAILURE);
 	if (cmd->redirection_in != -1)
 	{
-		dup2(cmd->redirection_in, STDIN_FILENO);
+		dup2_ret = dup2(cmd->redirection_in, STDIN_FILENO);
+		if (dup2_ret)
+			exit(EXIT_FAILURE);
 		close(cmd->redirection_in);
 		close(vars->prev_read);
 	}

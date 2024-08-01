@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:04:19 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:33:18 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int		strs_len(char **strs);
 
 void	pipe_echo(t_vars *vars, t_cmd *cmd);
 void	pipe_cd(t_status *status, t_cmd *cmd);
-void	pipe_pwd(t_vars *vars, t_cmd *cmd);
+void	pipe_pwd(t_vars *vars);
 
 void	print_envp_in_export(t_envp_list *envp_list);
 void	pipe_export(t_cmd *cmd, t_status *status);
-void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status);
-void	pipe_env(t_vars *vars, t_cmd *cmd, t_status *stats);
-void	pipe_exit(t_vars *vars, t_cmd *cmd);
+void	pipe_unset(t_cmd *cmd);
+void	pipe_env(t_cmd *cmd, t_status *status);
+void	pipe_exit(t_cmd *cmd);
 
 int		make_here_doc(t_vars *vars, t_cmd *cmd, char *token);
 
