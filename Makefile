@@ -24,7 +24,7 @@ SRCS_PARSE	= \
 	$(PARSE_DIR)tokenize_string_1.c $(PARSE_DIR)tokenize_string_2.c \
 	$(PARSE_DIR)expand_env_vars_1.c $(PARSE_DIR)expand_env_vars_2.c \
 	$(PARSE_DIR)combine_expanded_tokens.c \
-	atoi_check_num.c check_fd.c \
+	atoi_check_num.c \
 
 SRCS_PIPE	= \
 	pipex/find_cmd.c pipex/make_here_doc.c \
@@ -40,8 +40,8 @@ SRCS_GNL	= \
 
 SRCS_BUITIN	= \
 	parse_dir_path.c pipex/pipe_built_in.c pipex/pipe_built_in2.c \
-	pipex/pipe_built_in3.c \
-	builtins/echo.c builtins/export.c builtins/unset.c builtins/env.c \
+	pipex/pipe_built_in3.c pipex/pipe_built_in4.c \
+	builtins/echo.c builtins/export.c builtins/unset.c \
 	builtins/cd.c builtins/sort_env.c builtins/builtin_exit.c
 
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o)

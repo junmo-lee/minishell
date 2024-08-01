@@ -47,6 +47,16 @@ void	make_here_doc_process(t_vars *vars, char *token)
 	exit(EXIT_SUCCESS);
 }
 
+void	wait_here_doc_process(pid_t fork_ret, int *process_status)
+{
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(fork_ret, process_status, 0);
+	signal(SIGINT, stdin_handler);
+	signal(SIGQUIT, stdin_handler);
+}
+
 int	make_here_doc(t_vars *vars, t_cmd *cmd, char *token)
 {
 	int		process_status;

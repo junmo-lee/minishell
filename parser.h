@@ -106,5 +106,6 @@ void	parse_dir(char *target, char *pwd, char *str);
 
 void	main_status_init(t_status *status, t_vars *vars, t_envp_list **envp_list, char **envp);
 int		str_exist(char *str, t_status *status, t_vars *vars, t_envp_list *envp_list);
+int		pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status);
 
 #endif
