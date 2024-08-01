@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_built_in3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:58:23 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:23:59 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ void	pipe_unset(t_vars *vars, t_cmd *cmd, t_status *status)
 	while (cmd->args[i] != NULL)
 	{
 		if (check_key_syntax(cmd->args[i]) == UNDEFINED_ERROR)
-			printf("minishell: unset: \'%s\' : not a valid identifier", \
-				cmd->args[i]);
+		{
+			ft_putstr_fd("unset: `", STDERR_FILENO);
+			ft_putstr_fd(cmd->args[i], STDERR_FILENO);
+			ft_putstr_fd(" : not a valid identifier\n", STDERR_FILENO);
+		}
 		i++;
 	}
 	status++;

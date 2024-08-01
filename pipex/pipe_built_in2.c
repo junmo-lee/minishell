@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_built_in2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:38:37 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 21:26:22 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 			write(vars->next_write, " ", 1);
 		i++;
 	}
-	(void)vars;
 	exit(EXIT_SUCCESS);
 }
 
