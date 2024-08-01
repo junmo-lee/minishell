@@ -2,7 +2,6 @@
 
 NAME 	= .parse_relink
 PARSE 	= minishell
-AR 		= ar
 
 LIBFT 	= libft/libft.a
 LIBFT_DIR = libft/
@@ -47,11 +46,6 @@ SRCS_MAIN = \
 	main/parse_dir_path.c main/utils.c main/atoi_check_num.c
 
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o) $(SRCS_MAIN:.c=.o)
-HEADER	= parser.h
-
-ifdef DEBUG_FLAG
-	CFLAGS += -g3 -fsanitize=address
-endif
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
