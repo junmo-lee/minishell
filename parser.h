@@ -82,7 +82,7 @@ int				check_key_syntax(char *key_str);
 	// unset
 int				unset(t_parser_list *cmd_head, t_envp_list **envp_list);
 	// env
-int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
+//int				env(t_parser_list *cmd_list, t_envp_list **envp_list);
 
 	// cd
 int 			cd(t_parser_list *cmd_list, t_envp_list **envp_list, char *pwd);

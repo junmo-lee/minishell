@@ -103,22 +103,10 @@ int	main(int argc, char **argv, char **envp)
 			add_history(str);
 			head = parser(str, &status, envp_list);
 			bubble_sort(envp_list);
-			init(status.one_line, envp_list);
-			// if (head->cmd_list_head == NULL)
-			// {
-			// 	clear_parsed_tree(&head);
-			// 	continue ;
-			// }
-			// printf_parsed_list(parsed_list);
-			// clear_parse_list(&parsed_list);
+			main_init(status.one_line, envp_list);
 			if (head->error == NO_ERROR)
 			{
 				printf_parsed_tree(head);
-
-				// 명령어 실행
-				// vars 에 argc, argv, envp, path를 넣는 단계
-
-				// 실제 line 실행부
 				g_signal = 0;
 				status.exit_status = 0;
 				status.env_list = envp_list;

@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:58:43 by junmlee           #+#    #+#             */
-/*   Updated: 2024/07/31 21:57:50 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 18:04:43 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,40 @@ char	*make_str_env(char *key, char *value)
 	return (ret);
 }
 
-void	init(t_vars *vars, t_envp_list *env_list)
+void	main_init_envp_parse(t_vars *vars, t_envp_list *env_list)
 {
 	t_envp_list	*current_node;
 	int			envp_len;
 
+	envp_len = 0;
+	current_node = env_list;
+	while (current_node != NULL)
+	{
+		if (current_node->value != NULL)
+			envp_len++;
+		current_node = current_node->next;
+	}
+	vars->envp = malloc(sizeof(char *) * (envp_len + 1));
+	if (vars->envp == NULL)
+		exit(EXIT_FAILURE);
+
+	envp_len = 0;
+	current_node = env_list;
+	while (current_node != NULL)
+	{
+		if (current_node->value != NULL)
+			vars->envp[envp_len++] = make_str_env(current_node->key, current_node->value);
+		current_node = current_node->next;
+	}
+	vars->envp[envp_len] = NULL;
+}
+
+void	main_init(t_vars *vars, t_envp_list *env_list)
+{
 	ft_memset(vars, 0, sizeof(vars));
-	// env_list 를 이중 배열로 만들어 vars->envp 에 넣기, env 처럼 key=value 인것만 넣기
 	if (env_list == NULL)
 		vars->envp = NULL;
 	else
-	{
-		envp_len = 0;
-		current_node = env_list;
-		while (current_node != NULL)
-		{
-			if (current_node->value != NULL)
-				envp_len++;
-			current_node = current_node->next;
-		}
-		
-		vars->envp = malloc(sizeof(char *) * (envp_len + 1));
-		if (vars->envp == NULL)
-			exit(EXIT_FAILURE);
-
-		envp_len = 0;
-		current_node = env_list;
-		while (current_node != NULL)
-		{
-			if (current_node->value != NULL)
-				vars->envp[envp_len++] = make_str_env(current_node->key, current_node->value);
-			current_node = current_node->next;
-		}
-		vars->envp[envp_len] = NULL;
-	}
+		main_init_envp_parse(vars, env_list);
 	import_path(vars);
 }
