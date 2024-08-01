@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_def.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:12:08 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/01 22:00:22 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,8 @@
 # include <termios.h>
 # include <unistd.h>
 # include <signal.h>
-# include <errno.h>
-# include <unistd.h>
 # include <fcntl.h>
 # include <sys/syslimits.h>
-# include <limits.h>
-# include <sys/wait.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
