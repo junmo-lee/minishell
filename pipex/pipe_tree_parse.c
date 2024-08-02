@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_tree_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:28:36 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:14:46 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ char	*list_get_cmd_name(t_parsed_tree *current_node)
 {
 	t_parser_list	*parser_node;
 	int				arg_index;
-	int				is_prev_here_doc;
+	int				is_ignore;
 
-	is_prev_here_doc = 0;
+	is_ignore = 0;
 	arg_index = 0;
 	parser_node = (current_node)->cmd_list_head;
 	while (parser_node != NULL)
 	{
-		if (parser_node->type == HERE_DOC)
-			is_prev_here_doc = 1;
+		if (parser_node->type == HERE_DOC || parser_node->type == REDIRECTION)
+			is_ignore = 1;
 		else
 		{
-			if (is_prev_here_doc != 1)
+			if (is_ignore != 1)
 			{
 				if (parser_node->type == STRING)
 					return (parser_node->token);
 			}
-			is_prev_here_doc = 0;
+			is_ignore = 0;
 		}
 		parser_node = parser_node->next;
 	}

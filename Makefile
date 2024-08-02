@@ -10,7 +10,7 @@ LDFLAGS	= -L$(LIBFT_DIR)
 LDLIBS	= -lreadline -lft
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror
+CFLAGS 	= -Wall -Wextra -Werror 
 
 PARSE_DIR = ./parse/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:39:52 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:08:15 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	export_free_next_node(char *key_str, t_parser_list	**current_node)
 	(*current_node) = (*current_node)->next;
 }
 
-int	*builtin_export(t_parser_list *cmd_head, t_envp_list **envp_list)
+void	builtin_export(t_parser_list *cmd_head, t_envp_list **envp_list)
 {
 	t_parser_list	*current_node;
 	char			*key_str;
@@ -81,13 +81,15 @@ int	*builtin_export(t_parser_list *cmd_head, t_envp_list **envp_list)
 				export_free_next_node(key_str, &current_node);
 			else if (ft_strncmp(key_str, "_", 2) == 0)
 				export_free_next_node(key_str, &current_node);
-			if (find_equal(current_node->token))
-				value_str = get_value(current_node->token);
 			else
-				value_str = NULL;
-			insert_envp_node(envp_list, key_str, value_str);
-			current_node = current_node->next;
+			{	
+				if (find_equal(current_node->token))
+					value_str = get_value(current_node->token);
+				else
+					value_str = NULL;
+				insert_envp_node(envp_list, key_str, value_str);
+				current_node = current_node->next;
+			}
 		}
 	}
-	return (0);
 }

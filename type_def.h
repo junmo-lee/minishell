@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_def.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 22:00:22 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:16:09 by choolee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ volatile sig_atomic_t	g_signal;
 typedef enum s_tag
 {
 	DEFAULT,
-	CMD,
 	STRING,
-	EQUAL,
 	REDIRECTION,
 	HERE_DOC,
 	PIPE,
