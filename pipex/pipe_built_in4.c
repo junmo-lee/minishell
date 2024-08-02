@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:05:48 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 17:03:16 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:09:10 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,11 @@ void	pipe_cd(t_status *status, t_cmd *cmd)
 	if (lstat(cmd->args[1], &dir_stat) == 0)
 	{
 		if (!S_ISDIR(dir_stat.st_mode))
-		{
-			fprintf(stderr, "test : is none_dir?\n");
-			pipe_cd_print_error(cmd->args[1], ": Not a directory\n"); // 폴더가 아닐때
-		}
+			pipe_cd_print_error(cmd->args[1], ": Not a directory\n");
 		if (access(cmd->args[1], X_OK) == 0)
-			exit(EXIT_SUCCESS); // 성공했을때
-		fprintf(stderr, "test : is not exe?\n");
-		pipe_cd_print_error(cmd->args[1], ": Permission denied\n"); // 실행권한이 없을때
+			exit(EXIT_SUCCESS);
+		pipe_cd_print_error(cmd->args[1], ": Permission denied\n");
 	}
 	else
-	{
-		fprintf(stderr, "test : is none_file?\n");
-		pipe_cd_print_error(cmd->args[1], ": No such file or directory\n"); // 파일이 없을때?
-	}
+		pipe_cd_print_error(cmd->args[1], ": No such file or directory\n");
 }
