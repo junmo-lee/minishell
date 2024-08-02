@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 14:20:04 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:44:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ int	builtin_exit(t_parser_list *head_next, t_status *status)
 	int	exit_val;
 
 	if (head_next == NULL)
-		exit(EXIT_SUCCESS);
+	{
+		if (g_signal == MAIN_SIGINT)
+			exit(EXIT_FAILURE);
+		else
+			exit((unsigned char)status->exit_status);
+	}
 	if (atoi_check_num(head_next->token, &exit_val))
 	{
 		if (head_next->next == NULL)

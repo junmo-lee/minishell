@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 15:31:20 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:41:51 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	do_loop(t_status *status, t_vars *vars, t_envp_list *envp_list)
 	{
 		str = NULL;
 		rl_catch_signals = 0;
+		g_signal = 0;
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		str = readline("prompt : \001\033[s\002");

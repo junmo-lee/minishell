@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:38:37 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 17:00:23 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:24:37 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_exit(t_cmd *cmd)
+void	pipe_exit(t_cmd *cmd, t_status *status)
 {
 	int	exit_code;
 
 	if (cmd->args[1] == NULL)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		exit(EXIT_SUCCESS);
+		exit((unsigned char)status->exit_status);
 	}
 	else if (atoi_check_num(cmd->args[1], &exit_code))
 	{

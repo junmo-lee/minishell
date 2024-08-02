@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 21:18:02 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:33:15 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:22:45 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	pipe_built_in(t_vars *vars, t_cmd *cmd, t_status *status)
 	else if (ft_strcmp(cmd->cmd_name, "env") == 0)
 		pipe_env(cmd, status);
 	else if (ft_strcmp(cmd->cmd_name, "exit") == 0)
-		pipe_exit(cmd);
+		pipe_exit(cmd, status);
 	return (0);
 }

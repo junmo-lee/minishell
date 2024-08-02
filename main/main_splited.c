@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_splited.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 20:24:03 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:40:27 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	tree_no_error(t_status *status, t_vars *vars, \
 t_parsed_tree *head, t_envp_list *envp_list)
 {
 	count_parsed_tree(head);
-	g_signal = 0;
-	status->exit_status = 0;
 	status->env_list = envp_list;
 	status->exit_status = run_cmd_tree(status, head, vars);
 	if (vars->is_here_doc == 1)
