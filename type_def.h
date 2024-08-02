@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_def.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 15:16:09 by choolee          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:31:12 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define STATUS_FAILURE 0x0000100
 # define SIGINT_EXIT_CODE 130
 # define SIGQUIT_EXIT_CODE 131
-# define HERE_DOC_SIGINT 10
+# define MAIN_SIGINT 10
 # define EACCES_EXIT_CODE 126
 # define COMMAND_NOT_FOUND 127
 # define EXIT_NUMERIC 255

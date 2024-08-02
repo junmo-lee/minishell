@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:35:31 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:31:20 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
+		g_signal = MAIN_SIGINT;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);

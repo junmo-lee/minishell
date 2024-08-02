@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_vars_1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:17:04 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:35:38 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	expand_with_question_mark(char *str, t_info *s_info, t_status *status)
 
 	last_index_of_text = s_info->index - 1;
 	s_info->index += 2;
-	envp_value = ft_itoa(status->exit_status);
+	if (status->exit_status == 0 && g_signal == MAIN_SIGINT)
+		envp_value = ft_itoa(EXIT_FAILURE);
+	else
+		envp_value = ft_itoa(status->exit_status);
 	static_text = slice_string(s_info->first_text_idx, last_index_of_text, str);
 	s_info->expanded_token = concat_strs(s_info->expanded_token, static_text);
 	s_info->expanded_token = concat_strs(s_info->expanded_token, envp_value);
