@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:38:37 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:33:05 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:00:23 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,47 +40,6 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipe_cd_print_error(char *str)
-{
-	ft_putstr_fd("cd: ", STDERR_FILENO);
-	perror(str);
-	exit(EXIT_FAILURE);
-}
-
-void	pipe_cd(t_status *status, t_cmd *cmd)
-{
-	char	*env_home;
-	char	*cd_arg;
-
-	if (cmd->args[1] == NULL)
-	{
-		env_home = ft_getenv("HOME", status->env_list);
-		if (env_home == NULL)
-		{
-			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
-			exit(EXIT_FAILURE);
-		}
-		cd_arg = env_home;
-	}
-	else
-		cd_arg = cmd->args[1];
-	if (access(cmd->args[1], F_OK) == 0)
-	{
-		if (access(cmd->args[1], X_OK) == 0)
-			exit(EXIT_SUCCESS);
-		pipe_cd_print_error(cmd->args[1]);
-	}
-	else
-		pipe_cd_print_error(cmd->args[1]);
-}
-
-void	pipe_pwd(t_vars *vars)
-{
-	ft_putstr_fd(vars->pwd, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	exit(EXIT_SUCCESS);
-}
-
 void	pipe_exit(t_cmd *cmd)
 {
 	int	exit_code;
@@ -105,4 +64,11 @@ void	pipe_exit(t_cmd *cmd)
 		ft_putstr_fd("exit\nexit: a: numeric argument required\n", STDERR_FILENO);
 		exit(EXIT_NUMERIC);
 	}
+}
+
+void	pipe_pwd(t_vars *vars)
+{
+	ft_putstr_fd(vars->pwd, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	exit(EXIT_SUCCESS);
 }
