@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:04:11 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 17:06:35 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/05 17:58:39 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 void	change_directory(t_envp_list **envp_list, char *pwd, char *str)
 {
 	struct stat	dir_stat;
+	char		buf[PATH_MAX];
 
-	if (lstat(str, &dir_stat) == 0)
+	ft_strlcpy(buf, pwd, PATH_MAX);
+	if (stat(str, &dir_stat) == 0)
 	{
 		if (S_ISDIR(dir_stat.st_mode) && (access(str, X_OK) == 0))
 		{
-			insert_envp_node(envp_list, ft_strdup("OLDPWD"), ft_strdup(pwd));
-			update_pwd(pwd, str);
-			chdir(pwd);
-			insert_envp_node(envp_list, ft_strdup("PWD"), ft_strdup(pwd));
+			update_pwd(buf, str);
+			if (chdir(buf) == 0)
+			{
+				insert_envp_node(envp_list, \
+					ft_strdup("OLDPWD"), ft_strdup(pwd));
+				insert_envp_node(envp_list, ft_strdup("PWD"), ft_strdup(buf));
+				ft_strlcpy(pwd, buf, PATH_MAX);
+			}
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:05:48 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 17:09:10 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/05 17:57:55 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ void	pipe_env_print_error(char *str)
 
 void	pipe_env(t_cmd *cmd, t_status *status)
 {
-	int			i;
 	t_envp_list	*current_node;
 
 	current_node = status->env_list;
-	i = 0;
 	if (cmd->args[1] != NULL)
 		return ;
 	while (current_node != NULL)
@@ -52,28 +50,38 @@ void	pipe_cd_print_error(char *str, char *error_msg)
 	exit(EXIT_FAILURE);
 }
 
+void	pipe_cd_get_home(t_status *status, t_cmd *cmd)
+{
+	char	*env_home;
+
+	env_home = ft_getenv("HOME", status->env_list);
+	if (env_home == NULL)
+	{
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	cmd->args[1] = env_home;
+}
+
 void	pipe_cd(t_status *status, t_cmd *cmd)
 {
-	char		*env_home;
 	struct stat	dir_stat;
 
 	if (cmd->args[1] == NULL)
+		pipe_cd_get_home(status, cmd);
+	if (stat(cmd->args[1], &dir_stat) == 0)
 	{
-		env_home = ft_getenv("HOME", status->env_list);
-		if (env_home == NULL)
+		if (!S_ISLNK(dir_stat.st_mode))
 		{
-			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
-			exit(EXIT_FAILURE);
+			if (!S_ISDIR(dir_stat.st_mode))
+				pipe_cd_print_error(cmd->args[1], ": Not a directory\n");
 		}
-		cmd->args[1] = env_home;
-	}
-	if (lstat(cmd->args[1], &dir_stat) == 0)
-	{
-		if (!S_ISDIR(dir_stat.st_mode))
-			pipe_cd_print_error(cmd->args[1], ": Not a directory\n");
-		if (access(cmd->args[1], X_OK) == 0)
+		if (access(cmd->args[1], F_OK) != 0)
+			pipe_cd_print_error(cmd->args[1], ": No such file or directory\n");
+		else if (access(cmd->args[1], X_OK) != 0)
+			pipe_cd_print_error(cmd->args[1], ": Permission denied\n");
+		else
 			exit(EXIT_SUCCESS);
-		pipe_cd_print_error(cmd->args[1], ": Permission denied\n");
 	}
 	else
 		pipe_cd_print_error(cmd->args[1], ": No such file or directory\n");
