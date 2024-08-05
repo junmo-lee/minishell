@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 16:28:33 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/05 16:20:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@
 # define COMMAND_NOT_FOUND 127
 # define EXIT_NUMERIC 255
 
-volatile sig_atomic_t	g_signal;
-
+sig_atomic_t	g_signal;
 typedef enum s_tag
 {
 	DEFAULT,
