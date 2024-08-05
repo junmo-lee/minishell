@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_list_funcs2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee   <junmlee@student.42seoul.k>      +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:17:04 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/05 15:47:57 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_key(char *str)
 	while (str[index_equal] != '=' && str[index_equal] != '\0')
 		index_equal ++;
 	key_str = (char *)malloc(sizeof(char) * (index_equal + 1));
-	strlcpy(key_str, str, index_equal + 1);
+	ft_strlcpy(key_str, str, index_equal + 1);
 	return (key_str);
 }
 
@@ -61,8 +61,8 @@ char	*get_value(char *str)
 	if (*str == '\0')
 		value_str = ft_strdup("");
 	else
-		value_str = (char *)malloc(sizeof(char) * strlen(&(*str)) + 1);
-	strlcpy(value_str, str, strlen(&(*str)) + 1);
+		value_str = (char *)malloc(sizeof(char) * ft_strlen(&(*str)) + 1);
+	ft_strlcpy(value_str, str, ft_strlen(&(*str)) + 1);
 	return (value_str);
 }
 
