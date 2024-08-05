@@ -6,11 +6,13 @@ PARSE 	= minishell
 LIBFT 	= libft/libft.a
 LIBFT_DIR = libft/
 
-LDFLAGS	= -L$(LIBFT_DIR)
+LDFLAGS	= -L${HOME}/.brew/opt/readline/lib -L$(LIBFT_DIR) 
 LDLIBS	= -lreadline -lft
 
+INC		= -I${HOME}/.brew/opt/readline/include
+
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror 
+CFLAGS 	= -Wall -Wextra -Werror
 
 PARSE_DIR = ./parse/
 
@@ -48,7 +50,7 @@ SRCS_MAIN = \
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o) $(SRCS_MAIN:.c=.o)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR) all
