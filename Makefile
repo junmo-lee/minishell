@@ -14,7 +14,7 @@ LDLIBS	= -lft -lreadline
 INC		= -I$(BREW_PREFIX)/opt/readline/include
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror -g 
+CFLAGS 	= -Wall -Wextra -Werror
 
 PARSE_DIR = ./parse/
 
