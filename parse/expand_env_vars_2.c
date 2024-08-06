@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:17:04 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/06 23:36:35 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/07 00:29:36 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*slice_string(int start_index, int end_index, char *str)
 	result = (char *)malloc(sizeof(char) * (result_len + 1));
 	if (!result)
 		return (NULL);
-	ft_strlcpy(result, str + start_index, result_len);
+	ft_strlcpy(result, str + start_index, result_len + 1);
 	result[result_len] = '\0';
 	return (result);
 }

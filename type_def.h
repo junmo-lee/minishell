@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_def.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/06 21:23:38 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 23:38:20 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define EXIT_NUMERIC 255
 
 sig_atomic_t	g_signal;
+
 typedef enum s_tag
 {
 	DEFAULT,
