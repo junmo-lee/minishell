@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:57:08 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/01 21:30:34 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:32:20 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,14 @@ void	child_init_fd(t_vars *vars, t_cmd *cmd)
 	else
 	{
 		dup2_ret = dup2(vars->prev_read, STDIN_FILENO);
+		close(vars->prev_read);
 		if (dup2_ret == -1)
 			exit(EXIT_FAILURE);
-		if (dup2_ret != STDIN_FILENO)
-			close(vars->prev_read);
 	}
 	dup2_ret = dup2(vars->next_write, STDOUT_FILENO);
+	close(vars->next_write);
 	if (dup2_ret == -1)
 		exit(EXIT_FAILURE);
-	if (dup2_ret != STDOUT_FILENO)
-		close(vars->next_write);
 }
 
 void	child(t_vars *vars, t_cmd *cmd, t_status *status)
