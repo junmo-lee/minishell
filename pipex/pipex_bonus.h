@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 17:22:41 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 21:07:40 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		check_cmd_path(t_status *status, t_vars *vars, t_cmd *cmd);
 
 int		strs_len(char **strs);
 
-void	pipe_echo(t_vars *vars, t_cmd *cmd);
+void	pipe_echo(t_cmd *cmd);
 void	pipe_cd(t_status *status, t_cmd *cmd);
 void	pipe_pwd(t_vars *vars);
 
@@ -38,7 +38,7 @@ void	pipe_exit(t_cmd *cmd, t_status *status);
 
 int		make_here_doc(t_vars *vars, t_cmd *cmd, char *token);
 
-void	child(t_vars *vars, t_cmd *cmd, t_status *status);
+void	child(t_vars *vars, t_cmd *cmd, t_status *status, int count);
 int		write_stderr(char *error_msg, char *name);
 void	write_stderr_exit(char *name, char *error_msg, int errorcode);
 char	**pipex_split(char *str, char c);
