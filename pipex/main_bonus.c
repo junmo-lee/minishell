@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/06 19:14:14 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 21:18:06 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	run_cmd_tree(t_status *status, t_parsed_tree *tree, t_vars *vars)
 		return (EXIT_SUCCESS);
 	if (tree_parse(tree, vars, cmd) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	check_fd("before forking");
 	vars->prev_read = dup(STDIN_FILENO);
 	count = 0;
 	while (count < vars->cmd_len)

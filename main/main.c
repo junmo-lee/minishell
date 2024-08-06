@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:19:33 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/06 16:56:32 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 21:18:20 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	do_loop(t_status *status, t_vars *vars, t_envp_list *envp_list)
 		if (str[0] != '\0')
 			str_exist(str, status, vars, envp_list);
 		free(str);
-		check_fd("exit");
 	}
 	clear_envp_list(&envp_list);
 	return (EXIT_SUCCESS);

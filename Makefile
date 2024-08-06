@@ -45,7 +45,7 @@ SRCS_BUITIN	= \
 
 SRCS_MAIN = \
 	main/main.c main/main_splited.c \
-	main/parse_dir_path.c main/utils.c main/atoi_check_num.c check_fd.c
+	main/parse_dir_path.c main/utils.c main/atoi_check_num.c
 
 OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o) $(SRCS_MAIN:.c=.o) 
 

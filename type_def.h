@@ -6,7 +6,7 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:49:12 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/05 16:20:57 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 21:23:38 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ typedef struct s_vars
 	char			**path;
 	int				pipe_fd[2];
 	int				prev_read;
-	int				next_write;
 	int				cmd_len;
 	int				is_here_doc;
 	char			*temp_here_doc;
