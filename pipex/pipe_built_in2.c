@@ -6,13 +6,13 @@
 /*   By: junmlee <junmlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:38:37 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 17:24:37 by junmlee          ###   ########.fr       */
+/*   Updated: 2024/08/06 21:07:25 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pipe_echo(t_vars *vars, t_cmd *cmd)
+void	pipe_echo(t_cmd *cmd)
 {
 	int	option_flag;
 	int	i;
@@ -30,11 +30,11 @@ void	pipe_echo(t_vars *vars, t_cmd *cmd)
 			continue ;
 		}
 		print_flag = 1;
-		write (vars->next_write, cmd->args[i], ft_strlen(cmd->args[i]));
+		write(STDOUT_FILENO, cmd->args[i], ft_strlen(cmd->args[i]));
 		if (cmd->args[i + 1] == NULL && option_flag == 0)
-			write(vars->next_write, "\n", 1);
+			write(STDOUT_FILENO, "\n", 1);
 		if (cmd->args[i + 1] != NULL)
-			write(vars->next_write, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	exit(EXIT_SUCCESS);
