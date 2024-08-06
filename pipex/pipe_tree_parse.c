@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_tree_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:28:36 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 15:14:46 by choolee          ###   ########.fr       */
+/*   Updated: 2024/08/06 23:42:03 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 char	*list_get_cmd_name(t_parsed_tree *current_node)
 {
 	t_parser_list	*parser_node;
-	int				arg_index;
 	int				is_ignore;
 
 	is_ignore = 0;
-	arg_index = 0;
 	parser_node = (current_node)->cmd_list_head;
 	while (parser_node != NULL)
 	{
