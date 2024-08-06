@@ -12,7 +12,7 @@ LDLIBS	= -lreadline -lft
 INC		= -I${HOME}/.brew/opt/readline/include
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror
+CFLAGS 	= -Wall -Wextra -Werror -g 
 
 PARSE_DIR = ./parse/
 
@@ -45,9 +45,9 @@ SRCS_BUITIN	= \
 
 SRCS_MAIN = \
 	main/main.c main/main_splited.c \
-	main/parse_dir_path.c main/utils.c main/atoi_check_num.c
+	main/parse_dir_path.c main/utils.c main/atoi_check_num.c check_fd.c
 
-OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o) $(SRCS_MAIN:.c=.o)
+OBJS	= $(SRCS_PARSE:.c=.o) $(SRCS_PIPE:.c=.o) $(SRCS_GNL:.c=.o) $(SRCS_BUITIN:.c=.o) $(SRCS_MAIN:.c=.o) 
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
