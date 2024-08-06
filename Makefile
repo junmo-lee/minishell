@@ -6,7 +6,7 @@ PARSE 	= minishell
 LIBFT 	= libft/libft.a
 LIBFT_DIR = libft/
 
-BREW_PREFIX=$(brew --prefix)
+BREW_PREFIX := $(shell brew --prefix)
 
 LDFLAGS	= -L$(LIBFT_DIR) -L$(BREW_PREFIX)/opt/readline/lib
 LDLIBS	= -lft -lreadline 
