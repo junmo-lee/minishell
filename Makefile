@@ -6,10 +6,12 @@ PARSE 	= minishell
 LIBFT 	= libft/libft.a
 LIBFT_DIR = libft/
 
-LDFLAGS	= -L${HOME}/.brew/opt/readline/lib -L$(LIBFT_DIR) 
-LDLIBS	= -lreadline -lft
+BREW_PREFIX=$(brew --prefix)
 
-INC		= -I${HOME}/.brew/opt/readline/include
+LDFLAGS	= -L$(LIBFT_DIR) -L$(BREW_PREFIX)/opt/readline/lib
+LDLIBS	= -lft -lreadline 
+
+INC		= -I$(BREW_PREFIX)/opt/readline/include
 
 CC 		= cc
 CFLAGS 	= -Wall -Wextra -Werror -g 
