@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: choolee <choolee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: junmlee <junmlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 20:39:52 by junmlee           #+#    #+#             */
-/*   Updated: 2024/08/02 15:08:15 by choolee          ###   ########.fr       */
+/*   Updated: 2024/08/07 00:44:14 by junmlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	builtin_export(t_parser_list *cmd_head, t_envp_list **envp_list)
 			else if (ft_strncmp(key_str, "_", 2) == 0)
 				export_free_next_node(key_str, &current_node);
 			else
-			{	
+			{
 				if (find_equal(current_node->token))
 					value_str = get_value(current_node->token);
 				else
